@@ -154,9 +154,28 @@ One file in, deployed book out. Nothing about the authoring workflow changes.
 
 ---
 
-## 10. Addendum (v1.1) — the authoring master is now a folder
+## 10. Phase 4 (v1.2) — The Map View (approved)
+
+An interactive historical-borders map, **PWA-only** — injected into the shell at build time. It must NEVER enter the authoring master or the assembled single-file `chronicle-complete.html` (data is far too heavy; the book's hand-drawn schematic SVG maps remain the in-chapter maps).
+
+**Data:** [Seshat Cliopatria](https://seshatdatabank.info/seshat-cliopatria/) polity borders (CC BY 4.0) + [Natural Earth](https://www.naturalearthdata.com/) basemap (public domain). Build step: download once, simplify polygons aggressively for mobile (TopoJSON), pre-slice into era-chunked, gzipped payloads. Target: < 2 MB fetched for any one era; all map data lazy-loaded only when the map view is opened.
+
+**UI (`#view-map` in the shell):**
+- Year slider spanning the dataset range, with a play button for auto-advance (watch empires expand/contract).
+- **Era preset chips matching the book's shelves** — "First Cradles" jumps to c. 2500 BCE and shows every polity on earth at once (the owner's stated core use: the whole ancient world on one screen, then drag to watch expansion).
+- Tap a polygon → popover with polity name + dates; if the polity maps to a written chapter, a "Read its chapter →" button routes through the existing `show()` router (chunk-loading inherited for free).
+- Polity→chapter mapping lives in a curated `map-links.json` in the repo (name/id → slug + year-span); starts with the obvious matches (Akkadian→akkad, Neo-Assyrian→assyria, Achaemenid→persia, Roman→rome, …) and grows as chapters land. Unmapped polities still show name/dates — never a dead tap.
+- Entry points: navigator card on home; optional later — a "see the map at this year" affordance from World-view snapshots.
+
+**Constraints:** no heavy framework in the shell — the map module (MapLibre GL or a lightweight pre-projected canvas renderer, builder's choice) loads lazily with its data; the shell without the map must remain byte-identical in behavior to Phase 1–3. Offline: cache map chunks in the SW after first use, same versioning as content chunks.
+
+**Attribution page (required, Phase 4 or earlier):** a simple About/Attribution view crediting Seshat Cliopatria (CC BY 4.0), Natural Earth, Wikimedia Commons (chapter images), and the text's reference sources; optionally a courtesy line noting worldempires.co.uk as inspiration for the map view.
+
+**Acceptance:** First-Cradles preset renders every c. 2500 BCE polity on an S25 Ultra at 60fps pan; slider drag updates borders smoothly; tapping the Achaemenid polygon opens the Persia chapter; airplane-mode works after one use.
+
+## 11. Addendum (v1.1) — the authoring master is now a folder
 Decision made post-v1.0: the authoring side has ALREADY adopted the split. The repo's `master/` directory contains `shell.html` + `content/*.html` (same chunk boundaries as §3), maintained by the writing pipeline via `codexfs.py` (assemble/split live in the authoring skill — reuse it, don't reimplement). Consequences for the build: the "split" step of §4 is already done upstream — the build consumes the folder directly (shell patch, search index, manifest, SW). `chronicle-complete.html` (single-file artifact, produced by `assemble.py`) should still be generated and published at the site root as the durable share-anywhere fallback.
 
-## 11. Out of scope
+## 12. Out of scope
 
 Chapter writing, editing, validation, numbering (owned by the authoring pipeline); EPUB export (separate future project); any CMS/admin UI; analytics of any kind (this is a private, ad-free, tracker-free book).

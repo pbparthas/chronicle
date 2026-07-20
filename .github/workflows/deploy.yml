@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - 'master/**'
+      - 'mapdata/**'
       - 'build/**'
       - 'tools/**'
       - '.github/workflows/deploy.yml'
