@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f5eddd">
+<title>The Chronicle — A Tale of Time</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Literata:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --clay: #c07b52; --clay-deep: #9c5a37; --reed: #7d8a5c;
+    --ink: #241f1a; --ink-soft: #4a423a;
+    --sand: #ece2cf; --sand-deep: #ddceb2; --paper: #f5eddd;
+    --gold: #bd9433; --shadow: rgba(36,31,26,0.16);
+    --topbar-h: 52px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(192,123,82,0.055), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(125,138,92,0.055), transparent 40%);
+    color: var(--ink);
+    font-family:var(--body-font, 'Spectral', Georgia, serif);
+    font-size:18.5px; line-height:var(--lh, 1.75);
+    -webkit-font-smoothing:antialiased;
+    padding-top: var(--topbar-h);
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position:fixed; top:0; left:0; right:0; height:var(--topbar-h);
+    background:var(--topbar-bg, rgba(245,237,221,0.92)); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--sand-deep); z-index:60;
+    display:flex; align-items:center; gap:6px; padding:0 10px;
+  }
+  .topbar button {
+    background:none; border:none; font-family:'Barlow Condensed',sans-serif;
+    font-size:14px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--clay-deep); padding:8px 10px; cursor:pointer; border-radius:4px;
+    font-weight:600; white-space:nowrap;
+  }
+  .topbar button:active { background:var(--sand); }
+  .topbar .bar-title {
+    flex:1; text-align:center; font-family:'Cormorant Garamond',serif;
+    font-weight:600; font-size:17px; color:var(--ink-soft);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .resume-card { display:none; margin:20px 0 0; background:var(--sand); border:1px solid var(--sand-deep);
+    border-left:3px solid var(--gold); border-radius:4px; padding:14px 18px;
+    color:inherit; text-decoration:none; font-size:16px; line-height:1.45; }
+  .resume-card.has-bm { display:block; }
+  .resume-card b { color:var(--clay-deep); }
+
+  .scroll-progress {
+    position:fixed; top:var(--topbar-h); left:0; height:3px; width:0%;
+    background:linear-gradient(90deg,var(--clay-deep),var(--clay),var(--gold));
+    z-index:59; transition:width 0.1s linear;
+  }
+
+  /* ============ FLOATING BOOKMARK RIBBON ============ */
+  .bm-fab {
+    position:fixed; right:0; top:55%; z-index:58;
+    background:var(--clay-deep); color:var(--paper);
+    border:none; border-radius:8px 0 0 8px;
+    padding:14px 10px 14px 12px; cursor:pointer;
+    font-size:20px; line-height:1;
+    box-shadow:0 4px 14px var(--shadow);
+    display:none; opacity:0.86;
+  }
+  .bm-fab.show { display:block; }
+  .bm-fab:active { opacity:1; }
+  .toast {
+    position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper); border-radius:6px;
+    font-family:'Barlow Condensed',sans-serif; font-size:14px;
+    letter-spacing:0.06em; padding:10px 18px; z-index:70;
+    opacity:0; pointer-events:none; transition:opacity 0.25s, transform 0.25s;
+  }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ============ VIEWS ============ */
+  .view { display:none; }
+  .view.active { display:block; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 24px 110px; }
+  .wrap-wide { max-width:860px; margin:0 auto; padding:0 24px 110px; }
+
+  /* ============ HOME ============ */
+  .hero { padding:52px 0 34px; }
+  .kicker {
+    font-family:'Barlow Condensed',sans-serif; letter-spacing:0.4em;
+    text-transform:uppercase; font-size:12.5px; color:var(--clay-deep);
+    font-weight:600; margin-bottom:20px;
+  }
+  .hero h1 {
+    font-family:'Cormorant Garamond',serif; font-weight:700;
+    font-size:clamp(44px,11vw,84px); line-height:0.92; letter-spacing:-0.015em;
+    margin-bottom:16px;
+  }
+  .hero .tag {
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-size:clamp(19px,4.5vw,26px); color:var(--ink-soft); line-height:1.3;
+    max-width:600px;
+  }
+  .trust-strip {
+    margin-top:26px; background:var(--sand); border:1px solid var(--sand-deep);
+    border-radius:4px; padding:16px 18px; font-size:15px; color:var(--ink-soft);
+    line-height:1.55;
+  }
+  .trust-strip b { color:var(--clay-deep); font-weight:600; }
+  .badge { display:inline-block; font-family:'Barlow Condensed',sans-serif;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    border-radius:3px; padding:1px 7px 2px; font-weight:600; vertical-align:1px; }
+  .b-att { background:rgba(125,138,92,0.18); color:#5c6a3e; }
+  .b-inf { background:rgba(189,148,51,0.16); color:#8a6c20; }
+  .b-leg { background:rgba(192,123,82,0.16); color:var(--clay-deep); }
+
+  .divider { text-align:center; color:var(--clay); letter-spacing:0.6em; font-size:16px; margin:38px 0; }
+
+  /* Timeline */
+  .tl-block h2, .shelf h2 {
+    font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:clamp(24px,6vw,32px); margin-bottom:6px;
+  }
+  .tl-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:14px -24px 0; padding:0 24px; }
+  .tl-scroll svg { min-width:760px; display:block; }
+  .tl-note { font-family:'Barlow Condensed',sans-serif; font-size:12.5px;
+    letter-spacing:0.06em; color:var(--reed); text-transform:uppercase; margin-top:8px; }
+
+  /* Chapter shelf */
+  .shelf-nav { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:18px; }
+  .shelf-nav a { display:flex; align-items:center; gap:10px; background:var(--sand); border:1px solid var(--sand-deep);
+    border-radius:4px; padding:11px 13px; text-decoration:none; color:var(--ink);
+    font-family:'Cormorant Garamond',serif; font-weight:600; font-size:17.5px; }
+  .shelf-nav a:active { border-color:var(--clay); }
+  .shelf-nav .g { font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--clay-deep);
+    min-width:24px; text-align:center; letter-spacing:0.05em; font-weight:600; }
+  .era-head { scroll-margin-top:calc(var(--topbar-h) + 12px); display:flex; align-items:baseline; gap:14px; margin:44px 0 18px; }
+  .era-head .num { font-family:'Barlow Condensed',sans-serif; font-size:13px;
+    letter-spacing:0.2em; color:var(--clay); font-weight:600; }
+  .era-head h3 { font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:clamp(22px,5.5vw,28px); }
+  .era-head .span { font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    color:var(--reed); letter-spacing:0.08em; text-transform:uppercase; margin-left:auto; white-space:nowrap; }
+  .chapters { display:grid; gap:12px; }
+  .chap {
+    display:grid; grid-template-columns:52px 1fr auto; align-items:center; gap:16px;
+    background:var(--sand); border:1px solid var(--sand-deep); border-radius:4px;
+    padding:18px 18px; text-decoration:none; color:inherit; cursor:pointer;
+  }
+  .chap:active { border-color:var(--clay); }
+  .chap .rn { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600;
+    color:var(--clay); line-height:1; text-align:center;
+    border-right:1px solid var(--sand-deep); padding-right:6px; }
+  .chap h4 { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:21px; line-height:1.1; }
+  .chap p { font-size:14.5px; color:var(--ink-soft); line-height:1.4; }
+  .chap .where { font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--reed); margin-top:4px; }
+  .chap .status { font-family:'Barlow Condensed',sans-serif; font-size:11.5px;
+    letter-spacing:0.12em; text-transform:uppercase; white-space:nowrap; text-align:right; }
+  .chap.ready .status { color:var(--clay-deep); }
+  .chap.ready .status::after { content:" →"; }
+  .chap.soon { opacity:0.6; cursor:default; }
+  .chap.soon .status { color:var(--reed); }
+  .chap.soon .rn { color:var(--sand-deep); }
+
+  /* ============ SEARCH ============ */
+  .search-panel { padding:26px 0; }
+  .search-panel input {
+    width:100%; font-family:'Spectral',serif; font-size:19px;
+    padding:14px 16px; border:1px solid var(--sand-deep); border-radius:6px;
+    background:var(--sand); color:var(--ink); outline:none;
+  }
+  .search-panel input:focus { border-color:var(--clay); }
+  .s-results { margin-top:20px; display:grid; gap:12px; }
+  .s-hit {
+    background:var(--sand); border:1px solid var(--sand-deep); border-left:3px solid var(--clay);
+    border-radius:4px; padding:14px 16px; cursor:pointer;
+  }
+  .s-hit .s-ch { font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--clay-deep); font-weight:600; }
+  .s-hit .s-sec { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; margin:2px 0 4px; }
+  .s-hit .s-snip { font-size:15px; color:var(--ink-soft); line-height:1.5; }
+  .s-hit mark { background:rgba(189,148,51,0.3); color:inherit; padding:0 1px; }
+  .s-empty { color:var(--ink-soft); font-style:italic; margin-top:20px; }
+
+  /* ============ CHAPTER TYPOGRAPHY ============ */
+  article section { content-visibility:auto; contain-intrinsic-size: auto 900px; margin-bottom:58px; scroll-margin-top:calc(var(--topbar-h) + 16px); }
+  .cover { padding:48px 0 30px; }
+  .chapter-mark { font-family:'Barlow Condensed',sans-serif; letter-spacing:0.38em;
+    text-transform:uppercase; font-size:12px; color:var(--clay-deep); font-weight:600; margin-bottom:24px; }
+  .cover h1 { font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:clamp(50px,13vw,92px); line-height:0.95; margin-bottom:6px; }
+  .cover .sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-size:clamp(21px,5.5vw,32px); color:var(--clay-deep); margin-bottom:32px; }
+  .epigraph { border-left:2px solid var(--clay); padding-left:20px; font-style:italic;
+    color:var(--ink-soft); max-width:520px; font-size:17.5px; line-height:1.6; }
+  .epigraph cite { display:block; margin-top:10px; font-style:normal;
+    font-family:'Barlow Condensed',sans-serif; letter-spacing:0.12em;
+    text-transform:uppercase; font-size:11.5px; color:var(--clay-deep); }
+  .dateline { margin-top:34px; display:flex; gap:22px; flex-wrap:wrap;
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:0.08em;
+    color:var(--ink-soft); text-transform:uppercase; }
+  .dateline strong { color:var(--clay-deep); display:block; font-size:19px; letter-spacing:0; }
+
+  .toc { background:var(--sand); border:1px solid var(--sand-deep); border-radius:3px;
+    padding:24px 26px; margin:14px 0 58px; }
+  .toc h4 { font-family:'Barlow Condensed',sans-serif; text-transform:uppercase;
+    letter-spacing:0.2em; font-size:12px; color:var(--clay-deep); margin-bottom:14px; font-weight:600; }
+  .toc ol { list-style:none; counter-reset:toc; }
+  .toc li { counter-increment:toc; margin-bottom:8px; }
+  .toc a { color:var(--ink-soft); text-decoration:none; display:flex; align-items:baseline;
+    gap:11px; font-size:16.5px; }
+  .toc a::before { content:counter(toc,decimal-leading-zero);
+    font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--clay); min-width:20px; }
+
+  .eyebrow { font-family:'Barlow Condensed',sans-serif; text-transform:uppercase;
+    letter-spacing:0.28em; font-size:11.5px; color:var(--reed); font-weight:600; margin-bottom:12px; }
+  article h2 { font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:clamp(30px,7vw,42px); line-height:1.05; margin-bottom:24px; letter-spacing:-0.01em; }
+  article h3 { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:25px;
+    color:var(--clay-deep); margin:36px 0 12px; line-height:1.15; }
+  article p { margin-bottom:20px; }
+  article p a, .cite { color:var(--clay-deep); text-decoration:none;
+    border-bottom:1px solid rgba(156,90,55,0.35); }
+  sup.cite { border:none; font-size:12px; margin-left:1px; }
+  sup.cite a { color:var(--clay-deep); text-decoration:none; border:none; font-weight:600; }
+  .lead::first-letter { font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:4.3em; float:left; line-height:0.72; margin:8px 11px 0 0; color:var(--clay-deep); }
+  strong { font-weight:600; }
+
+  figure { margin:32px 0; }
+  .imgrow { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .imgrow.tri { grid-template-columns:1fr 1fr 1fr; }
+  figure img { width:100%; height:100%; object-fit:cover; display:block; border-radius:2px;
+    box-shadow:0 3px 14px var(--shadow); background:var(--sand-deep); aspect-ratio:4/3; min-height:90px; }
+  figcaption { font-family:'Barlow Condensed',sans-serif; font-size:13.5px;
+    color:var(--ink-soft); margin-top:11px; line-height:1.4; text-align:center; }
+  .map-fig svg { width:100%; height:auto; border-radius:3px; box-shadow:0 3px 14px var(--shadow); display:block; }
+
+  .pull { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-size:clamp(25px,6vw,32px); line-height:1.25; color:var(--clay-deep);
+    text-align:center; margin:46px 0; }
+
+  .war { background:var(--sand); border:1px solid var(--sand-deep); border-left:3px solid var(--clay);
+    border-radius:3px; padding:22px 24px; margin:30px 0; }
+  .war .tag { font-family:'Barlow Condensed',sans-serif; text-transform:uppercase;
+    letter-spacing:0.18em; font-size:10.5px; color:var(--clay-deep); font-weight:600; margin-bottom:7px; }
+  .war h4 { font-family:'Cormorant Garamond',serif; font-size:23px; margin-bottom:5px; font-weight:600; }
+  .war .meta { font-family:'Barlow Condensed',sans-serif; font-size:12.5px; color:var(--reed);
+    letter-spacing:0.05em; margin-bottom:12px; text-transform:uppercase; }
+  .war p { font-size:17px; margin-bottom:13px; }
+  .war .sources { margin-top:14px; padding-top:12px; border-top:1px solid var(--sand-deep);
+    font-family:'Barlow Condensed',sans-serif; font-size:13.5px; }
+  .war .sources a { display:inline-block; color:var(--clay-deep); text-decoration:none;
+    border-bottom:1px solid rgba(156,90,55,0.4); margin-right:14px; }
+  .war .sources a::after { content:" ↗"; font-size:10px; }
+
+  .king { border-top:2px solid var(--ink); padding-top:16px; margin:28px 0 0; }
+  .king .name { font-family:'Cormorant Garamond',serif; font-size:29px; font-weight:600; line-height:1; }
+  .king .years { font-family:'Barlow Condensed',sans-serif; letter-spacing:0.1em;
+    color:var(--clay-deep); font-size:14px; text-transform:uppercase; margin:6px 0 10px; }
+
+  .note { background:rgba(125,138,92,0.09); border-radius:3px; padding:16px 20px;
+    margin:26px 0; font-size:16.5px; border-left:3px solid var(--reed); color:var(--ink-soft); }
+  .note strong { color:var(--reed); }
+
+  .voice { background:var(--sand); border-radius:3px; border:1px solid var(--sand-deep);
+    padding:20px 22px; margin:24px 0; }
+  .voice .v-text { font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:21px; line-height:1.45; color:var(--ink); }
+  .voice .v-who { margin-top:12px; font-family:'Barlow Condensed',sans-serif;
+    font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--clay-deep); }
+  .voice .v-note { font-size:15px; color:var(--ink-soft); margin-top:8px; line-height:1.5; }
+
+  .scene { border-left:3px solid var(--gold); background:rgba(189,148,51,0.07);
+    border-radius:3px; padding:22px 24px; margin:30px 0; }
+  .scene p { font-size:18px; margin-bottom:16px; }
+  .scene p:last-of-type { margin-bottom:0; }
+  .scene .prov { margin-top:16px; padding-top:12px; border-top:1px dashed rgba(189,148,51,0.45);
+    font-family:'Barlow Condensed',sans-serif; font-size:13.5px; letter-spacing:0.04em;
+    color:#8a6c20; font-style:normal; }
+
+  .rule { text-align:center; margin:52px 0; color:var(--clay); font-size:18px; letter-spacing:0.6em; }
+
+  .refs { margin-top:70px; border-top:2px solid var(--ink); padding-top:26px; }
+  .refs h3 { color:var(--ink); margin-top:0; }
+  .refs ol { padding-left:22px; font-size:15px; color:var(--ink-soft); }
+  .refs li { margin-bottom:9px; line-height:1.5; }
+  .refs a { color:var(--clay-deep); text-decoration:none; border-bottom:1px solid rgba(156,90,55,0.4); }
+  .refs .back { text-decoration:none; border:none; margin-left:5px; color:var(--reed); }
+
+  .next { margin-top:60px; padding-top:28px; border-top:1px solid var(--sand-deep); }
+
+  /* ---------- BACK TO TOP + READ TIME ---------- */
+  .top-fab{position:fixed;right:14px;bottom:22px;z-index:58;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--sand-deep);background:var(--sand);color:var(--clay-deep);
+    font-size:20px;line-height:1;cursor:pointer;box-shadow:0 4px 14px var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .2s}
+  .top-fab.show{opacity:0.92;pointer-events:auto}
+  .readtime{font-family:'Barlow Condensed',sans-serif;letter-spacing:0.12em;text-transform:uppercase;
+    font-size:12px;color:var(--reed);font-weight:600;margin-left:10px}
+
+  /* ---------- COVER ART ---------- */
+  .cover-art { margin:20px 0 6px; }
+  .cover-art svg { width:100%; height:auto; display:block; }
+
+  /* ---------- GRAND TIMELINE VIEW ---------- */
+  #view-tl .tl-note2 { font-family:'Barlow Condensed',sans-serif; font-size:12.5px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--reed); padding:8px 16px 6px; }
+  #view-tl .tl-vert { padding:0 6px 60px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  #view-tl .tl-vert svg { width:640px; min-width:640px; height:auto; display:block; }
+
+  /* ---------- CONNECTED PANEL ---------- */
+  .connected { margin-top:36px; background:var(--sand); border:1px solid var(--sand-deep);
+    border-radius:3px; padding:20px 24px; }
+  .connected h4 { font-family:'Barlow Condensed',sans-serif; text-transform:uppercase;
+    letter-spacing:0.2em; font-size:12px; color:var(--clay-deep); margin-bottom:12px; font-weight:600; }
+  .cx { display:flex; gap:12px; padding:7px 0; border-bottom:1px solid var(--sand-deep); align-items:baseline; font-size:16px; }
+  .cx:last-child { border-bottom:none; }
+  .cx .lens { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--reed); min-width:74px; font-weight:600; }
+  .cx a { color:var(--clay-deep); text-decoration:none; border-bottom:1px solid rgba(156,90,55,0.4); }
+  .cx .pl { color:var(--ink-soft); }
+  .cx .pl::after { content:" · planned"; font-family:'Barlow Condensed',sans-serif;
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--reed); }
+
+  /* ---------- WORLD SNAPSHOTS ---------- */
+  .ws-year { margin-bottom:54px; }
+  .ws-year h2 { margin-bottom:8px; }
+  .ws-sub { font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--reed); margin-bottom:18px; }
+  .ws-item { display:grid; grid-template-columns:118px 1fr; gap:14px; padding:11px 0;
+    border-bottom:1px solid var(--sand-deep); align-items:baseline; }
+  .ws-item:last-child { border-bottom:none; }
+  .ws-region { font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--clay-deep); font-weight:600; }
+  .ws-item p { margin:0; font-size:16.5px; line-height:1.5; }
+  .ws-item a { color:var(--clay-deep); text-decoration:none; border-bottom:1px solid rgba(156,90,55,0.4); }
+  .world-cta { display:block; margin-top:16px; background:var(--sand); border:1px solid var(--sand-deep);
+    border-left:3px solid var(--clay); border-radius:4px; padding:16px 18px; cursor:pointer; color:inherit; text-decoration:none; }
+  .world-cta b { color:var(--clay-deep); }
+
+  /* ---------- TAP HINTS ---------- */
+  .hint { border-bottom:1px dotted var(--clay-deep); cursor:pointer; }
+  #hint-pop{position:fixed;left:12px;right:12px;bottom:18px;z-index:76;background:var(--sand);
+    border:1px solid var(--sand-deep);border-left:3px solid var(--clay);border-radius:8px;
+    padding:14px 40px 14px 16px;box-shadow:0 8px 30px var(--shadow);display:none;max-width:560px;margin:0 auto}
+  #hint-pop.show{display:block}
+  #hint-pop .hint-term{font-family:'Barlow Condensed',sans-serif;letter-spacing:0.12em;
+    text-transform:uppercase;font-size:12px;color:var(--clay-deep);font-weight:600;margin-bottom:4px}
+  #hint-pop .hint-body{font-size:15.5px;color:var(--ink);line-height:1.5}
+  #hint-pop .hint-x{position:absolute;top:8px;right:10px;color:var(--ink-soft);font-size:15px;padding:4px 6px;cursor:pointer}
+
+  /* ---------- READER THEMES ---------- */
+  body.t-white{--paper:#ffffff;--sand:#f5f4f1;--sand-deep:#e3e1da;--ink:#1d1c1a;--ink-soft:#4c4a45;--topbar-bg:rgba(255,255,255,0.93)}
+  body.t-sepia{--paper:#efe0c2;--sand:#e6d3ac;--sand-deep:#d3bd8e;--ink:#2e2415;--ink-soft:#5c4c33;--topbar-bg:rgba(239,224,194,0.94)}
+  body.t-mint{--paper:#e6efe2;--sand:#d9e6d2;--sand-deep:#c0d3b6;--ink:#1e2a1e;--ink-soft:#47563f;--topbar-bg:rgba(230,239,226,0.94)}
+  body.t-dark{--paper:#26231f;--sand:#302c27;--sand-deep:#464038;--ink:#eae3d4;--ink-soft:#b9b09d;--clay-deep:#d08c5e;--shadow:rgba(0,0,0,0.5);--topbar-bg:rgba(38,35,31,0.93)}
+  body.t-black{--paper:#000000;--sand:#151515;--sand-deep:#2d2d2d;--ink:#e8e8e8;--ink-soft:#ababab;--clay-deep:#d08c5e;--shadow:rgba(0,0,0,0.7);--topbar-bg:rgba(0,0,0,0.9)}
+
+  /* ---------- SETTINGS SHEET ---------- */
+  #settings-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.38);z-index:79;opacity:0;pointer-events:none;transition:opacity .2s}
+  #settings-backdrop.show{opacity:1;pointer-events:auto}
+  #settings-sheet{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--paper);
+    border-top:1px solid var(--sand-deep);border-radius:16px 16px 0 0;
+    box-shadow:0 -12px 44px rgba(0,0,0,0.3);padding:18px 22px 30px;
+    max-height:78vh;overflow-y:auto;transform:translateY(105%);transition:transform .28s}
+  #settings-sheet.open{transform:none}
+  .sheet-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .set-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px}
+  #sheet-close{background:none;border:none;font-size:18px;color:var(--ink-soft);padding:6px 10px;cursor:pointer}
+  .set-h{font-family:'Barlow Condensed',sans-serif;letter-spacing:0.2em;text-transform:uppercase;
+    font-size:12px;color:var(--clay-deep);font-weight:600;margin:18px 0 10px}
+  .swatches{display:flex;gap:14px;flex-wrap:wrap}
+  .swatch{width:44px;height:44px;border-radius:50%;border:2px solid var(--sand-deep);cursor:pointer}
+  .swatch.active{outline:3px solid var(--clay);outline-offset:2px}
+  .font-row{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .font-card{min-width:88px;background:var(--sand);border:1px solid var(--sand-deep);border-radius:8px;
+    padding:10px 8px 8px;text-align:center;cursor:pointer;color:var(--ink)}
+  .font-card.active{border-color:var(--clay);box-shadow:0 0 0 1px var(--clay)}
+  .font-card .fa{font-size:26px;line-height:1.15}
+  .font-card .fn{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:0.06em;
+    color:var(--ink-soft);margin-top:4px;text-transform:uppercase}
+  .fs-row{display:flex;gap:14px;align-items:center;color:var(--ink)}
+  .fs-row input{flex:1;accent-color:var(--clay)}
+  .lh-row{display:flex;gap:10px}
+  .lh-btn{flex:1;background:var(--sand);border:1px solid var(--sand-deep);border-radius:8px;
+    padding:10px 6px;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--ink-soft);cursor:pointer}
+  .lh-btn.active{border-color:var(--clay);color:var(--clay-deep);box-shadow:0 0 0 1px var(--clay)}
+
+  @media (max-width:560px) {
+    body { font-size:18px; }
+    .wrap, .wrap-wide { padding:0 19px 100px; }
+    .imgrow.tri { grid-template-columns:1fr; }
+    .chap { grid-template-columns:44px 1fr; gap:12px; }
+    .chap .status { grid-column:2; text-align:left; margin-top:3px; }
+  }
+</style>
+</head>
+<body>
+<script>
+function imgFail(i){ i.style.display = 'none'; }
+</script>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <button id="btn-home">⌂ Home</button>
+  <div class="bar-title" id="bar-title">The Chronicle</div>
+  <button id="btn-aa" title="Reading settings">Aa</button>
+  <button id="btn-search">Search</button>
+</div>
+<div class="scroll-progress" id="progress"></div>
+
+<!-- FLOATING BOOKMARK BUTTON -->
+<button class="bm-fab" id="bm-fab" title="Bookmark this spot">⚑</button>
+<button class="top-fab" id="top-fab" title="Back to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<!-- ============ HOME VIEW ============ -->
+<div class="view active" id="view-home">
+  <div class="wrap-wide">
+    <header class="hero">
+      <div class="kicker">A Tale of Time</div>
+      <div class="cover-art"><svg viewBox="0 0 900 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The monuments of history in one skyline">
+      <circle cx="452" cy="66" r="30" style="fill:var(--gold)" opacity="0.85"/>
+      <circle cx="452" cy="66" r="40" fill="none" style="stroke:var(--gold)" stroke-width="1.5" opacity="0.45"/>
+      <!-- ziggurat -->
+      <g style="fill:var(--ink-soft)" opacity="0.9"><rect x="42" y="164" width="92" height="48"/><rect x="58" y="140" width="60" height="24"/><rect x="73" y="120" width="30" height="20"/><rect x="83" y="106" width="10" height="14"/></g>
+      <!-- pyramid -->
+      <path d="M168,212 L226,118 L284,212 Z" style="fill:var(--ink-soft)" opacity="0.8"/>
+      <!-- greek temple -->
+      <g style="fill:var(--ink-soft)" opacity="0.9"><rect x="310" y="197" width="96" height="15"/><polygon points="306,163 358,136 410,163"/><rect x="318" y="163" width="7" height="34" style="fill:var(--ink-soft)"/><rect x="332" y="163" width="7" height="34" style="fill:var(--ink-soft)"/><rect x="346" y="163" width="7" height="34" style="fill:var(--ink-soft)"/><rect x="360" y="163" width="7" height="34" style="fill:var(--ink-soft)"/><rect x="374" y="163" width="7" height="34" style="fill:var(--ink-soft)"/><rect x="388" y="163" width="7" height="34" style="fill:var(--ink-soft)"/></g>
+      <!-- roman arches -->
+      <g opacity="0.85"><rect x="428" y="170" width="104" height="42" style="fill:var(--ink-soft)"/><path d="M432,212 v-30 a10,12 0 0 1 20,0 v30 z" style="fill:var(--paper)"/><path d="M456,212 v-30 a10,12 0 0 1 20,0 v30 z" style="fill:var(--paper)"/><path d="M480,212 v-30 a10,12 0 0 1 20,0 v30 z" style="fill:var(--paper)"/><path d="M504,212 v-30 a10,12 0 0 1 20,0 v30 z" style="fill:var(--paper)"/></g>
+      <!-- pagoda -->
+      <g style="fill:var(--ink-soft)" opacity="0.8"><polygon points="560,212 604,212 598,196 566,196"/><polygon points="556,196 608,196 582,178"/><polygon points="564,180 600,180 582,164"/><polygon points="570,166 594,166 582,150"/><rect x="580" y="142" width="4" height="10"/></g>
+      <!-- dome & minarets -->
+      <g style="fill:var(--ink-soft)" opacity="0.9"><rect x="646" y="184" width="66" height="28"/><path d="M650,184 a29,26 0 0 1 58,0 z"/><rect x="634" y="140" width="6" height="72"/><circle cx="637" cy="137" r="4"/><rect x="718" y="140" width="6" height="72"/><circle cx="721" cy="137" r="4"/></g>
+      <!-- castle -->
+      <g style="fill:var(--ink-soft)" opacity="0.8"><rect x="746" y="164" width="34" height="48"/><rect x="746" y="156" width="7" height="10"/><rect x="759" y="156" width="7" height="10"/><rect x="772" y="156" width="8" height="10"/></g>
+      <!-- skyscrapers -->
+      <g style="fill:var(--ink-soft)" opacity="0.9"><rect x="800" y="140" width="18" height="72"/><rect x="824" y="112" width="20" height="100"/><rect x="850" y="128" width="16" height="84"/></g>
+      <line x1="30" y1="212" x2="870" y2="212" style="stroke:var(--clay-deep)" stroke-width="2.5"/>
+      <g><path d="M70,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M92,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M114,234 l16,4 l-16,4 z" style="fill:var(--clay)" opacity="0.55"/><path d="M144,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M166,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M214,234 l16,4 l-16,4 z" style="fill:var(--clay)" opacity="0.55"/><path d="M244,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M266,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M288,234 l16,4 l-16,4 z" style="fill:var(--clay)" opacity="0.55"/><path d="M318,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M366,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M388,234 l16,4 l-16,4 z" style="fill:var(--clay)" opacity="0.55"/><path d="M418,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M440,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/><path d="M462,234 l16,4 l-16,4 z" style="fill:var(--clay)" opacity="0.55"/><path d="M518,230 l4,16 l4,-16 z" style="fill:var(--clay)" opacity="0.55"/></g>
+    </svg></div>
+      <h1>The<br>Chronicle</h1>
+      <div class="tag">The whole human story — from the first city in the mud of Sumer to the world we live in now. Told slowly, and in full.</div>
+      <div class="trust-strip">
+        <b>How to read this:</b> every load-bearing claim carries a numbered citation to its source. Claims are graded
+        <span class="badge b-att">attested</span> (documented in sources or archaeology),
+        <span class="badge b-inf">inferred</span> (scholarly consensus from indirect evidence), or
+        <span class="badge b-leg">legend</span> (tradition, told as tradition). Where scholars disagree, the disagreement is stated. Dates use BCE/CE — the same years as the older BC/AD. Chapters are numbered by era and position — II·3 is the third chapter of the Classical World. A civilization is shelved in the era where its story begins. Tap ⚑ while reading to bookmark your spot; ⚑ Resume returns to it from anywhere.
+      </div>
+      <nav class="shelf-nav"><a href="#era-cradles"><span class="g">I</span>First Cradles</a><a href="#era-classical"><span class="g">II</span>Classical World</a><a href="#era-medieval"><span class="g">III</span>Medieval World</a><a href="#era-earlymodern"><span class="g">IV</span>Early Modern</a><a href="#era-modern"><span class="g">V</span>Modern World</a><a href="#era-interludes"><span class="g">In·</span>Interludes</a><a href="#era-eastasia"><span class="g">E·</span>East Asia</a><a href="#era-epics"><span class="g">M·</span>Epics &amp; Myths</a><a href="#era-cities"><span class="g">C·</span>Great Cities</a><a href="#era-faiths"><span class="g">F·</span>Faiths</a></nav>
+    </header>
+
+    <a id="btn-resume" class="resume-card" href="#">⚑ Continue reading</a>
+
+    <div class="tl-block">
+      <h2>The Grand Timeline</h2>
+      <a class="world-cta" data-goto="tl" href="#"><b>Open the Grand Timeline →</b> Every civilization as a bar across 5,500 years — full-screen, built for your phone. Written chapters in clay red.</a>
+      <a class="world-cta" data-goto="world" href="#"><b>The World, Year by Year →</b> Freeze any moment — 3000 BCE to Alexander — and see what every civilization on earth was doing at once.</a>
+    </div>
+
+    <div class="divider">✶ ✶ ✶</div>
+
+    <div class="shelf">
+      <h2>The Chapters</h2>
+
+      <div class="era-head" id="era-cradles"><span class="num">I</span><h3>The First Cradles</h3><span class="span">c. 3500–539 BCE</span></div>
+      <div class="chapters">
+        <div class="chap ready" data-ch="sumer">
+          <div class="rn">I·1</div>
+          <div><h4>Sumer</h4><p>The black-headed people who built the first cities and invented writing.</p><div class="where">Southern Mesopotamia · modern Iraq</div></div>
+          <div class="status">Read</div>
+        </div>
+        <div class="chap ready" data-ch="akkad"><div class="rn">I·2</div><div><h4>Akkad &amp; Old Babylon</h4><p>Sargon’s empire, the pious Gudea, Hammurabi’s law in stone — ending the night the Hittites broke in.</p><div class="where">Mesopotamia · modern Iraq</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="babylonia"><div class="rn">I·3</div><div><h4>Babylon: Kassites to the Fall</h4><p>The longest dynasty, Nebuchadnezzar’s city of wonders, the exile — and the night the gates opened to Cyrus.</p><div class="where">Mesopotamia</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="assyria"><div class="rn">I·4</div><div><h4>Assyria</h4><p>Fourteen centuries beside Babylon — from the merchant caravans of Kanesh to the war machine of the Iron Age and the burning of Nineveh.</p><div class="where">Northern Mesopotamia</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="egypt-ok"><div class="rn">I·5</div><div><h4>Egypt: The Old Kingdom</h4><p>Unification, the god-kings, and the age of the pyramids — and the inspector's logbook that reveals who really built them.</p><div class="where">The Nile Valley</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="egypt-nk"><div class="rn">I·6</div><div><h4>Egypt: Middle &amp; New Kingdoms</h4><p>The empire age — Hatshepsut, Akhenaten, Tutankhamun, Ramesses and Kadesh.</p><div class="where">The Nile Valley</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="kush"><div class="rn">I·7</div><div><h4>Kush &amp; Nubia</h4><p>Three thousand years on the upper Nile — Kerma, the pharaoh-conquerors of the 25th Dynasty, and the iron city of Meroë.</p><div class="where">The Nile · modern Sudan</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="indus"><div class="rn">I·8</div><div><h4>The Indus Valley</h4><p>Vast, orderly cities, a strange absence of kings, and a script we still cannot read.</p><div class="where">Pakistan &amp; NW India</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="minoans"><div class="rn">I·9</div><div><h4>The Minoans &amp; Mycenaeans</h4><p>Europe's first civilization — the palaces of Crete, the eruption of Thera, and the warlords Homer half-remembered.</p><div class="where">Crete &amp; the Aegean</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="caral"><div class="rn">I·10</div><div><h4>Caral, Olmec &amp; the First Americas</h4><p>Civilization's independent second birth — the first city of the Americas and Mesoamerica's mother culture.</p><div class="where">Peru &amp; Mexico</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="hittites"><div class="rn">I·11</div><div><h4>The Hittites &amp; the Bronze Age Collapse</h4><p>The lost lords of Asia Minor, the battle of Kadesh — and the domino-fall of 1200 BCE that ended a world.</p><div class="where">Anatolia &amp; the E. Mediterranean</div></div><div class="status">Read</div></div>
+      </div>
+
+      <div class="era-head" id="era-classical"><span class="num">II</span><h3>The Classical World</h3><span class="span">c. 900 BCE–500 CE</span></div>
+      <div class="chapters">
+        <div class="chap ready" data-ch="egypt-twilight"><div class="rn">II·1</div><div><h4>Egypt: The Long Twilight</h4><p>Kushite pharaohs, Persian conquest, the Ptolemies — and Cleopatra, the last of them all.</p><div class="where">The Nile Valley</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="israel-judah"><div class="rn">II·2</div><div><h4>Israel &amp; Judah</h4><p>The biblical kingdoms — small states, exile in Babylon, and an outsized legacy.</p><div class="where">The Levant</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="judea-maccabees"><div class="rn">II·3</div><div><h4>Judea: Maccabees to Masada</h4><p>The revolt of the Maccabees, the Hasmonean kingdom, Herod's temple — and the war with Rome that ended on a desert rock.</p><div class="where">Roman Judea</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="phoenicians"><div class="rn">II·4</div><div><h4>The Phoenicians</h4><p>The sea-traders of Tyre and Sidon who colonized the Mediterranean — and gave the world the alphabet.</p><div class="where">The Levant → the sea</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="persia"><div class="rn">II·5</div><div><h4>Achaemenid Persia</h4><p>The first world-empire — Cyrus, Darius, Persepolis.</p><div class="where">Iran &amp; beyond</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">II·6</div><div><h4>Maurya &amp; Gupta India</h4><p>Ashoka's empire and the subcontinent's golden age.</p><div class="where">India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">II·7</div><div><h4>Qin &amp; Han China</h4><p>The First Emperor, the Great Wall, and the dynasty that defined a civilization.</p><div class="where">East Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap ready" data-ch="rome"><div class="rn">II·8</div><div><h4>Rome: The Republic</h4><p>The commonwealth that conquered the world and then itself — from the expulsion of the kings to the Ides of March.</p><div class="where">Italy &amp; the Mediterranean</div></div><div class="status">Read</div></div><div class="chap ready" data-ch="rome-empire"><div class="rn">II·9</div><div><h4>Rome: The Empire</h4><p>Augustus to the Antonines — two centuries of one city ruling the world, and the first cracks in the marble.</p><div class="where">The Mediterranean</div></div><div class="status">Read</div></div><div class="chap ready" data-ch="rome-fall"><div class="rn">II·10</div><div><h4>Rome: The Fall of the West</h4><p>Crisis, division, and the long unraveling — how the western empire came apart, and what came after.</p><div class="where">The Mediterranean</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="greece"><div class="rn">II·11</div><div><h4>Greece &amp; Alexander</h4><p>City-states, philosophy, and the conqueror of the known world.</p><div class="where">The Aegean</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">II·12</div><div><h4>Parthia &amp; Sasanid Persia</h4><p>Persia’s second and third acts — nine hundred years as Rome’s great eastern rival, ending at the gates of Islam.</p><div class="where">Iran &amp; Mesopotamia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">II·13</div><div><h4>Aksum</h4><p>The African empire that minted its own gold, ruled the Red Sea trade, and adopted Christianity before Rome fell.</p><div class="where">Ethiopia &amp; Eritrea</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-medieval"><span class="num">III</span><h3>The Medieval World</h3><span class="span">c. 500–1500 CE</span></div>
+      <div class="chapters">
+        <div class="chap soon"><div class="rn">III·1</div><div><h4>Byzantium</h4><p>The Rome that refused to die for a thousand years.</p><div class="where">Constantinople</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·2</div><div><h4>The Caliphates</h4><p>The rise of Islam and its golden age of learning.</p><div class="where">Arabia to Iberia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·3</div><div><h4>Medieval Europe</h4><p>Feudal kingdoms, the Hundred Years War, the Black Death — castles, cathedrals, and the first universities.</p><div class="where">Western Europe</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·15</div><div><h4>The Papacy &amp; the Crusades</h4><p>Canossa, the popes who humbled emperors, two centuries of armed pilgrimage — and the Schism of three rival popes.</p><div class="where">Rome · Avignon · the Holy Land</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·4</div><div><h4>The English Kingdoms</h4><p>The Saxon Heptarchy, Alfred, the Norman Conquest — the making of England.</p><div class="where">Britain</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·5</div><div><h4>The Mongol Empire</h4><p>The largest contiguous land empire in history.</p><div class="where">The Eurasian steppe</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·6</div><div><h4>The Khmer &amp; Angkor</h4><p>The temple-city of a vanished empire.</p><div class="where">Cambodia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·7</div><div><h4>The Maya</h4><p>Astronomers and city-builders of the rainforest.</p><div class="where">Mesoamerica</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·8</div><div><h4>The Vikings</h4><p>Raiders, traders, settlers — from Lindisfarne to Normandy, Kyiv, and the shores of North America.</p><div class="where">Scandinavia → the world</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·9</div><div><h4>Kievan Rus &amp; the Rise of Russia</h4><p>From the river-road of the Vikings to the Mongol yoke and the first tsars.</p><div class="where">The Russian rivers</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·10</div><div><h4>The Delhi Sultanate</h4><p>Three centuries of sultans between the Guptas and the Mughals — conquest, Tughlaq’s follies, and Timur’s sack.</p><div class="where">Northern India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·11</div><div><h4>The Cholas &amp; the Indian South</h4><p>The temple-building sea empire that reached Southeast Asia — and the southern story ending at Vijayanagara.</p><div class="where">Southern India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·12</div><div><h4>Srivijaya &amp; Majapahit</h4><p>The maritime empires of the spice seas — Buddhist Srivijaya and Java’s Majapahit.</p><div class="where">Maritime Southeast Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·13</div><div><h4>Great Zimbabwe &amp; the Swahili Coast</h4><p>Stone cities of the south and the gold-and-ivory trade world of the East African coast.</p><div class="where">Southern &amp; East Africa</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">III·14</div><div><h4>The Polynesian Voyagers</h4><p>The greatest navigators in history — settling an ocean a third of the planet wide, by canoe and star.</p><div class="where">The Pacific</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-earlymodern"><span class="num">IV</span><h3>The Early Modern Threshold</h3><span class="span">c. 1300–1800 CE</span></div>
+      <div class="chapters">
+        <div class="chap soon"><div class="rn">IV·1</div><div><h4>The Aztec &amp; Inca</h4><p>Two vast American empires and the catastrophe that ended them.</p><div class="where">Mexico &amp; the Andes</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">IV·2</div><div><h4>Mali &amp; Songhai</h4><p>The gold empires and the scholars of Timbuktu.</p><div class="where">West Africa</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">IV·3</div><div><h4>The Ottomans</h4><p>The empire that took Constantinople.</p><div class="where">Three continents</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">IV·4</div><div><h4>The Mughals</h4><p>The empire that reshaped the subcontinent.</p><div class="where">India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">IV·5</div><div><h4>Safavid Persia</h4><p>The empire that made Iran Shia — Isfahan, “half the world.”</p><div class="where">Iran</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">IV·6</div><div><h4>The Marathas</h4><p>The confederacy that broke Mughal power and ruled most of India on the eve of the British.</p><div class="where">The Deccan &amp; beyond</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-modern"><span class="num">V</span><h3>The Modern World</h3><span class="span">c. 1500 CE → today</span></div>
+      <div class="chapters">
+        <div class="chap soon"><div class="rn">V·1</div><div><h4>The Colonial Empires</h4><p>Exploration, conquest, and the European remaking of the globe.</p><div class="where">Worldwide</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·2</div><div><h4>The World Wars</h4><p>The two catastrophes that broke the old world, 1914–1945.</p><div class="where">Worldwide</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·8</div><div><h4>Nazi Germany</h4><p>How a democracy murdered itself — the Reich, the Holocaust, and the reckoning at Nuremberg.</p><div class="where">Germany</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·7</div><div><h4>Russia &amp; the Soviet Century</h4><p>Revolution, Stalin, the Great Patriotic War — and the empire that dissolved without a shot in 1991.</p><div class="where">Russia &amp; the USSR</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·3</div><div><h4>The Cold War</h4><p>The iron curtain, the divided city, and the forty-year standoff.</p><div class="where">The divided world</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·9</div><div><h4>The Balkans &amp; the Yugoslav Wars</h4><p>Europe’s powder keg — Ottoman retreat, Sarajevo 1914, Tito’s federation, and the wars of its breakup.</p><div class="where">Southeastern Europe</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·4</div><div><h4>The Modern Middle East</h4><p>From the Ottoman collapse to today — borders drawn by others, oil, revolutions, and the long conflicts.</p><div class="where">The Middle East</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·5</div><div><h4>The United States</h4><p>From thirteen colonies to superpower — with the Civil War as the hinge of the story.</p><div class="where">North America</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">V·6</div><div><h4>The Raj &amp; Indian Independence</h4><p>From Company rule to Crown to freedom at midnight — and Partition.</p><div class="where">The Indian subcontinent</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-interludes"><span class="num">✦</span><h3>Interludes</h3><span class="span">The kingdoms between the giants</span></div>
+      <div class="chapters">
+        <div class="chap ready" data-ch="elam"><div class="rn">In·I</div><div><h4>Elam</h4><p>Sumer's eastern shadow for two thousand years — the sackers of Ur, the thieves of Hammurabi's stele, and the tutors of Persia.</p><div class="where">SW Iran · Susa &amp; Anshan</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">In·II</div><div><h4>Mitanni</h4><p>The forgotten Hurrian empire that once bossed Assyria and married its daughters to pharaohs.</p><div class="where">Northern Mesopotamia &amp; Syria</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·III</div><div><h4>The Medes</h4><p>The highland confederation that burned Nineveh and built the throne Persia took — an "empire" historians still debate ever existed.</p><div class="where">NW Iran · Ecbatana</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·IV</div><div><h4>Urartu</h4><p>Assyria’s mountain rival around Lake Van — the forgotten kingdom of the highlands.</p><div class="where">Armenia &amp; E. Anatolia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·V</div><div><h4>The Scythians</h4><p>The horse-lords of the western steppe — gold, kurgans, and the archers no empire could catch.</p><div class="where">The Pontic steppe</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·VI</div><div><h4>The Etruscans</h4><p>Rome’s teachers — the refined, mysterious civilization Rome absorbed and outgrew.</p><div class="where">Central Italy</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·VII</div><div><h4>The Celts</h4><p>The Iron Age world from Ireland to Anatolia — druids, hillforts, and the sack of Rome in 390 BCE.</p><div class="where">Iron Age Europe</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·VIII</div><div><h4>The Oxus Civilization</h4><p>The forgotten Bronze Age culture of Central Asia’s river oases (BMAC).</p><div class="where">Central Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·IX</div><div><h4>Cahokia &amp; the Mound Builders</h4><p>North America’s lost city — larger than London in 1100 CE.</p><div class="where">The Mississippi valley</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">In·X</div><div><h4>Benin &amp; the Forest Kingdoms</h4><p>The bronzes of Benin, Oyo, and Ashanti — West Africa beyond the Sahel.</p><div class="where">The West African coast</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-eastasia"><span class="num">◉</span><h3>East Asia</h3><span class="span">The other half of the human story</span></div>
+      <div class="chapters">
+        <div class="chap soon"><div class="rn">E·I</div><div><h4>Shang &amp; Zhou China</h4><p>Bronze Age China — oracle bones, the Mandate of Heaven, and the age of Confucius.</p><div class="where">The Yellow River</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·II</div><div><h4>Tang &amp; Song China</h4><p>The golden age — poetry, printing, gunpowder, and the greatest cities on earth.</p><div class="where">China</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·III</div><div><h4>Ming &amp; Qing China</h4><p>The Forbidden City, the treasure fleets, and the long road to 1912.</p><div class="where">China</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·IV</div><div><h4>Japan</h4><p>From the Yamato court to samurai, shoguns, and the closed country.</p><div class="where">The Japanese archipelago</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·V</div><div><h4>Korea</h4><p>The Three Kingdoms, Silla and Goryeo, and five centuries of Joseon.</p><div class="where">The Korean peninsula</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·VI</div><div><h4>Tibet &amp; the Steppe</h4><p>The Tibetan Empire, the Dalai Lamas, and the horse peoples between the great powers.</p><div class="where">The high plateau &amp; Central Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·VII</div><div><h4>Vietnam</h4><p>A thousand years under China, the kingdoms of Champa and Dai Viet, and the long fight for the south.</p><div class="where">Southeast Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">E·VIII</div><div><h4>China since 1912</h4><p>The fall of the last emperor, war and revolution, and the People’s Republic.</p><div class="where">China</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-epics"><span class="num">✦</span><h3>Epics, Myths &amp; Legends</h3><span class="span">The stories they told — all traditions, one literary lens</span></div>
+      <div class="chapters">
+        <div class="chap ready" data-ch="gilgamesh"><div class="rn">M·I</div><div><h4>Gilgamesh</h4><p>The first epic in full: the king who sought immortality and came home with wisdom instead.</p><div class="where">Sumer &amp; Babylon</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="iliad"><div class="rn">M·II</div><div><h4>The Iliad &amp; the Trojan War</h4><p>Achilles, Hector, and the rage of heroes — Homer’s war epic against the archaeology of Troy.</p><div class="where">The Aegean &amp; Anatolia</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">M·III</div><div><h4>The Odyssey</h4><p>Odysseus’s ten-year voyage home — cyclops, sirens, and the first great journey story.</p><div class="where">The Mediterranean</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">M·IV</div><div><h4>The Greek Heroes</h4><p>Heracles, Theseus, Perseus, Jason — and what the myths meant to those who told them.</p><div class="where">The Greek world</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">M·V</div><div><h4>Ramayana &amp; Mahabharata</h4><p>The two great epics of the subcontinent, and the history beneath them.</p><div class="where">India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">M·VI</div><div><h4>The Norse Myths</h4><p>Odin, Thor, Ragnarök — the mythology of the Viking north.</p><div class="where">Scandinavia</div></div><div class="status">Planned</div></div>
+        <div class="chap ready" data-ch="egyptian-pantheon"><div class="rn">M·VII</div><div><h4>The Egyptian Pantheon</h4><p>Ra, Osiris, Isis, Anubis — the gods of the Nile and the journey of the dead.</p><div class="where">Egypt</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">M·VIII</div><div><h4>The Greek &amp; Roman Gods</h4><p>The Olympians, from Zeus to Jupiter — one pantheon, two empires, and its long afterlife.</p><div class="where">The Mediterranean</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">M·IX</div><div><h4>King Arthur</h4><p>The once and future king — a post-Roman war leader, if he existed, beneath a mountain of romance.</p><div class="where">Britain</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">M·X</div><div><h4>The Shahnameh</h4><p>Persia’s epic of kings — Rostam, Sohrab, and a thousand years of memory in verse.</p><div class="where">Iran</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-cities"><span class="num">◈</span><h3>Great Cities</h3><span class="span">Biographies of places</span></div>
+      <div class="chapters">
+        <div class="chap ready" data-ch="babylon"><div class="rn">C·I</div><div><h4>Babylon</h4><p>The city of gates and gardens — from Hammurabi to its long afterlife in legend.</p><div class="where">Mesopotamia</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">C·II</div><div><h4>Tyre</h4><p>The island fortress of the Phoenicians — purple dye, the alphabet, and Alexander's causeway.</p><div class="where">Lebanon</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·III</div><div><h4>Carthage</h4><p>Tyre's daughter and Rome's nemesis — Hannibal's city, and its annihilation.</p><div class="where">Tunisia</div></div><div class="status">Planned</div></div>
+        <div class="chap ready" data-ch="alexandria"><div class="rn">C·IV</div><div><h4>Alexandria</h4><p>The lighthouse, the library, and the greatest city of the Hellenistic world.</p><div class="where">Egypt</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">C·V</div><div><h4>Constantinople</h4><p>The city of the world's desire, and the walls that held for a thousand years.</p><div class="where">The Bosporus</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·VI</div><div><h4>Tenochtitlan</h4><p>The island capital of the Aztecs — larger than most cities of the Europe that destroyed it.</p><div class="where">Mexico</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·VII</div><div><h4>Venice</h4><p>The republic of the lagoon — a thousand years of merchant empire.</p><div class="where">The Adriatic</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·VIII</div><div><h4>Jerusalem</h4><p>Thrice-holy, endlessly contested — the most fought-over city on earth.</p><div class="where">The Levant</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·IX</div><div><h4>Petra</h4><p>The rose-red caravan city of the Nabataeans, carved from the cliffs.</p><div class="where">Jordan</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">C·X</div><div><h4>Baghdad</h4><p>The round city of the caliphs and the House of Wisdom.</p><div class="where">Iraq</div></div><div class="status">Planned</div></div>
+      </div>
+
+      <div class="era-head" id="era-faiths"><span class="num">✛</span><h3>Faiths of the World</h3><span class="span">The religious story of humankind</span></div>
+      <div class="chapters">
+        <div class="chap soon"><div class="rn">F·I</div><div><h4>Hinduism</h4><p>From the Vedas to the temples — the world’s oldest living religious tradition.</p><div class="where">The Indian subcontinent</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·II</div><div><h4>Buddhism</h4><p>The Buddha, the dharma, and the faith that crossed all of Asia.</p><div class="where">India → Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·III</div><div><h4>Judaism</h4><p>From the exile in Babylon to the diaspora — the religious story behind the kingdoms.</p><div class="where">The Levant &amp; the world</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·IV</div><div><h4>Christianity</h4><p>From a Roman province to the faith of empires — and the Reformation that split it.</p><div class="where">The Mediterranean → the world</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·V</div><div><h4>Islam</h4><p>The Prophet, the revelation, and the faith — the religious story behind the Caliphates.</p><div class="where">Arabia → the world</div></div><div class="status">Planned</div></div>
+        <div class="chap ready" data-ch="zoroastrianism"><div class="rn">F·VI</div><div><h4>Zoroastrianism</h4><p>Zoroaster's fire — the ancient faith of one god, one adversary, and a final judgment, whose ideas flowed into all the others.</p><div class="where">Iran → the world's religions</div></div><div class="status">Read</div></div>
+        <div class="chap soon"><div class="rn">F·VII</div><div><h4>Confucianism &amp; Daoism</h4><p>The two great currents of Chinese thought — order and the Way.</p><div class="where">China → East Asia</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·VIII</div><div><h4>Jainism</h4><p>The ancient Indian path of radical non-violence.</p><div class="where">India</div></div><div class="status">Planned</div></div>
+        <div class="chap soon"><div class="rn">F·IX</div><div><h4>Sikhism</h4><p>The Gurus, the Khalsa, and the youngest of the great faiths.</p><div class="where">Punjab</div></div><div class="status">Planned</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GRAND TIMELINE VIEW ============ -->
+<div class="view" id="view-tl">
+  <div class="tl-note2">Time flows downward · scroll sideways for more lanes · tap a clay-red spine to open its chapter · side-by-side bars = alive at the same time</div>
+  <div class="tl-vert"><svg viewBox="0 0 520 1982" xmlns="http://www.w3.org/2000/svg" font-family="Barlow Condensed, sans-serif"><line x1="6" y1="40" x2="514" y2="40" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="35" font-size="13" style="fill:var(--reed)">3500 BCE</text><line x1="6" y1="215" x2="514" y2="215" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="210" font-size="13" style="fill:var(--reed)">3000 BCE</text><line x1="6" y1="390" x2="514" y2="390" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="385" font-size="13" style="fill:var(--reed)">2500 BCE</text><line x1="6" y1="565" x2="514" y2="565" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="560" font-size="13" style="fill:var(--reed)">2000 BCE</text><line x1="6" y1="740" x2="514" y2="740" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="735" font-size="13" style="fill:var(--reed)">1500 BCE</text><line x1="6" y1="915" x2="514" y2="915" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="910" font-size="13" style="fill:var(--reed)">1000 BCE</text><line x1="6" y1="1090" x2="514" y2="1090" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1085" font-size="13" style="fill:var(--reed)">500 BCE</text><line x1="6" y1="1265" x2="514" y2="1265" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1260" font-size="13" style="fill:var(--reed)">1 CE</text><line x1="6" y1="1440" x2="514" y2="1440" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1435" font-size="13" style="fill:var(--reed)">500 CE</text><line x1="6" y1="1615" x2="514" y2="1615" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1610" font-size="13" style="fill:var(--reed)">1000 CE</text><line x1="6" y1="1790" x2="514" y2="1790" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1785" font-size="13" style="fill:var(--reed)">1500 CE</text><line x1="6" y1="1930" x2="514" y2="1930" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1925" font-size="13" style="fill:var(--reed)">1900 CE</text><g data-goto="sumer" style="cursor:pointer"><rect x="58" y="40" width="42" height="612" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 50)" x="85" y="50" font-size="15" style="fill:#fff3e2" font-weight="600">Sumer · 3500 BCE – 1750 BCE</text></g><g data-goto="egypt-ok" style="cursor:pointer"><rect x="108" y="180" width="42" height="322" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 190)" x="135" y="190" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Old Kingdom · 3100 BCE – 2181 BCE</text></g><g data-goto="indus" style="cursor:pointer"><rect x="158" y="355" width="42" height="245" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 365)" x="185" y="365" font-size="15" style="fill:#fff3e2" font-weight="600">Indus Valley · 2600 BCE – 1900 BCE</text></g><g data-goto="akkad" style="cursor:pointer"><rect x="208" y="448" width="42" height="259" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 458)" x="235" y="458" font-size="15" style="fill:#fff3e2" font-weight="600">Akkad &amp; Old Babylon · 2334 – 1595 BCE</text></g><g data-goto="babylonia" style="cursor:pointer"><rect x="208" y="712" width="42" height="365" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 722)" x="235" y="722" font-size="15" style="fill:#fff3e2" font-weight="600">Babylon · 1595 – 539 BCE</text></g><g data-goto="egypt-nk" style="cursor:pointer"><rect x="108" y="546" width="42" height="342" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 556)" x="135" y="556" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Middle &amp; New Kingdoms · 2055 BCE – 1077 BCE</text></g><g data-goto="assyria" style="cursor:pointer"><rect x="258" y="556" width="42" height="496" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 566)" x="285" y="566" font-size="15" style="fill:#fff3e2" font-weight="600">Assyria · 2025 BCE – 609 BCE</text></g><g data-goto="hittites" style="cursor:pointer"><rect x="58" y="688" width="42" height="164" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 698)" x="85" y="698" font-size="15" style="fill:#fff3e2" font-weight="600">Hittites · 1650 BCE – 1180 BCE</text></g><g data-goto="minoans" style="cursor:pointer"><rect x="158" y="605" width="42" height="275" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 610)" x="185" y="610" font-size="15" style="fill:#fff3e2" font-weight="600">Minoans &amp; Mycenaeans · 1900 BCE – 1100 BCE</text></g><g data-goto="greece" style="cursor:pointer"><rect x="58" y="985" width="42" height="229" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 995)" x="85" y="995" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Classical Greece &amp; Hellenistic · 800 BCE – 146 BCE</text></g><g data-goto="rome" style="cursor:pointer"><rect x="108" y="1001" width="42" height="430" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 1011)" x="135" y="1011" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Rome · 753 BCE – 476 CE</text></g><g data-goto="egypt-twilight" style="cursor:pointer"><rect x="158" y="888" width="42" height="366" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 898)" x="185" y="898" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: The Long Twilight · 1077 – 30 BCE</text></g><g data-goto="persia" style="cursor:pointer"><rect x="258" y="1072" width="42" height="77" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 1082)" x="285" y="1082" font-size="15" style="fill:#fff3e2" font-weight="600">Achaemenid Persia · 550 BCE – 330 BCE</text></g><g><rect x="208" y="1188" width="42" height="154" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1198)" x="235" y="1198" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Qin &amp; Han China · 221 BCE – 220 CE</text></g><g><rect x="58" y="1432" width="42" height="342" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1442)" x="85" y="1442" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Byzantium · 476 CE – 1453 CE</text></g><g><rect x="108" y="1486" width="42" height="219" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 135 1496)" x="135" y="1496" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Islamic Caliphates · 632 CE – 1258 CE</text></g><g><rect x="158" y="1687" width="42" height="57" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 185 1697)" x="185" y="1697" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mongol Empire · 1206 CE – 1368 CE</text></g><g><rect x="208" y="1720" width="42" height="218" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1730)" x="235" y="1730" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ottoman Empire · 1299 CE – 1922 CE</text></g><g><rect x="258" y="1744" width="42" height="190" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 285 1754)" x="285" y="1754" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ming &amp; Qing China · 1368 CE – 1912 CE</text></g><g><rect x="58" y="1799" width="42" height="116" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1809)" x="85" y="1809" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mughal India · 1526 CE – 1857 CE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="215" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 225)" x="335" y="225" font-size="15" style="fill:#fff3e2" font-weight="600">Caral &amp; Norte Chico · 3000 – 1800 BCE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="705" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 715)" x="335" y="715" font-size="15" style="fill:#fff3e2" font-weight="600">The Olmec · 1600 – 400 BCE</text></g><g data-goto="kush" style="cursor:pointer"><rect x="358" y="891" width="42" height="497" rx="4" style="fill:#c07b52"/><text transform="rotate(90 385 901)" x="385" y="901" font-size="15" style="fill:#fff3e2" font-weight="600">Kush &amp; Nubia · 1069 BCE – 350 CE</text></g><g data-goto="israel-judah" style="cursor:pointer"><rect x="408" y="905" width="42" height="155" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 915)" x="435" y="915" font-size="15" style="fill:#fff3e2" font-weight="600">Israel &amp; Judah · c. 1030 – 586 BCE</text></g><g data-goto="phoenicians" style="cursor:pointer"><rect x="458" y="845" width="42" height="304" rx="4" style="fill:#c07b52"/><text transform="rotate(90 485 855)" x="485" y="855" font-size="15" style="fill:#fff3e2" font-weight="600">The Phoenicians · 1200 – 332 BCE</text></g><g data-goto="judea-maccabees" style="cursor:pointer"><rect x="408" y="1207" width="42" height="84" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 1217)" x="435" y="1217" font-size="15" style="fill:#fff3e2" font-weight="600">Judea · 167 BCE – 73 CE</text></g></svg></div>
+</div>
+
+<!-- ============ WORLD VIEW ============ -->
+<div class="view" id="view-world">
+  <div class="wrap">
+    <article id="ch-world" data-title="The World, Year by Year">
+      <header class="cover" style="min-height:auto;padding-bottom:10px">
+        <div class="chapter-mark">The Synchronic View</div>
+        <h1 style="font-size:clamp(40px,9vw,64px)">The World,<br>Year by Year</h1>
+        <div class="epigraph">History books tell one story at a time. But the world never happened one story at a time. Freeze a year, and look around the whole planet.<cite>Fifteen moments · 3000 BCE – 1900 CE</cite></div>
+      </header>
+<section class="ws-year" id="ws-3000"><h2>c. 3000 BCE</h2><div class="ws-sub">The first cities · writing is brand new</div><div class="ws-item"><div class="ws-region">Mesopotamia</div><p><a data-goto="sumer" href="#">Uruk is the largest settlement on earth</a>; cuneiform writing is spreading through the temple storehouses.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-ok" href="#">The Nile kingdoms have just been unified</a> under the first pharaohs; hieroglyphs appearing.</p></div><div class="ws-item"><div class="ws-region">Indus</div><p><a data-goto="indus" href="#">Farming towns of the early Harappan era</a> — the great cities are still centuries away.</p></div><div class="ws-item"><div class="ws-region">Europe</div><p>Megalithic tomb-builders; Stonehenge exists only as an earthwork circle. Ötzi the Iceman died in the Alps about three centuries earlier.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Neolithic farming villages along the Yellow River; no writing, no dynasties yet.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p>Maize farming spreading in Mexico; on the Peruvian coast, <a data-goto="caral" href="#">the first stirrings of what will become Caral</a>.</p></div></section><section class="ws-year" id="ws-2500"><h2>c. 2500 BCE</h2><div class="ws-sub">The pyramid age</div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-ok" href="#">The Great Pyramid of Giza has just been completed</a> — the tallest building on earth for the next 3,800 years.</p></div><div class="ws-item"><div class="ws-region">Mesopotamia</div><p><a data-goto="sumer" href="#">The Sumerian city-states are at war</a>; the death-pit burials of Ur’s royal cemetery belong to this era.</p></div><div class="ws-item"><div class="ws-region">Uruk</div><p>A generation or two earlier or later, roughly here, sits the reign later poets would remember as <a data-goto="gilgamesh" href="#">Gilgamesh, king of Uruk</a> — within a century or two of Kish's archaeologically attested king Enmebaragesi.</p></div><div class="ws-item"><div class="ws-region">Indus</div><p><a data-goto="indus" href="#">Mohenjo-daro and Harappa near their height</a> — the largest planned cities in the world.</p></div><div class="ws-item"><div class="ws-region">Anatolia</div><p>The citadel of Troy (Troy II) flourishes, rich in gold.</p></div><div class="ws-item"><div class="ws-region">Britain</div><p>The great sarsen stones of Stonehenge are being raised.</p></div><div class="ws-item"><div class="ws-region">Peru</div><p><a data-goto="caral" href="#">Caral — the first city of the Americas — is flourishing, with monumental platforms</a>.</p></div></section><section class="ws-year" id="ws-2300"><h2>c. 2300 BCE</h2><div class="ws-sub">The first empire</div><div class="ws-item"><div class="ws-region">Mesopotamia</div><p><a data-goto="akkad" href="#">Sargon’s Akkadian Empire</a> — the first empire in history — rules from the Gulf toward the Mediterranean.</p></div><div class="ws-item"><div class="ws-region">Assyria</div><p>Ashur is a modest town under Akkadian sway; its merchant centuries are still ahead.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-ok" href="#">The Old Kingdom is past its pyramid-building peak</a> and drifting toward crisis.</p></div><div class="ws-item"><div class="ws-region">Indus</div><p><a data-goto="indus" href="#">The mature cities trade with Mesopotamia</a>, where their land is called Meluhha.</p></div><div class="ws-item"><div class="ws-region">Europe</div><p>Bell Beaker cultures spread metalworking across the continent.</p></div></section><section class="ws-year" id="ws-2000"><h2>c. 2000 BCE</h2><div class="ws-sub">After the fall of Ur</div><div class="ws-item"><div class="ws-region">Mesopotamia</div><p><a data-goto="sumer" href="#">Ur has just fallen to Elam (2004 BCE)</a>; <a data-goto="akkad" href="#">Amorite kingdoms are carving up the land</a> — Babylon is still a village.</p></div><div class="ws-item"><div class="ws-region">Assyria</div><p><a data-goto="assyria" href="#">The Kanesh merchant caravans are about to make Ashur rich</a> — the opening act of Assyria’s story.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-nk" href="#">The Middle Kingdom has reunified Egypt</a> after a century of division.</p></div><div class="ws-item"><div class="ws-region">Indus</div><p><a data-goto="indus" href="#">The great cities are beginning their long, mysterious decline</a>.</p></div><div class="ws-item"><div class="ws-region">Crete</div><p><a data-goto="minoans" href="#">The first Minoan palaces rise</a> — Europe’s first civilization.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Late Longshan culture; the era of the legendary Xia dynasty; bronze-working Erlitou soon after.</p></div></section><section class="ws-year" id="ws-1750"><h2>c. 1750 BCE</h2><div class="ws-sub">The age of Hammurabi</div><div class="ws-item"><div class="ws-region">Babylon</div><p><a data-goto="akkad" href="#">Hammurabi has united Mesopotamia and carved his law in stone</a>; the Ea-nasir copper complaints are being filed at Ur.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-nk" href="#">The Middle Kingdom is waning</a>; Asiatic settlers in the Delta foreshadow the Hyksos era.</p></div><div class="ws-item"><div class="ws-region">Anatolia</div><p><a data-goto="hittites" href="#">The Old Hittite kingdom is taking shape</a>.</p></div><div class="ws-item"><div class="ws-region">Crete</div><p><a data-goto="minoans" href="#">Minoan palace civilization at its height</a> — Knossos, frescoes, the bull-leapers.</p></div><div class="ws-item"><div class="ws-region">India</div><p><a data-goto="indus" href="#">The Indus cities are largely abandoned</a>; village cultures carry on.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Erlitou casts the first Chinese bronzes.</p></div></section><section class="ws-year" id="ws-1450"><h2>c. 1450 BCE</h2><div class="ws-sub">The imperial Bronze Age</div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-nk" href="#">The New Kingdom empire is at its greatest extent</a> under Thutmose III, from Syria to Nubia.</p></div><div class="ws-item"><div class="ws-region">Anatolia</div><p><a data-goto="hittites" href="#">The Hittites are becoming a great power</a>.</p></div><div class="ws-item"><div class="ws-region">Babylon</div><p><a data-goto="babylonia" href="#">The Kassite kings preside over a stable, quiet Babylonia</a>.</p></div><div class="ws-item"><div class="ws-region">Assyria</div><p>Still in the shadow of Mitanni — its imperial turn is a century away.</p></div><div class="ws-item"><div class="ws-region">Greece</div><p><a data-goto="minoans" href="#">Mycenaean warlords take over Minoan Knossos</a>; the palace age of mainland Greece.</p></div><div class="ws-item"><div class="ws-region">China</div><p>The Shang dynasty rules from the Yellow River; oracle-bone writing appears in the following centuries.</p></div></section><section class="ws-year" id="ws-1200"><h2>c. 1200 BCE</h2><div class="ws-sub">The Bronze Age Collapse</div><div class="ws-item"><div class="ws-region">E. Mediterranean</div><p><a data-goto="hittites" href="#">The interconnected Bronze Age world is falling like dominoes</a> — the Hittite empire vanishes, Ugarit burns, the Sea Peoples are on the move.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-nk" href="#">Ramesses III repels the Sea Peoples</a> — Egypt survives, but its imperial age is ending.</p></div><div class="ws-item"><div class="ws-region">Mesopotamia</div><p><a data-goto="babylonia" href="#">Assyria and Babylon weather the storm, weakened</a>.</p></div><div class="ws-item"><div class="ws-region">Greece</div><p><a data-goto="minoans" href="#">The Mycenaean palaces burn; Greece enters a dark age</a>. The legend of the Trojan War is set in this world.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Late Shang — the oracle bones of Anyang record the kings’ questions to their ancestors.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p><a data-goto="caral" href="#">The Olmec centre of San Lorenzo flourishes in Mexico</a>, its colossal stone heads already carved.</p></div></section><section class="ws-year" id="ws-900"><h2>c. 900 BCE</h2><div class="ws-sub">The Iron Age dawn</div><div class="ws-item"><div class="ws-region">Assyria</div><p><a data-goto="assyria" href="#">The Neo-Assyrian rise begins</a> — the war machine the Bible remembers.</p></div><div class="ws-item"><div class="ws-region">Levant</div><p><a data-goto="israel-judah" href="#">The kingdoms of Israel and Judah take shape</a>.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-twilight" href="#">Divided, ruled in part by Libyan pharaohs of the Twenty-second Dynasty</a> — the long twilight has begun.</p></div><div class="ws-item"><div class="ws-region">Nubia</div><p><a data-goto="kush" href="#">Napata is re-emerging as an organized Egyptianized kingdom</a> under King Alara — within two centuries its kings will rule Egypt itself.</p></div><div class="ws-item"><div class="ws-region">Greece</div><p><a data-goto="greece" href="#">Recovering from the dark age</a>; within a century it will borrow the <a data-goto="phoenicians" href="#">Phoenician alphabet</a>.</p></div><div class="ws-item"><div class="ws-region">India</div><p>Vedic kingdoms and the first great cities of the Ganges plain.</p></div><div class="ws-item"><div class="ws-region">China</div><p>The Western Zhou rule under the Mandate of Heaven.</p></div></section><section class="ws-year" id="ws-550"><h2>c. 550 BCE</h2><div class="ws-sub">The Axial Age</div><div class="ws-item"><div class="ws-region">Persia</div><p><a data-goto="persia" href="#">Cyrus is assembling the largest empire the world has seen</a>.</p></div><div class="ws-item"><div class="ws-region">Babylon</div><p><a data-goto="babylonia" href="#">Nabonidus, Babylon’s strange last king, reigns</a> — the gates open to Cyrus in 539.</p></div><div class="ws-item"><div class="ws-region">Nubia</div><p><a data-goto="kush" href="#">Kush has withdrawn to Napata, then Meroe, after a century ruling Egypt as its 25th Dynasty</a> — sacked once by Assyria's allies, once by Egypt itself, and still standing.</p></div><div class="ws-item"><div class="ws-region">Greece</div><p><a data-goto="greece" href="#">The city-states flourish; Athens is a generation from inventing democracy</a>.</p></div><div class="ws-item"><div class="ws-region">India</div><p>The age of the Buddha; the Ganges kingdoms compete.</p></div><div class="ws-item"><div class="ws-region">China</div><p>The age of Confucius; the Zhou order is fragmenting.</p></div><div class="ws-item"><div class="ws-region">Rome</div><p><a data-goto="rome" href="#">A small city ruled by its last kings</a>.</p></div></section><section class="ws-year" id="ws-330"><h2>c. 330 BCE</h2><div class="ws-sub">The world Alexander broke open</div><div class="ws-item"><div class="ws-region">Persia</div><p><a data-goto="persia" href="#">Persepolis burns; the Achaemenid Empire falls to Alexander</a>.</p></div><div class="ws-item"><div class="ws-region">Greece &amp; Macedon</div><p><a data-goto="greece" href="#">Alexander of Macedon, having conquered Greece, now overruns the Persian Empire</a>; the age of the free city-state is over.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-twilight" href="#">Alexander is welcomed as liberator</a>; the Ptolemaic age — ending with Cleopatra — begins.</p></div><div class="ws-item"><div class="ws-region">India</div><p>The Nanda empire rules the Ganges; Chandragupta Maurya is about to overthrow it.</p></div><div class="ws-item"><div class="ws-region">China</div><p>The Warring States forge the ideas and armies that Qin will soon unify.</p></div><div class="ws-item"><div class="ws-region">Rome</div><p><a data-goto="rome" href="#">The Republic is conquering Italy, unnoticed by the great powers of the east</a>.</p></div></section><section class="ws-year" id="ws-1ce"><h2>c. 1 CE</h2><div class="ws-sub">Two empires bookend the earth</div><div class="ws-item"><div class="ws-region">Rome</div><p><a data-goto="rome-empire" href="#">Augustus has turned the Republic into an empire; the Mediterranean is a Roman lake</a>.</p></div><div class="ws-item"><div class="ws-region">Persia</div><p>The Parthians rule Iran and Mesopotamia — Rome’s stubborn eastern rival.</p></div><div class="ws-item"><div class="ws-region">India</div><p>Sangam-era Tamil kingdoms trade with Rome; the north between empires.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Han China — Rome’s equal in size and wealth; silk moves west along the new roads.</p></div><div class="ws-item"><div class="ws-region">Egypt</div><p><a data-goto="egypt-twilight" href="#">A Roman province now; Cleopatra died three decades ago</a>.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p>Teotihuacan rises in Mexico; the Maya lowland cities are growing.</p></div></section>
+<section class="ws-year" id="ws-500ce"><h2>c. 500 CE</h2><div class="ws-sub">After Rome</div><div class="ws-item"><div class="ws-region">Byzantium</div><p><a data-goto="rome-fall" href="#">The Western empire has fallen (476)</a>; Constantinople carries Rome on.</p></div><div class="ws-item"><div class="ws-region">Persia</div><p>The Sasanians at their height — Byzantium’s great rival.</p></div><div class="ws-item"><div class="ws-region">India</div><p>The Gupta golden age is ending under Huna invasions.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Divided north and south; reunification is a century away.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p>The Classic Maya flourish; Teotihuacan dominates Mexico.</p></div><div class="ws-item"><div class="ws-region">Europe</div><p>Frankish and Gothic kingdoms rise on Roman ruins.</p></div></section>
+<section class="ws-year" id="ws-1000"><h2>c. 1000 CE</h2><div class="ws-sub">The medieval world at full sail</div><div class="ws-item"><div class="ws-region">China</div><p>Song China is the richest, most inventive society on earth.</p></div><div class="ws-item"><div class="ws-region">Islamic world</div><p>From Córdoba to Baghdad — the golden age of Islamic science.</p></div><div class="ws-item"><div class="ws-region">Byzantium</div><p>At its medieval peak under Basil II.</p></div><div class="ws-item"><div class="ws-region">India</div><p>The Cholas rule the south and send fleets across the Bay of Bengal.</p></div><div class="ws-item"><div class="ws-region">The north</div><p>Vikings touch Newfoundland; Kievan Rus adopts Christianity.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p>Cahokia rises on the Mississippi; the Toltecs dominate Mexico.</p></div></section>
+<section class="ws-year" id="ws-1450ce"><h2>c. 1450 CE</h2><div class="ws-sub">On the eve of the modern</div><div class="ws-item"><div class="ws-region">Ottomans</div><p>About to take Constantinople (1453) and end Byzantium.</p></div><div class="ws-item"><div class="ws-region">China</div><p>Ming China has ended its treasure voyages and turned inward.</p></div><div class="ws-item"><div class="ws-region">India</div><p>Vijayanagara at its height in the south; the Delhi Sultanate fading.</p></div><div class="ws-item"><div class="ws-region">Americas</div><p>The Aztec alliance and the expanding Inca — both near their peaks, unaware of what is coming.</p></div><div class="ws-item"><div class="ws-region">Europe</div><p>The Renaissance stirs in Italy; printing is being invented in Mainz.</p></div><div class="ws-item"><div class="ws-region">Africa</div><p>Songhai rises on the Niger; Great Zimbabwe wanes.</p></div></section>
+<section class="ws-year" id="ws-1900"><h2>c. 1900 CE</h2><div class="ws-sub">The world the Chronicle ends in</div><div class="ws-item"><div class="ws-region">Britain</div><p>The empire covers a quarter of the earth; the Raj rules India.</p></div><div class="ws-item"><div class="ws-region">China</div><p>The Qing dynasty is in its final decade.</p></div><div class="ws-item"><div class="ws-region">Ottomans</div><p>The “sick man of Europe” nears its end.</p></div><div class="ws-item"><div class="ws-region">Japan</div><p>Meiji Japan has industrialized in a single generation.</p></div><div class="ws-item"><div class="ws-region">The rising</div><p>The United States and Germany — the new industrial giants.</p></div><div class="ws-item"><div class="ws-region">Africa</div><p>Partitioned among European powers within a single generation.</p></div></section>
+      <section>
+        <div class="note"><strong>How to use this page.</strong> Every linked line opens the chapter where that story is told in full. Unlinked lines are chapters still to come — this page grows as the Chronicle does. All entries are deliberately conservative summaries of well-established history; the chapters carry the citations and the debates.</div>
+      </section>
+    </article>
+  </div>
+</div>
+
+<!-- ============ SEARCH VIEW ============ -->
+<div class="view" id="view-search">
+  <div class="wrap">
+    <div class="search-panel">
+      <input type="search" id="s-input" placeholder="Search the chronicle — kings, cities, battles…" autocomplete="off">
+      <div class="s-results" id="s-results"></div>
+    </div>
+  </div>
+</div>
+
+<!-- @CHAPTER-CHUNKS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HINT POPOVER -->
+<div id="hint-pop"><span class="hint-x">✕</span><div class="hint-term" id="hint-term"></div><div class="hint-body" id="hint-body"></div></div>
+
+<!-- SETTINGS SHEET -->
+<div id="settings-backdrop"></div>
+<div id="settings-sheet">
+  <div class="sheet-top"><div class="set-title">Reading Settings</div><button id="sheet-close">✕</button></div>
+  <div class="set-h">Page Colour</div>
+  <div class="swatches">
+    <div class="swatch" data-theme="parchment" style="background:#f5eddd" title="Parchment"></div>
+    <div class="swatch" data-theme="white" style="background:#ffffff" title="White"></div>
+    <div class="swatch" data-theme="sepia" style="background:#efe0c2" title="Sepia"></div>
+    <div class="swatch" data-theme="mint" style="background:#e6efe2" title="Mint"></div>
+    <div class="swatch" data-theme="dark" style="background:#26231f" title="Dark"></div>
+    <div class="swatch" data-theme="black" style="background:#000000" title="Black"></div>
+  </div>
+  <div class="set-h">Font</div>
+  <div class="font-row">
+    <div class="font-card" data-font="spectral" style="font-family:'Spectral',Georgia,serif"><div class="fa">Aa</div><div class="fn">Spectral</div></div>
+    <div class="font-card" data-font="literata" style="font-family:'Literata',Georgia,serif"><div class="fa">Aa</div><div class="fn">Literata</div></div>
+    <div class="font-card" data-font="lora" style="font-family:'Lora',Georgia,serif"><div class="fa">Aa</div><div class="fn">Lora</div></div>
+    <div class="font-card" data-font="baskerville" style="font-family:'Libre Baskerville',Georgia,serif"><div class="fa">Aa</div><div class="fn">Baskerville</div></div>
+    <div class="font-card" data-font="garamond" style="font-family:'EB Garamond',Georgia,serif"><div class="fa">Aa</div><div class="fn">Garamond</div></div>
+    <div class="font-card" data-font="merriweather" style="font-family:'Merriweather',Georgia,serif"><div class="fa">Aa</div><div class="fn">Merriweather</div></div>
+    <div class="font-card" data-font="atkinson" style="font-family:'Atkinson Hyperlegible',sans-serif"><div class="fa">Aa</div><div class="fn">Atkinson</div></div>
+    <div class="font-card" data-font="serif" style="font-family:Georgia,'Times New Roman',serif"><div class="fa">Aa</div><div class="fn">Book Serif</div></div>
+    <div class="font-card" data-font="sans" style="font-family:system-ui,Roboto,sans-serif"><div class="fa">Aa</div><div class="fn">Sans</div></div>
+  </div>
+  <div class="set-h">Text Size</div>
+  <div class="fs-row"><span style="font-size:14px">A</span><input type="range" id="fs-range" min="88" max="124" step="4" value="100"><span style="font-size:24px">A</span></div>
+  <div class="set-h">Line Spacing</div>
+  <div class="lh-row">
+    <button class="lh-btn" data-lh="1.55">Compact</button>
+    <button class="lh-btn" data-lh="1.75">Normal</button>
+    <button class="lh-btn" data-lh="1.95">Relaxed</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  /* ---------- safe storage (works from file://, degrades in sandboxed previews) ---------- */
+  var mem = {};
+  var store = {
+    get: function(k){ try { var v = localStorage.getItem(k); return v===null ? (k in mem ? mem[k] : null) : v; } catch(e){ return k in mem ? mem[k] : null; } },
+    set: function(k,v){ mem[k]=v; try { localStorage.setItem(k,v); } catch(e){} }
+  };
+
+  /* ---------- views / router ---------- */
+  var views = { home: 'view-home', search: 'view-search', world: 'view-world', tl: 'view-tl', sumer: 'view-sumer', akkad: 'view-akkad', babylonia: 'view-babylonia', 'egypt-ok': 'view-egypt-ok', 'egypt-nk': 'view-egypt-nk', kush: 'view-kush', indus: 'view-indus', minoans: 'view-minoans', caral: 'view-caral', hittites: 'view-hittites', assyria: 'view-assyria', persia: 'view-persia', 'egypt-twilight': 'view-egypt-twilight', 'israel-judah': 'view-israel-judah', 'judea-maccabees': 'view-judea-maccabees', phoenicians: 'view-phoenicians', gilgamesh: 'view-gilgamesh', babylon: 'view-babylon', elam: 'view-elam', 'egyptian-pantheon': 'view-egyptian-pantheon', alexandria: 'view-alexandria', zoroastrianism: 'view-zoroastrianism', iliad: 'view-iliad', greece: 'view-greece', rome: 'view-rome', 'rome-empire': 'view-rome-empire', 'rome-fall': 'view-rome-fall' };
+  var titles = { home: 'The Chronicle', search: 'Search', world: 'The World, Year by Year', tl: 'The Grand Timeline', sumer: 'Chapter I·1 — Sumer', akkad: 'Chapter I·2 — Akkad & Old Babylon', babylonia: 'Chapter I·3 — Babylon', 'egypt-ok': 'Chapter I·5 — Egypt: The Old Kingdom', 'egypt-nk': 'Chapter I·6 — Egypt: Middle & New Kingdoms', kush: 'Chapter I·7 — Kush & Nubia', indus: 'Chapter I·8 — The Indus Valley', minoans: 'Chapter I·9 — The Minoans & Mycenaeans', caral: 'Chapter I·10 — Caral, Olmec & the First Americas', hittites: 'Chapter I·11 — The Hittites & the Bronze Age Collapse', assyria: 'Chapter I·4 — Assyria', persia: 'Chapter II·5 — Achaemenid Persia', 'egypt-twilight': 'Chapter II·1 — Egypt: The Long Twilight', 'israel-judah': 'Chapter II·2 — Israel & Judah', 'judea-maccabees': 'Chapter II·3 — Judea: Maccabees to Masada', phoenicians: 'Chapter II·4 — The Phoenicians', gilgamesh: 'Chapter M·I — Gilgamesh', babylon: 'Chapter C·I — Babylon', elam: 'Chapter In·I — Elam', 'egyptian-pantheon': 'Chapter M·VII — The Egyptian Pantheon', alexandria: 'Chapter C·IV — Alexandria', zoroastrianism: 'Chapter F·VI — Zoroastrianism', iliad: 'Chapter M·II — The Iliad & the Trojan War', greece: 'Chapter II·11 — Greece & Alexander', rome: 'Chapter II·8 — Rome: The Republic', 'rome-empire': 'Chapter II·9 — Rome: The Empire', 'rome-fall': 'Chapter II·10 — Rome: The Fall of the West' };
+  var current = 'home';
+  var fab = document.getElementById('bm-fab');
+  var barTitle = document.getElementById('bar-title');
+
+  function show(name, opts){
+    opts = opts || {};
+    if (!views[name]) name = 'home';
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    document.getElementById(views[name]).classList.add('active');
+    current = name;
+    barTitle.textContent = titles[name] || 'The Chronicle';
+    fab.classList.toggle('show', name !== 'home' && name !== 'search');
+    if (name === 'search') { setTimeout(function(){ document.getElementById('s-input').focus(); }, 60); }
+    if (!opts.keepScroll) {
+      if (name !== 'home' && name !== 'search') {
+        var saved = parseInt(store.get('pos:'+name) || '0', 10);
+        window.scrollTo(0, opts.scrollTo != null ? opts.scrollTo : saved);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+    store.set('lastView', name);
+    updateProgress();
+  }
+
+  document.getElementById('btn-home').addEventListener('click', function(){ show('home'); });
+  document.getElementById('btn-search').addEventListener('click', function(){
+    if (current === 'search') { show(store.get('lastReadView') || 'home'); } else { show('search'); }
+  });
+  document.querySelectorAll('.chap.ready').forEach(function(c){
+    c.addEventListener('click', function(){ show(c.getAttribute('data-ch')); });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); show(el.getAttribute('data-goto')); });
+  });
+
+  /* ---------- reading position: auto-save ---------- */
+  var saveTimer = null;
+  window.addEventListener('scroll', function(){
+    updateProgress();
+    if (current === 'home' || current === 'search') return;
+    store.set('lastReadView', current);
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ store.set('pos:'+current, String(window.scrollY|0)); }, 250);
+  }, { passive:true });
+  window.addEventListener('pagehide', function(){
+    if (current !== 'home' && current !== 'search') store.set('pos:'+current, String(window.scrollY|0));
+  });
+
+  /* ---------- explicit bookmark ---------- */
+  var resumeBtn = document.getElementById('btn-resume');
+  function refreshResume(){
+    var v = store.get('bm:view');
+    resumeBtn.classList.toggle('has-bm', !!v);
+    if (v) {
+      var lbl = store.get('bm:label') || '';
+      resumeBtn.innerHTML = '<b>⚑ Continue reading →</b> ' + (titles[v] || v) + (lbl ? ' · ' + lbl : '');
+    }
+  }
+  fab.addEventListener('click', function(){
+    var sameSpot = store.get('bm:view') === current &&
+      Math.abs(parseInt(store.get('bm:y') || '-99999', 10) - (window.scrollY|0)) < 60;
+    if (sameSpot) {
+      store.set('bm:view',''); store.set('bm:y',''); store.set('bm:label','');
+      toast('Bookmark removed'); refreshResume(); return;
+    }
+    store.set('bm:view', current);
+    store.set('bm:y', String(window.scrollY|0));
+    // find nearest heading above for a label
+    var label = '';
+    var heads = document.getElementById(views[current]).querySelectorAll('h2, h3');
+    for (var i=0;i<heads.length;i++){
+      var r = heads[i].getBoundingClientRect();
+      if (r.top < 80) label = heads[i].textContent;
+    }
+    store.set('bm:label', label);
+    toast('⚑ Bookmarked' + (label ? ' — ' + label : ''));
+    refreshResume();
+  });
+  resumeBtn.addEventListener('click', function(){
+    var v = store.get('bm:view');
+    if (!v) return;
+    var y = parseInt(store.get('bm:y') || '0', 10);
+    show(v, { scrollTo: y });
+    toast('Returned to bookmark');
+  });
+  refreshResume();
+
+  var toastEl = document.getElementById('toast'), toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+  }
+
+  /* ---------- progress bar ---------- */
+  var bar = document.getElementById('progress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }
+
+  /* ---------- search (built from live DOM) ---------- */
+  var index = [];
+  function buildIndex(){
+    index = [];
+    document.querySelectorAll('article').forEach(function(art){
+      var chView = art.closest('.view').id.replace('view-','');
+      var chTitle = art.getAttribute('data-title') || chView;
+      art.querySelectorAll('section').forEach(function(sec){
+        var head = sec.querySelector('h2, h3');
+        var secTitle = head ? head.textContent : chTitle;
+        var text = sec.textContent.replace(/\s+/g,' ').trim();
+        index.push({ view: chView, chTitle: chTitle, secTitle: secTitle, secId: sec.id || '', text: text, lower: text.toLowerCase() });
+      });
+    });
+    // Shelf cards (written and planned) — every name on the shelf is findable
+    document.querySelectorAll('#view-home .chap').forEach(function(card){
+      var h4 = card.querySelector('h4'); if (!h4) return;
+      var text = card.textContent.replace(/\s+/g,' ').trim();
+      index.push({ view: 'home', chTitle: 'The Shelf', secTitle: h4.textContent, text: text, lower: text.toLowerCase(), el: card });
+    });
+    // Hint glossary
+    document.querySelectorAll('.hint').forEach(function(h){
+      var chView = h.closest('.view'); if (!chView) return;
+      var text = h.textContent + ' \u2014 ' + (h.getAttribute('data-hint') || '');
+      index.push({ view: chView.id.replace('view-',''), chTitle: 'Glossary', secTitle: h.textContent, text: text, lower: text.toLowerCase(), el: h });
+    });
+  }
+  var sInput = document.getElementById('s-input');
+  var sResults = document.getElementById('s-results');
+  sInput.addEventListener('input', function(){
+    var q = sInput.value.trim().toLowerCase();
+    sResults.innerHTML = '';
+    if (q.length < 2) return;
+    var hits = [];
+    index.forEach(function(item){
+      var pos = item.lower.indexOf(q);
+      if (pos !== -1) hits.push({ item: item, pos: pos });
+    });
+    if (!hits.length){ sResults.innerHTML = '<div class="s-empty">Nothing found for that — yet. More chapters are coming.</div>'; return; }
+    hits.slice(0, 30).forEach(function(h){
+      var t = h.item.text;
+      var start = Math.max(0, h.pos - 60), end = Math.min(t.length, h.pos + q.length + 90);
+      var snip = (start>0?'…':'') + t.slice(start, end) + (end<t.length?'…':'');
+      snip = snip.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'), '<mark>$1</mark>');
+      var div = document.createElement('div');
+      div.className = 's-hit';
+      div.innerHTML = '<div class="s-ch">'+h.item.chTitle+'</div><div class="s-sec">'+h.item.secTitle+'</div><div class="s-snip">'+snip+'</div>';
+      div.addEventListener('click', function(){
+        show(h.item.view, { scrollTo: 0 });
+        var target = h.item.el || (h.item.secId ? document.getElementById(h.item.secId) : null);
+        if (target) setTimeout(function(){ target.scrollIntoView(); window.scrollBy(0,-60); }, 40);
+      });
+      sResults.appendChild(div);
+    });
+  });
+
+  /* ---------- reading time + back to top ---------- */
+  document.querySelectorAll('article').forEach(function(art){
+    var words = art.textContent.trim().split(/\s+/).length;
+    var mins = Math.max(1, Math.round(words / 220));
+    var mark = art.querySelector('.chapter-mark');
+    if (mark) {
+      var span = document.createElement('span');
+      span.className = 'readtime';
+      span.textContent = '\u00b7 ~' + mins + ' min read';
+      mark.appendChild(span);
+    }
+  });
+  var topFab = document.getElementById('top-fab');
+  topFab.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  function updateTopFab(){
+    topFab.classList.toggle('show', window.scrollY > 900 && current !== 'search');
+  }
+  window.addEventListener('scroll', updateTopFab, { passive: true });
+
+  /* ---------- tap hints ---------- */
+  var hintPop = document.getElementById('hint-pop');
+  document.addEventListener('click', function(e){
+    var h = e.target.closest('.hint');
+    if (h) {
+      document.getElementById('hint-term').textContent = h.textContent;
+      document.getElementById('hint-body').textContent = h.getAttribute('data-hint') || '';
+      hintPop.classList.add('show');
+      e.stopPropagation();
+    } else if (!e.target.closest('#hint-pop') || e.target.classList.contains('hint-x')) {
+      hintPop.classList.remove('show');
+    }
+  });
+
+  /* ---------- reader settings ---------- */
+  var sheet = document.getElementById('settings-sheet');
+  var backdrop = document.getElementById('settings-backdrop');
+  document.getElementById('btn-aa').addEventListener('click', function(){
+    sheet.classList.add('open'); backdrop.classList.add('show');
+  });
+  function closeSheet(){ sheet.classList.remove('open'); backdrop.classList.remove('show'); }
+  backdrop.addEventListener('click', closeSheet);
+  document.getElementById('sheet-close').addEventListener('click', closeSheet);
+
+  var FONTS = {
+    spectral: "'Spectral', Georgia, serif",
+    literata: "'Literata', Georgia, serif",
+    lora: "'Lora', Georgia, serif",
+    baskerville: "'Libre Baskerville', Georgia, serif",
+    garamond: "'EB Garamond', Georgia, serif",
+    merriweather: "'Merriweather', Georgia, serif",
+    atkinson: "'Atkinson Hyperlegible', system-ui, sans-serif",
+    serif: "Georgia, 'Times New Roman', serif",
+    sans: "system-ui, Roboto, 'Segoe UI', sans-serif"
+  };
+  function applySettings(){
+    var t = store.get('set:theme') || 'parchment';
+    document.body.classList.remove('t-white','t-sepia','t-mint','t-dark','t-black');
+    if (t !== 'parchment') document.body.classList.add('t-' + t);
+    var f = store.get('set:font') || 'spectral';
+    document.body.style.setProperty('--body-font', FONTS[f] || FONTS.spectral);
+    var lh = store.get('set:lh') || '1.75';
+    document.body.style.setProperty('--lh', lh);
+    var sc = parseInt(store.get('set:scale') || '100', 10);
+    document.body.style.zoom = (sc / 100);
+    document.querySelectorAll('.swatch').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-theme') === t); });
+    document.querySelectorAll('.font-card').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-font') === f); });
+    document.querySelectorAll('.lh-btn').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-lh') === lh); });
+    var r = document.getElementById('fs-range'); if (r) r.value = sc;
+  }
+  document.querySelectorAll('.swatch').forEach(function(el){
+    el.addEventListener('click', function(){ store.set('set:theme', el.getAttribute('data-theme')); applySettings(); });
+  });
+  document.querySelectorAll('.font-card').forEach(function(el){
+    el.addEventListener('click', function(){ store.set('set:font', el.getAttribute('data-font')); applySettings(); });
+  });
+  document.querySelectorAll('.lh-btn').forEach(function(el){
+    el.addEventListener('click', function(){ store.set('set:lh', el.getAttribute('data-lh')); applySettings(); });
+  });
+  document.getElementById('fs-range').addEventListener('input', function(){
+    store.set('set:scale', this.value);
+    document.body.style.zoom = (parseInt(this.value, 10) / 100);
+  });
+  applySettings();
+
+  /* ---------- init: restore last view + position ---------- */
+  if (window.requestIdleCallback) { requestIdleCallback(buildIndex, { timeout: 4000 }); }
+  else { setTimeout(buildIndex, 600); }
+  var last = store.get('lastView');
+  if (last && views[last] && last !== 'search') { show(last); } else { show('home'); }
+})();
+</script>
+</body>
+</html>

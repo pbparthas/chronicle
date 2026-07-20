@@ -1,0 +1,23 @@
+{
+  "name": "chronicle-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deterministic PWA build for The Chronicle — A Tale of Time.",
+  "type": "module",
+  "scripts": {
+    "build": "node build/build.mjs",
+    "test": "node build/test-site.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:41729/git/pbparthas/chronicle"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "node-html-parser": "^9.0.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
+  }
+}
