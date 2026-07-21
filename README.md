@@ -82,6 +82,32 @@ After that, every push to `main` that touches `master/`, `build/`, or `tools/`
 redeploys automatically. The output is a plain static folder, so switching to
 Cloudflare Pages later is trivial.
 
+## The Map of Time (Phase 4)
+
+A PWA-only interactive historical-borders map (`#view-map`), injected into the
+shell at build time — it never enters the authoring master or the standalone
+`chronicle-complete.html`. A vanilla canvas renderer (no framework, ~14 KB)
+loads lazily on first open, along with era-chunked border data:
+
+- **Data:** [Cliopatria](https://github.com/Seshat-Global-History-Databank/cliopatria)
+  polity borders (CC BY 4.0) + [Natural Earth](https://www.naturalearthdata.com/)
+  land (public domain), simplified and delta-encoded by `build/map-prep.mjs`
+  into `mapdata/era-*.json` (committed; 22 KB–1.2 MB gzipped per era — CI never
+  downloads external data). Re-run `node build/map-prep.mjs` to refresh.
+- **UI:** year slider snapping to actual border-change years, play button,
+  era preset chips matching the shelves ("First Cradles" → 2500 BCE), pinch/pan,
+  tap a polity for name + dates — and a "Read its chapter →" button when the
+  polity maps to a written chapter.
+- **`mapdata/map-links.json`** is the curated polity→chapter mapping (optionally
+  year-constrained, e.g. Babylonia before/after 1595 BCE). Entries pointing at
+  unwritten chapters are held back automatically until the chapter lands —
+  grow the file freely as the book grows.
+- **Offline:** map chunks inherit the service worker's cache-first strategy
+  after first use; any mapdata change bumps the build version and triggers the
+  update toast.
+- **Credits:** `#view-about` (linked from the map's attribution line) credits
+  Cliopatria, Natural Earth, and the book's sources.
+
 ## Notes
 
 - **No visual or content changes.** The book's look, typography, and chapter HTML

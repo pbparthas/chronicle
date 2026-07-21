@@ -10,9 +10,13 @@ on:
     branches: [main]
     paths:
       - 'master/**'
+      - 'mapdata/**'
       - 'build/**'
       - 'tools/**'
       - '.github/workflows/deploy.yml'
+  # PRs run the build + integrity checks only; deploy happens on push to main.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -22,8 +26,8 @@ permissions:
 
 # Never cancel an in-flight deploy; let each push finish in order.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -55,6 +59,7 @@ jobs:
           path: site
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:

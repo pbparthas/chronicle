@@ -18,7 +18,7 @@
  * beyond extraction; the shell patch is injection-only so the standalone file
  * keeps its own runtime search indexer.
  */
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -30,6 +30,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MASTER = join(ROOT, 'master');
 const CONTENT = join(MASTER, 'content');
 const SITE = join(ROOT, 'site');
+const MAPDATA = join(ROOT, 'mapdata');
+const TEMPLATES = join(ROOT, 'build', 'templates');
 
 // Canonical section order (from codexfs.py). This is a fixed list of shelf
 // sections, NOT a chapter list — chapters are discovered by scanning views.
@@ -67,6 +69,13 @@ if (!chunkFiles.length) die('no content chunks found in master/content/');
 const hash = createHash('sha256');
 hash.update(shellSrc);
 for (const c of chunkFiles) hash.update('\0' + c.name + '\0').update(c.src);
+// any change to map data or build templates must also bump the version, so
+// readers get the update toast and the SW refreshes its caches
+const mapFiles = existsSync(MAPDATA)
+  ? readdirSync(MAPDATA).filter((f) => f.endsWith('.json')).sort()
+  : [];
+for (const f of mapFiles) hash.update('\0map:' + f + '\0').update(readFileSync(join(MAPDATA, f)));
+for (const t of ['sw.js', 'map.js']) hash.update('\0tpl:' + t + '\0').update(readFileSync(join(TEMPLATES, t)));
 const VERSION = hash.digest('hex').slice(0, 12);
 
 // ---------------------------------------------------------------------------
@@ -179,8 +188,34 @@ for (const c of chunkFiles) {
 // ---------------------------------------------------------------------------
 let shell = shellSrc;
 
-// 6a. chunk mount point where the chapter views used to sit
-shell = replaceOnce(shell, '<!-- @CHAPTER-CHUNKS -->', '<div id="chunk-root"></div>', '@CHAPTER-CHUNKS');
+// 6a. chunk mount point where the chapter views used to sit, plus the two
+// PWA-only views (map + attribution). These exist ONLY in the built shell —
+// never in the authoring master or the assembled standalone file.
+const aboutView = `<div class="view" id="view-about">
+  <div class="wrap">
+    <h2 style="font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;margin:26px 0 6px;">About &amp; Credits</h2>
+    <p style="color:var(--ink-soft);font-size:15px;">The Chronicle is a private, ad-free, tracker-free book. These are the shoulders it stands on.</p>
+    <h3 style="margin:22px 0 4px;">The Map of Time</h3>
+    <p style="font-size:15px;"><b>Polity borders:</b> <a href="https://seshatdatabank.info/seshat-cliopatria/" target="_blank" rel="noopener">Cliopatria</a>, from the Seshat Global History Databank — licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Borders are simplified for mobile delivery and reflect one scholarly reconstruction among several; uncertainty is inherent to historical geography.</p>
+    <p style="font-size:15px;"><b>Land basemap:</b> <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> — public domain.</p>
+    <p style="font-size:15px;">The map view was inspired in part by <a href="https://worldempires.co.uk" target="_blank" rel="noopener">worldempires.co.uk</a>.</p>
+    <h3 style="margin:22px 0 4px;">The book itself</h3>
+    <p style="font-size:15px;"><b>Chapter images &amp; schematic maps:</b> drawn for this book; photographic references via Wikimedia Commons contributors.</p>
+    <p style="font-size:15px;"><b>Text sources:</b> every chapter carries its own numbered references — the scholars named there did the real work.</p>
+    <p style="margin-top:26px;"><a href="#" data-goto="home">← Back to the book</a></p>
+  </div>
+</div>`;
+shell = replaceOnce(shell, '<!-- @CHAPTER-CHUNKS -->',
+  '<div class="view" id="view-map"></div>\n' + aboutView + '\n<div id="chunk-root"></div>',
+  '@CHAPTER-CHUNKS');
+
+// 6a-bis. home entry point: a navigator card in the book's own style, right
+// after the Grand Timeline / World cards
+shell = replaceOnce(shell,
+  `<a class="world-cta" data-goto="world" href="#"><b>The World, Year by Year →</b> Freeze any moment — 3000 BCE to Alexander — and see what every civilization on earth was doing at once.</a>`,
+  `<a class="world-cta" data-goto="world" href="#"><b>The World, Year by Year →</b> Freeze any moment — 3000 BCE to Alexander — and see what every civilization on earth was doing at once.</a>
+      <a class="world-cta" data-goto="map" href="#"><b>The Map of Time →</b> Every border on earth, 3400 BCE to today — drag the year and watch empires breathe. Tap one to read its chapter.</a>`,
+  'world nav card');
 
 // 6b. head: manifest, iOS meta, icons, PWA styles
 const headInject = `
@@ -260,10 +295,43 @@ const loaderJs = `  var barTitle = document.getElementById('bar-title');
     inflight[chunk] = p;
     return p;
   }
+  /* PWA-only views: the Map of Time and the credits page (injected by build) */
+  views['map'] = 'view-map';   titles['map'] = 'The Map of Time';
+  views['about'] = 'view-about'; titles['about'] = 'About & Credits';
+  var mapModule = null;
+  function ensureMapModule(){
+    if (window.ChronicleMap) return Promise.resolve();
+    if (mapModule) return mapModule;
+    mapModule = new Promise(function(res, rej){
+      var s = document.createElement('script');
+      s.src = 'map/map.js?v=' + CHUNKS.version;
+      s.onload = res; s.onerror = function(){ mapModule = null; rej(new Error('map module')); };
+      document.head.appendChild(s);
+    });
+    return mapModule;
+  }
+  function openMap(opts){
+    return ensureMapModule().then(function(){
+      _showCore('map', opts);
+      window.ChronicleMap.open({
+        version: CHUNKS.version,
+        root: document.getElementById('view-map'),
+        show: show,
+        isChapter: function(slug){ return !!views[slug] && !!CHUNKS.bySlug[slug]; }
+      });
+    });
+  }
   function show(name, opts){
     opts = opts || {};
     if (!views[name]) name = 'home';
+    if (current === 'map' && name !== 'map' && window.ChronicleMap) window.ChronicleMap.close();
     if (name === 'search') loadIndex();
+    if (name === 'map') {
+      showLoading(true);
+      return openMap(opts)
+        .then(function(){ showLoading(false); })
+        .catch(function(){ showLoading(false); _showCore('home', opts); });
+    }
     var chunk = CHUNKS.bySlug[name];
     if (!chunk || loaded.has(chunk)) { _showCore(name, opts); return Promise.resolve(); }
     showLoading(true);
@@ -463,6 +531,13 @@ mkdirSync(join(SITE, 'icons'), { recursive: true });
 
 writeFileSync(join(SITE, 'index.html'), shell);
 for (const c of chunkFiles) writeFileSync(join(SITE, 'content', c.file), c.src);
+
+// map view assets (Phase 4): pre-processed era payloads + lazy module
+if (mapFiles.length) {
+  mkdirSync(join(SITE, 'map'), { recursive: true });
+  for (const f of mapFiles) cpSync(join(MAPDATA, f), join(SITE, 'map', f));
+  writeFileSync(join(SITE, 'map', 'map.js'), readFileSync(join(TEMPLATES, 'map.js'), 'utf8'));
+}
 writeFileSync(join(SITE, 'search-index.json'), JSON.stringify(index));
 writeFileSync(join(SITE, 'manifest-chunks.json'), JSON.stringify(CHUNKS, null, 2));
 
@@ -501,6 +576,14 @@ execFileSync('python3', [join(ROOT, 'tools', 'assemble.py'), MASTER, join(SITE, 
 // ---------------------------------------------------------------------------
 // 9. Build log
 // ---------------------------------------------------------------------------
+// map-links sanity: every linked slug that IS a written chapter must resolve
+if (existsSync(join(MAPDATA, 'map-links.json'))) {
+  const ml = JSON.parse(readFileSync(join(MAPDATA, 'map-links.json'), 'utf8'));
+  const future = ml.links.filter((l) => !viewSlugs.has(l.slug)).map((l) => l.slug);
+  log(`  map links      ${ml.links.length} entries` +
+    (future.length ? ` (${[...new Set(future)].join(', ')} await their chapters)` : ''));
+}
+
 const perChunk = chunkFiles.map((c) =>
   `${c.name}: ${Object.values(bySlug).filter((f) => f === c.file).length}`).join(', ');
 log('');
