@@ -3,3 +3,4 @@ site/
 __pycache__/
 build/preview-*.png
 .map-cache/
+_extract/
