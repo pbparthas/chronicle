@@ -7,8 +7,8 @@ so new chapters are picked up automatically. Never hardcode chapter lists.
 """
 import os, re
 
-ORDER = ['era-1','era-2','era-3','era-4','era-5','interludes','east-asia','epics','cities','faiths']
-HEADMAP = {'era-cradles':'era-1','era-classical':'era-2','era-medieval':'era-3',
+ORDER = ['era-0','era-1','era-2','era-3','era-4','era-5','interludes','east-asia','epics','cities','faiths']
+HEADMAP = {'era-before':'era-0','era-cradles':'era-1','era-classical':'era-2','era-medieval':'era-3',
            'era-earlymodern':'era-4','era-modern':'era-5','era-interludes':'interludes',
            'era-eastasia':'east-asia','era-epics':'epics','era-cities':'cities','era-faiths':'faiths'}
 MARKER = '<!-- @CHAPTER-CHUNKS -->'

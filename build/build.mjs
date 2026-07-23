@@ -35,7 +35,7 @@ const TEMPLATES = join(ROOT, 'build', 'templates');
 
 // Canonical section order (from codexfs.py). This is a fixed list of shelf
 // sections, NOT a chapter list — chapters are discovered by scanning views.
-const ORDER = ['era-1', 'era-2', 'era-3', 'era-4', 'era-5',
+const ORDER = ['era-0', 'era-1', 'era-2', 'era-3', 'era-4', 'era-5',
   'interludes', 'east-asia', 'epics', 'cities', 'faiths'];
 
 const SHELL_VIEWS = new Set(['home', 'search', 'world', 'tl']);
@@ -62,6 +62,16 @@ const chunkFiles = ORDER
   .map((c) => ({ ...c, src: readFileSync(c.path, 'utf8') }));
 
 if (!chunkFiles.length) die('no content chunks found in master/content/');
+
+// A content file the ORDER list doesn't know about would be silently dropped
+// from the book (this happened when era-0.html was first delivered) — fail
+// loudly instead so the fix is a one-line ORDER addition, never a mystery.
+const orphans = readdirSync(CONTENT)
+  .filter((f) => f.endsWith('.html') && !ORDER.includes(f.replace(/\.html$/, '')));
+if (orphans.length) {
+  die(`content file(s) not in the canonical ORDER list: ${orphans.join(', ')} — ` +
+    `add them to ORDER in build/build.mjs AND tools/codexfs.py (position = shelf order)`);
+}
 
 // ---------------------------------------------------------------------------
 // 2. Content hash (version) over the whole master, order-stable
