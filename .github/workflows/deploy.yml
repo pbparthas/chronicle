@@ -53,6 +53,15 @@ jobs:
       - name: Validate the standalone fallback
         run: python3 tools/validate_codex.py site/chronicle-complete.html
 
+      # Ensures Pages is enabled with Source = GitHub Actions (idempotent);
+      # without this the deploy step 404s on a repo where Pages was never
+      # enabled or is set to branch mode.
+      - name: Setup Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
