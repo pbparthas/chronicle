@@ -455,7 +455,7 @@ function imgFail(i){ i.style.display = 'none'; }
         <span class="badge b-inf">inferred</span> (scholarly consensus from indirect evidence), or
         <span class="badge b-leg">legend</span> (tradition, told as tradition). Where scholars disagree, the disagreement is stated. Dates use BCE/CE — the same years as the older BC/AD. Chapters are numbered by era and position — II·3 is the third chapter of the Classical World. A civilization is shelved in the era where its story begins. Tap ⚑ while reading to bookmark your spot; ⚑ Resume returns to it from anywhere.
       </div>
-      <nav class="shelf-nav"><a href="#era-cradles"><span class="g">I</span>First Cradles</a><a href="#era-classical"><span class="g">II</span>Classical World</a><a href="#era-medieval"><span class="g">III</span>Medieval World</a><a href="#era-earlymodern"><span class="g">IV</span>Early Modern</a><a href="#era-modern"><span class="g">V</span>Modern World</a><a href="#era-interludes"><span class="g">In·</span>Interludes</a><a href="#era-eastasia"><span class="g">E·</span>East Asia</a><a href="#era-epics"><span class="g">M·</span>Epics &amp; Myths</a><a href="#era-cities"><span class="g">C·</span>Great Cities</a><a href="#era-faiths"><span class="g">F·</span>Faiths</a></nav>
+      <nav class="shelf-nav"><a href="#era-before"><span class="g">0</span>Before History</a><a href="#era-cradles"><span class="g">I</span>First Cradles</a><a href="#era-classical"><span class="g">II</span>Classical World</a><a href="#era-medieval"><span class="g">III</span>Medieval World</a><a href="#era-earlymodern"><span class="g">IV</span>Early Modern</a><a href="#era-modern"><span class="g">V</span>Modern World</a><a href="#era-interludes"><span class="g">In·</span>Interludes</a><a href="#era-eastasia"><span class="g">E·</span>East Asia</a><a href="#era-epics"><span class="g">M·</span>Epics &amp; Myths</a><a href="#era-cities"><span class="g">C·</span>Great Cities</a><a href="#era-faiths"><span class="g">F·</span>Faiths</a></nav>
     </header>
 
     <a id="btn-resume" class="resume-card" href="#">⚑ Continue reading</a>
@@ -471,7 +471,11 @@ function imgFail(i){ i.style.display = 'none'; }
     <div class="shelf">
       <h2>The Chapters</h2>
 
-      <div class="era-head" id="era-cradles"><span class="num">I</span><h3>The First Cradles</h3><span class="span">c. 3500–539 BCE</span></div>
+      <div class="era-head" id="era-before"><span class="num">0</span><h3>Before History</h3><span class="span">The thaw, the first villages — the world that made the world</span></div>
+        <div class="chap ready" data-ch="thaw"><div class="rn">0·1</div><div><h4>The Thaw</h4><p>The end of the Ice Age — seas rise a hundred metres, coastlines drown, the Gulf floods, the Sahara greens: the remaking of the earth that made civilization possible.</p><div class="where">The whole planet · c. 20,000–6000 BCE</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="villages"><div class="rn">0·2</div><div><h4>The First Villages</h4><p>Temples before farming at Göbekli Tepe, the town with no streets at Çatalhöyük, Jericho’s tower — the ten-thousand-year runway to Sumer.</p><div class="where">The Fertile Crescent · c. 12,000–4000 BCE</div></div><div class="status">Read</div></div>
+
+        <div class="era-head" id="era-cradles"><span class="num">I</span><h3>The First Cradles</h3><span class="span">c. 3500–539 BCE</span></div>
       <div class="chapters">
         <div class="chap ready" data-ch="sumer">
           <div class="rn">I·1</div>
@@ -712,6 +716,209 @@ function imgFail(i){ i.style.display = 'none'; }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- HINT POPOVER -->
 <div id="hint-pop"><span class="hint-x">✕</span><div class="hint-term" id="hint-term"></div><div class="hint-body" id="hint-body"></div></div>
 
@@ -812,8 +1019,8 @@ function imgFail(i){ i.style.display = 'none'; }
   };
 
   /* ---------- views / router ---------- */
-  var views = { home: 'view-home', search: 'view-search', world: 'view-world', tl: 'view-tl', sumer: 'view-sumer', akkad: 'view-akkad', babylonia: 'view-babylonia', 'egypt-ok': 'view-egypt-ok', 'egypt-nk': 'view-egypt-nk', kush: 'view-kush', indus: 'view-indus', minoans: 'view-minoans', caral: 'view-caral', hittites: 'view-hittites', assyria: 'view-assyria', persia: 'view-persia', 'egypt-twilight': 'view-egypt-twilight', 'israel-judah': 'view-israel-judah', 'judea-maccabees': 'view-judea-maccabees', phoenicians: 'view-phoenicians', gilgamesh: 'view-gilgamesh', babylon: 'view-babylon', elam: 'view-elam', 'egyptian-pantheon': 'view-egyptian-pantheon', alexandria: 'view-alexandria', zoroastrianism: 'view-zoroastrianism', iliad: 'view-iliad', greece: 'view-greece', rome: 'view-rome', 'rome-empire': 'view-rome-empire', 'rome-fall': 'view-rome-fall' };
-  var titles = { home: 'The Chronicle', search: 'Search', world: 'The World, Year by Year', tl: 'The Grand Timeline', sumer: 'Chapter I·1 — Sumer', akkad: 'Chapter I·2 — Akkad & Old Babylon', babylonia: 'Chapter I·3 — Babylon', 'egypt-ok': 'Chapter I·5 — Egypt: The Old Kingdom', 'egypt-nk': 'Chapter I·6 — Egypt: Middle & New Kingdoms', kush: 'Chapter I·7 — Kush & Nubia', indus: 'Chapter I·8 — The Indus Valley', minoans: 'Chapter I·9 — The Minoans & Mycenaeans', caral: 'Chapter I·10 — Caral, Olmec & the First Americas', hittites: 'Chapter I·11 — The Hittites & the Bronze Age Collapse', assyria: 'Chapter I·4 — Assyria', persia: 'Chapter II·5 — Achaemenid Persia', 'egypt-twilight': 'Chapter II·1 — Egypt: The Long Twilight', 'israel-judah': 'Chapter II·2 — Israel & Judah', 'judea-maccabees': 'Chapter II·3 — Judea: Maccabees to Masada', phoenicians: 'Chapter II·4 — The Phoenicians', gilgamesh: 'Chapter M·I — Gilgamesh', babylon: 'Chapter C·I — Babylon', elam: 'Chapter In·I — Elam', 'egyptian-pantheon': 'Chapter M·VII — The Egyptian Pantheon', alexandria: 'Chapter C·IV — Alexandria', zoroastrianism: 'Chapter F·VI — Zoroastrianism', iliad: 'Chapter M·II — The Iliad & the Trojan War', greece: 'Chapter II·11 — Greece & Alexander', rome: 'Chapter II·8 — Rome: The Republic', 'rome-empire': 'Chapter II·9 — Rome: The Empire', 'rome-fall': 'Chapter II·10 — Rome: The Fall of the West' };
+  var views = { home: 'view-home', search: 'view-search', world: 'view-world', tl: 'view-tl', thaw: 'view-thaw', villages: 'view-villages', sumer: 'view-sumer', akkad: 'view-akkad', babylonia: 'view-babylonia', 'egypt-ok': 'view-egypt-ok', 'egypt-nk': 'view-egypt-nk', kush: 'view-kush', indus: 'view-indus', minoans: 'view-minoans', caral: 'view-caral', hittites: 'view-hittites', assyria: 'view-assyria', persia: 'view-persia', 'egypt-twilight': 'view-egypt-twilight', 'israel-judah': 'view-israel-judah', 'judea-maccabees': 'view-judea-maccabees', phoenicians: 'view-phoenicians', gilgamesh: 'view-gilgamesh', babylon: 'view-babylon', elam: 'view-elam', 'egyptian-pantheon': 'view-egyptian-pantheon', alexandria: 'view-alexandria', zoroastrianism: 'view-zoroastrianism', iliad: 'view-iliad', greece: 'view-greece', rome: 'view-rome', 'rome-empire': 'view-rome-empire', 'rome-fall': 'view-rome-fall' };
+  var titles = { home: 'The Chronicle', search: 'Search', world: 'The World, Year by Year', tl: 'The Grand Timeline', thaw: 'Chapter 0·1 — The Thaw', villages: 'Chapter 0·2 — The First Villages', sumer: 'Chapter I·1 — Sumer', akkad: 'Chapter I·2 — Akkad & Old Babylon', babylonia: 'Chapter I·3 — Babylon', 'egypt-ok': 'Chapter I·5 — Egypt: The Old Kingdom', 'egypt-nk': 'Chapter I·6 — Egypt: Middle & New Kingdoms', kush: 'Chapter I·7 — Kush & Nubia', indus: 'Chapter I·8 — The Indus Valley', minoans: 'Chapter I·9 — The Minoans & Mycenaeans', caral: 'Chapter I·10 — Caral, Olmec & the First Americas', hittites: 'Chapter I·11 — The Hittites & the Bronze Age Collapse', assyria: 'Chapter I·4 — Assyria', persia: 'Chapter II·5 — Achaemenid Persia', 'egypt-twilight': 'Chapter II·1 — Egypt: The Long Twilight', 'israel-judah': 'Chapter II·2 — Israel & Judah', 'judea-maccabees': 'Chapter II·3 — Judea: Maccabees to Masada', phoenicians: 'Chapter II·4 — The Phoenicians', gilgamesh: 'Chapter M·I — Gilgamesh', babylon: 'Chapter C·I — Babylon', elam: 'Chapter In·I — Elam', 'egyptian-pantheon': 'Chapter M·VII — The Egyptian Pantheon', alexandria: 'Chapter C·IV — Alexandria', zoroastrianism: 'Chapter F·VI — Zoroastrianism', iliad: 'Chapter M·II — The Iliad & the Trojan War', greece: 'Chapter II·11 — Greece & Alexander', rome: 'Chapter II·8 — Rome: The Republic', 'rome-empire': 'Chapter II·9 — Rome: The Empire', 'rome-fall': 'Chapter II·10 — Rome: The Fall of the West' };
   var current = 'home';
   var fab = document.getElementById('bm-fab');
   var barTitle = document.getElementById('bar-title');
