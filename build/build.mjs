@@ -443,11 +443,11 @@ shell = replaceOnce(shell,
   initTimelineRegions();    /* F8: region attrs + chips */
   var _r = parseHash();     /* F9: deep-link if a URL was shared/bookmarked */
   if (location.hash && location.hash !== '#/' && views[_r.view]) {
-    show(_r.view, { replace:true, scrollToSection: _r.section });
+    show(_r.view, { replace:true, scrollToSection: _r.section, noVT:true });
   } else {
     var last = store.get('lastView');
     var start = (last && views[last] && last !== 'search') ? last : 'home';
-    show(start, { replace:true });
+    show(start, { replace:true, noVT:true });
   }`,
   `  addReadTimes(document);
   markShelfFinished();
@@ -456,11 +456,11 @@ shell = replaceOnce(shell,
   initTimelineRegions();
   var _r = parseHash();
   if (location.hash && location.hash !== '#/' && views[_r.view]) {
-    show(_r.view, { replace:true, scrollToSection: _r.section });
+    show(_r.view, { replace:true, scrollToSection: _r.section, noVT:true });
   } else {
     var last = store.get('lastView');
     var start = (last && views[last] && last !== 'search') ? last : 'home';
-    show(start, { replace:true });
+    show(start, { replace:true, noVT:true });
   }
 
   /* ---------- PWA boot: service worker, offline warm, update check, install ---------- */
