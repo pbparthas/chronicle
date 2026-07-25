@@ -451,13 +451,18 @@ shell = replaceOnce(shell,
   }
 
   /* ---------- PWA boot: service worker, offline warm, update check, install ---------- */
+  var toastShown = false;
   function showUpdateToast(){
     var t = document.getElementById('update-toast');
-    if (!t) return;
+    if (!t || toastShown) return;
+    toastShown = true;
     t.classList.add('show');
     t.onclick = function(){
-      if (swWaiting) { swWaiting.postMessage({ type: 'SKIP_WAITING' }); }
-      else { window.location.reload(); }
+      // the new SW skip-waits, so it is (or is about to be) active; a plain
+      // reload fetches the fresh shell network-first. controllerchange also
+      // triggers a reload, so this always lands on the new version.
+      if (swWaiting) { try { swWaiting.postMessage({ type: 'SKIP_WAITING' }); } catch(e){} }
+      window.location.reload();
     };
   }
   function bootPWA(){

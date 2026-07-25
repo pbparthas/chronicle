@@ -15,6 +15,10 @@ const CORE = [
 ];
 
 self.addEventListener('install', (e) => {
+  // Activate the new version immediately instead of waiting for every tab to
+  // close. With clients.claim() on activate + the shell's controllerchange
+  // reload, a deploy applies on the next launch — no stuck "tap to update" loop.
+  self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)));
 });
 
@@ -43,9 +47,18 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Navigations resolve to the cached shell (offline-first single page).
+  // Navigations are network-first so a new deploy is visible on the next online
+  // launch; the fresh shell is cached for offline, and we fall back to it offline.
   if (req.mode === 'navigate') {
-    e.respondWith(caches.match('index.html').then((r) => r || fetch(req)));
+    e.respondWith(
+      fetch(req).then((resp) => {
+        if (resp && resp.ok) {
+          const copy = resp.clone();
+          caches.open(CACHE).then((c) => c.put('index.html', copy));
+        }
+        return resp;
+      }).catch(() => caches.match('index.html'))
+    );
     return;
   }
 

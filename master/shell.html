@@ -486,6 +486,11 @@
   #view-tl [data-region] { transition:opacity .25s; }
   #view-tl [data-region].tl-dim { opacity:0.15; }
 
+  /* era-head overflow fix: a long section caption (e.g. Era 0's) must wrap, not
+     force a viewport-wide row. Short date captions still sit inline, right-aligned. */
+  .era-head { flex-wrap: wrap; }
+  .era-head .span { white-space: normal; min-width: 0; }
+
   /* [CSS-only slot] Era Prelude link inside .era-head (writing pipeline adds the anchors) */
   .era-head .era-about { margin-left:auto; align-self:center; font-family:'Barlow Condensed',sans-serif;
     font-size:12.5px; letter-spacing:0.06em; color:var(--clay-deep); text-decoration:none; white-space:nowrap; }
