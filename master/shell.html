@@ -456,7 +456,7 @@
 
   /* [F5] finished-chapter check on shelf cards + reset row */
   .chap .fin-check { color:var(--reed); font-weight:700; margin-left:6px; }
-  #reset-progress { width:100%; background:var(--sand); border:1px solid var(--sand-deep); border-radius:8px;
+  #reset-progress, #btn-refresh { width:100%; background:var(--sand); border:1px solid var(--sand-deep); border-radius:8px;
     padding:11px; font-family:'Barlow Condensed',sans-serif; font-size:13.5px; letter-spacing:0.06em;
     text-transform:uppercase; color:var(--ink-soft); cursor:pointer; }
 
@@ -521,8 +521,8 @@
   .chap.ready:active, .world-cta:active, .s-hit:active, .shelf-nav a:active, .resume-card:active {
     transform: scale(.982); filter: brightness(.96); }
 
-  /* [v2·5] no accidental pull-to-refresh; no overscroll glow against focus mode */
-  html, body { overscroll-behavior-y: none; }
+  /* [v2·5] withdrawn: installed PWAs already suppress pull-to-refresh, and a
+     field report of broken scrolling argues for zero scroll-adjacent globals. */
 
   /* [v2·8] icon toolbar */
   .topbar #btn-home, .topbar #btn-search, .topbar #btn-aa {
@@ -868,6 +868,8 @@ function imgFail(i){ i.style.display = 'none'; }
   </div>
   <div class="set-h">Reading Progress</div>
   <button id="reset-progress">Reset reading progress</button>
+  <div class="set-h">Updates</div>
+  <button id="btn-refresh">Clear cache &amp; get latest</button>
 </div>
 
 
@@ -960,16 +962,17 @@ function imgFail(i){ i.style.display = 'none'; }
       if (name === 'search') { setTimeout(function(){ document.getElementById('s-input').focus(); }, 60); }
       var sec = opts.scrollToSection ? document.getElementById(opts.scrollToSection) : null;
       if (!opts.keepScroll) {
-        /* restore now AND on the next frame: switching a view (display + the
-           content-visibility:auto sections) can leave the page briefly un-laid-out,
-           which would clamp a synchronous scroll to the top. */
+        /* Landings are INSTANT (never smooth): gliding thousands of pixels
+           through content-visibility regions is janky and its long scroll
+           tail fights the chrome logic. Restore now AND on the next frame:
+           a just-shown view can be briefly un-laid-out, clamping the scroll. */
         var doScroll = function(fn){ fn(); requestAnimationFrame(fn); };
-        if (sec) { doScroll(function(){ sec.scrollIntoView(); }); }
+        if (sec) { doScroll(function(){ sec.scrollIntoView({ behavior:'instant', block:'start' }); }); }
         else if (name !== 'home' && name !== 'search') {
           var target = opts.scrollTo != null ? opts.scrollTo : parseInt(store.get('pos:'+name) || '0', 10);
-          doScroll(function(){ window.scrollTo(0, target); });
+          doScroll(function(){ window.scrollTo({ top: target, behavior:'instant' }); });
         } else {
-          window.scrollTo(0, 0);
+          window.scrollTo({ top: 0, behavior:'instant' });
         }
       }
       store.set('lastView', name);
@@ -979,21 +982,13 @@ function imgFail(i){ i.style.display = 'none'; }
       if (name === 'home') markShelfFinished(); /* [v2·10] hairlines reflect the session, not just boot */
       updateProgress();
     };
-    /* [v2·3] views crossfade like app screens where the browser supports it.
-       Watchdog: browsers can pause animations (battery saver, "remove
-       animations") WITHOUT reporting prefers-reduced-motion — a paused
-       view transition freezes the whole page, scroll included. Force-complete
-       within 600ms no matter what, and never transition the boot navigation. */
-    if (switching && !opts.noVT && document.startViewTransition &&
-        !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      try {
-        var vt = document.startViewTransition(apply);
-        if (vt && vt.finished && vt.finished.catch) vt.finished.catch(function(){});
-        if (vt && vt.skipTransition) setTimeout(function(){ try { vt.skipTransition(); } catch(e){} }, 600);
-      } catch(e) { apply(); }
-    } else {
-      apply();
-    }
+    /* [v2·3] view transitions DISABLED after a field report of a total
+       page freeze on the owner's device (a pending transition blocks all
+       interaction, scroll included, and paused-animation modes can pin it
+       open despite the watchdog). The crossfade is decorative; the book
+       being scrollable is not. Revisit behind an Aa setting if ever. */
+    void switching;
+    apply();
   }
 
   document.getElementById('btn-home').addEventListener('click', function(){ show('home'); });
@@ -1050,7 +1045,10 @@ function imgFail(i){ i.style.display = 'none'; }
   }
   function onFocusScroll(){
     if (!isChapter(current)) { document.body.classList.remove('chrome-hidden'); lastScrollY = window.scrollY; return; }
-    if (Date.now() < chromeGraceUntil) { lastScrollY = window.scrollY; return; }
+    /* grace after navigation extends while the landing scroll is still moving
+       (smooth scrollIntoView can run past any fixed window); it lapses only
+       once the page has been quiet for a beat. */
+    if (Date.now() < chromeGraceUntil) { chromeGraceUntil = Date.now() + 250; lastScrollY = window.scrollY; return; }
     var y = window.scrollY;
     if (y > 120 && y > lastScrollY + 4) document.body.classList.add('chrome-hidden');
     else if (y < lastScrollY - 4 || y <= 4) document.body.classList.remove('chrome-hidden');
@@ -1081,8 +1079,11 @@ function imgFail(i){ i.style.display = 'none'; }
      citations, and progress all keep working). */
   document.addEventListener('click', function(e){
     if (!isChapter(current)) return;
+    /* the click that NAVIGATED here (card, search hit) bubbles to this
+       listener after show() ran — the grace window identifies and skips it */
+    if (Date.now() < chromeGraceUntil) return;
     if (window.getSelection && String(window.getSelection())) return;
-    if (e.target.closest('a,button,input,sup.cite,.hint,[data-goto],#hint-pop,#cite-pop,#contents-sheet,#settings-sheet,#settings-backdrop,.topbar,#read-foot,.voices,figure')) return;
+    if (e.target.closest('a,button,input,sup.cite,.hint,[data-goto],#hint-pop,#cite-pop,#contents-sheet,#settings-sheet,#settings-backdrop,.topbar,#read-foot,.voices,figure,.s-hit,.chap')) return;
     var w = window.innerWidth, x = e.clientX;
     var paging = store.get('set:taps') === '1';
     if (paging && x > w * 0.72) { window.scrollBy(0, window.innerHeight - 90); return; }
@@ -1195,6 +1196,28 @@ function imgFail(i){ i.style.display = 'none'; }
     });
     updateProgressStrip();
   }
+  /* [Updates] hard refresh: drop every service worker + cache, keep bookmarks
+     and settings (localStorage untouched), then pull the newest version. */
+  document.getElementById('btn-refresh').addEventListener('click', function(){
+    toast('Updating…');
+    var work = [];
+    try {
+      if ('serviceWorker' in navigator) {
+        work.push(navigator.serviceWorker.getRegistrations().then(function(rs){
+          return Promise.all(rs.map(function(r){ return r.unregister(); }));
+        }));
+      }
+      if (window.caches && caches.keys) {
+        work.push(caches.keys().then(function(ks){
+          return Promise.all(ks.map(function(k){ return caches.delete(k); }));
+        }));
+      }
+    } catch(e){}
+    var done = function(){ window.location.replace(window.location.pathname + '?fresh=' + Date.now()); };
+    Promise.all(work).then(done, done);
+    setTimeout(done, 4000); /* belt: never hang on a wedged SW */
+  });
+
   document.getElementById('reset-progress').addEventListener('click', function(){
     if (!window.confirm('Reset reading progress? This clears which chapters are marked finished.')) return;
     store.keys().forEach(function(k){ if (k.indexOf('fin:') === 0 || k.indexOf('pct:') === 0) store.remove(k); });

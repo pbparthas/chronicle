@@ -275,11 +275,11 @@ const bodyInject = `<div id="chunk-loading">opening chapter…</div>
 ${MAIN_SCRIPT}`;
 shell = replaceOnce(shell, MAIN_SCRIPT, bodyInject, 'main <script>');
 
-// 6d. install hint inside the settings sheet (after the reset-progress row)
+// 6d. install hint inside the settings sheet (after the updates row)
 shell = replaceOnce(shell,
-  `  <button id="reset-progress">Reset reading progress</button>
+  `  <button id="btn-refresh">Clear cache &amp; get latest</button>
 </div>`,
-  `  <button id="reset-progress">Reset reading progress</button>
+  `  <button id="btn-refresh">Clear cache &amp; get latest</button>
   <div class="set-h">This Book</div>
   <button id="btn-install">⤓ Add to home screen</button>
 </div>`,
