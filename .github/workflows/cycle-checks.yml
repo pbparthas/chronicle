@@ -1,0 +1,53 @@
+name: Cycle gates (G1-G7)
+
+# Re-verifies every gate on cycle PRs, independently of the session that
+# claims they passed. No model calls. The baseline is the PR's merge-base —
+# the same definition stage 2 uses for freshness.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: cycle-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    if: startsWith(github.head_ref, 'cycle/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Pinned-script check (preflight parity)
+        run: cd scripts && sha256sum -c SKILL_SHA256SUMS
+
+      - name: Build baseline from merge-base
+        run: |
+          MB=$(git merge-base origin/main HEAD)
+          echo "merge-base: $MB"
+          git worktree add /tmp/mb "$MB"
+          cp -r /tmp/mb/master /tmp/baseline
+
+      - name: Read cycle state
+        id: state
+        run: |
+          RUN_DIR=$(ls -d pipeline/logs/*/ 2>/dev/null | sort | tail -1)
+          test -f "$RUN_DIR/state.json" || { echo "no run state on this branch"; exit 1; }
+          echo "chunk=$(python3 -c "import json;print(json.load(open('$RUN_DIR/state.json'))['chunk'])")" >> "$GITHUB_OUTPUT"
+          echo "shell=$(python3 -c "import json;print(json.load(open('$RUN_DIR/state.json'))['fields'].get('shell-work','no'))")" >> "$GITHUB_OUTPUT"
+
+      - name: G1-G7
+        run: |
+          ARGS="--baseline /tmp/baseline --chunk ${{ steps.state.outputs.chunk }}"
+          if [ "${{ steps.state.outputs.shell }}" = "yes" ]; then ARGS="$ARGS --shell-work"; fi
+          python3 pipeline/lib/gates.py $ARGS

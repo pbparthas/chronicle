@@ -1,0 +1,48 @@
+name: Nightly drift check
+
+# Catches corruption introduced outside the pipeline (spec §10). No model
+# calls: validator + assemble round-trip + regression of main against the
+# last known-good state, marked by the drift-baseline tag. The tag advances
+# only when tonight's checks pass.
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validator + round-trip
+        run: python3 scripts/validate_codex.py master/
+
+      - name: Assemble
+        run: python3 scripts/assemble.py master /tmp/assembled.html
+
+      - name: Regression vs drift-baseline
+        run: |
+          if git rev-parse -q --verify refs/tags/drift-baseline >/dev/null; then
+            git worktree add /tmp/base drift-baseline
+            python3 scripts/check_regression.py /tmp/base/master master
+          else
+            echo "no drift-baseline tag yet — bootstrapping tonight"
+          fi
+
+      - name: Advance drift-baseline
+        run: |
+          git config user.name "chronicle-drift"
+          git config user.email "noreply@anthropic.com"
+          git tag -f drift-baseline HEAD
+          git push -f origin drift-baseline
