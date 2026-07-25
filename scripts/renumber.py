@@ -11,7 +11,7 @@ import codexfs
 def main(path):
     s, _mode = codexfs.load(path)
     # 1. Walk the five main era shelves in DOM order
-    era_iter = list(re.finditer(r'<div class="era-head"[^>]*><span class="num">(I{1,3}|IV|V)</span>', s))
+    era_iter = list(re.finditer(r'<div class="era-head"[^>]*><span class="num">(0|I{1,3}|IV|V)</span>', s))
     assignments = {}  # slug -> chapter id (for ready cards)
     out = s
     for idx, m in enumerate(era_iter):

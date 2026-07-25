@@ -132,6 +132,52 @@ def main(path: str) -> int:
     else:
         failures.append("no <script> block found")
 
+    # section integrity: every era-head must resolve to a chunk; every chapter to a known chunk
+    try:
+        hm = codexfs.headmap_of(s)
+        bad_heads = sorted(h for h, ch in hm.items() if not ch)
+        if bad_heads:
+            failures.append("era-head(s) with no chunk mapping (add data-chunk attr or HEADMAP entry): " + ", ".join(bad_heads))
+        unmapped = sorted(sl for sl, ch in codexfs.chunk_of_slugs(s).items() if not ch)
+        if unmapped:
+            failures.append("chapter(s) under an unmapped section — WOULD BE DROPPED on split: " + ", ".join(unmapped))
+    except Exception as e:
+        failures.append("section-integrity check errored: " + str(e))
+
+    # round-trip stability: split(assemble(x)) must be a fixed point.
+    # A load/save cycle that changes the shell means the toolchain mutates the
+    # master on every write — this shipped once as unbounded blank-line growth in
+    # shell.html that nothing else caught. Content-free drift is still drift.
+    try:
+        if os.path.isdir(path):
+            shell_now = open(os.path.join(path, "shell.html"), encoding="utf-8").read()
+            shell_rt, _chunks_rt = codexfs.split(s)
+            if shell_rt != shell_now:
+                d = len(shell_rt) - len(shell_now)
+                blanks_now = sum(1 for ln in shell_now.splitlines() if not ln.strip())
+                blanks_rt = sum(1 for ln in shell_rt.splitlines() if not ln.strip())
+                failures.append(
+                    "round-trip instability: a save cycle would rewrite shell.html "
+                    f"({d:+d} chars, blank lines {blanks_now} -> {blanks_rt}). "
+                    "The toolchain is mutating the master on every write — fix codexfs.split "
+                    "before running renumber.py or any patch script."
+                )
+    except Exception as e:
+        failures.append("round-trip check errored: " + str(e))
+
+    # runaway whitespace: a long run of blank lines is the signature of the
+    # separator-accumulation class of bug.
+    try:
+        longest, run = 0, 0
+        for ln in s.splitlines():
+            run = run + 1 if not ln.strip() else 0
+            longest = max(longest, run)
+        if longest > 100:
+            failures.append(f"runaway blank-line run in the assembled book ({longest} consecutive) "
+                            "— likely separator accumulation from a load/save cycle")
+    except Exception as e:
+        failures.append("whitespace check errored: " + str(e))
+
     if failures:
         print(f"FAIL — {len(failures)} problem(s):")
         for f_ in failures:

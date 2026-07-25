@@ -11,7 +11,7 @@ installable, offline-capable app that keeps working while the book grows.
 master/            ← the authoring master (source of truth)
   shell.html         app shell + all CSS/JS; <!-- @CHAPTER-CHUNKS --> marks where chapters sit
   content/*.html     chapter views, grouped by shelf section (era-1, era-2, epics, …)
-tools/             ← the authoring pipeline's own scripts, reused verbatim (not reimplemented)
+scripts/             ← the authoring pipeline's own scripts, reused verbatim (not reimplemented)
   codexfs.py, assemble.py, validate_codex.py, renumber.py
 build/
   build.mjs          the deterministic transform: master/ → site/
@@ -36,7 +36,7 @@ already maintains the split) and emits `site/`:
 - **`app.webmanifest`**, **`sw.js`**, **`icons/`** — icons are rendered from the
   book's own cover skyline SVG.
 - **`chronicle-complete.html`** — the standalone single-file book (produced by
-  `tools/assemble.py`), published at the site root as the durable
+  `scripts/assemble.py`), published at the site root as the durable
   share-anywhere / offline fallback. It keeps its own runtime search indexer and
   is unaffected by the shell patch.
 
@@ -51,7 +51,7 @@ added later are picked up automatically.
   planned-but-unwritten chapters — the router falls back to home, as it always has);
 - no duplicate element ids across the shell + all chunks.
 
-The standalone fallback is additionally run through `tools/validate_codex.py` in CI.
+The standalone fallback is additionally run through `scripts/validate_codex.py` in CI.
 
 ## The ongoing update loop
 
@@ -78,7 +78,7 @@ Serve `site/` over HTTP (a service worker needs http/https, not `file://`), e.g.
 ## Deploying (GitHub Pages)
 
 One-time: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-After that, every push to `main` that touches `master/`, `build/`, or `tools/`
+After that, every push to `main` that touches `master/`, `build/`, or `scripts/`
 redeploys automatically. The output is a plain static folder, so switching to
 Cloudflare Pages later is trivial.
 

@@ -70,7 +70,7 @@ const orphans = readdirSync(CONTENT)
   .filter((f) => f.endsWith('.html') && !ORDER.includes(f.replace(/\.html$/, '')));
 if (orphans.length) {
   die(`content file(s) not in the canonical ORDER list: ${orphans.join(', ')} — ` +
-    `add them to ORDER in build/build.mjs AND tools/codexfs.py (position = shelf order)`);
+    `add them to ORDER in build/build.mjs AND scripts/codexfs.py (position = shelf order)`);
 }
 
 // ---------------------------------------------------------------------------
@@ -605,7 +605,7 @@ writeFileSync(join(SITE, 'icons', 'icon-512.png'), renderPng(iconSvg(0.10), 512)
 writeFileSync(join(SITE, 'icons', 'icon-maskable-512.png'), renderPng(iconSvg(0.20), 512));
 
 // standalone single-file fallback (reuse assemble.py — do not reimplement)
-execFileSync('python3', [join(ROOT, 'tools', 'assemble.py'), MASTER, join(SITE, 'chronicle-complete.html')],
+execFileSync('python3', [join(ROOT, 'scripts', 'assemble.py'), MASTER, join(SITE, 'chronicle-complete.html')],
   { stdio: 'inherit' });
 
 // ---------------------------------------------------------------------------

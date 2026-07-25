@@ -13,15 +13,34 @@ HEADMAP = {'era-before':'era-0','era-cradles':'era-1','era-classical':'era-2','e
            'era-eastasia':'east-asia','era-epics':'epics','era-cities':'cities','era-faiths':'faiths'}
 MARKER = '<!-- @CHAPTER-CHUNKS -->'
 
+def headmap_of(s):
+    """era-head id -> chunk name. Explicit data-chunk attributes on era-heads WIN;
+    the legacy HEADMAP constant fills gaps for shells that predate the attributes.
+    A head that resolves to None is a section the toolchain cannot place — validator fails on it."""
+    out = {}
+    for m in re.finditer(r'<div class="era-head" id="([a-z-]+)"([^>]*)>', s):
+        hid, attrs = m.group(1), m.group(2)
+        dc = re.search(r'data-chunk="([a-z0-9-]+)"', attrs)
+        out[hid] = dc.group(1) if dc else HEADMAP.get(hid)
+    return out
+
+def order_of(shell_text):
+    """Chunk assembly order derived from shelf DOM order; legacy ORDER fills the tail."""
+    seen = []
+    for hid, ch in headmap_of(shell_text).items():
+        if ch and ch not in seen: seen.append(ch)
+    return seen + [o for o in ORDER if o not in seen]
+
 def chunk_of_slugs(s):
     """slug -> chunk name, derived from the shelf."""
     heads = [(m.start(), m.group(1)) for m in re.finditer(r'<div class="era-head" id="([a-z-]+)"', s)]
     end_shelf = s.find('<!-- ============', heads[-1][0]) if heads else len(s)
+    hm = headmap_of(s)
     out = {}
     for i,(pos,hid) in enumerate(heads):
         nxt = heads[i+1][0] if i+1 < len(heads) else end_shelf
         for m in re.finditer(r'data-ch="([a-z-]+)"', s[pos:nxt]):
-            out[m.group(1)] = HEADMAP.get(hid)
+            out[m.group(1)] = hm.get(hid)
     return out
 
 def _extract_view(s, slug):
@@ -45,7 +64,15 @@ def _extract_view(s, slug):
     raise ValueError('unbalanced view: ' + slug)
 
 def split(s):
-    """full text -> (shell_text, {chunk: chunk_text})"""
+    """full text -> (shell_text, {chunk: chunk_text})
+
+    Inter-view whitespace is DROPPED, not carried into the shell. assemble()
+    regenerates separators ('\\n'.join across chunks, '\\n\\n'.join within one),
+    so preserving the old separators here made every load/save cycle harvest the
+    previous cycle's blank lines into shell.html and then add fresh ones —
+    unbounded growth that no validator check caught. Non-whitespace text between
+    views is still preserved; only pure separators are discarded.
+    """
     mapping = chunk_of_slugs(s)
     spans = []
     for slug, chunk in mapping.items():
@@ -55,17 +82,28 @@ def split(s):
     chunks, shell, last = {}, [], 0
     first = True
     for a,b,chunk in spans:
-        shell.append(s[last:a])
-        if first: shell.append(MARKER + '\n'); first = False
+        between = s[last:a]
+        if first:
+            shell.append(between)          # everything before the first view: real shell
+            shell.append(MARKER + '\n')
+            first = False
+        elif between.strip():
+            shell.append(between)          # real content between views: keep it
+        # else: pure separator whitespace — assemble() regenerates it
         chunks.setdefault(chunk, []).append(s[a:b])
         last = b
-    shell.append(s[last:])
+    tail = s[last:]
+    if spans:
+        # assemble() leaves the marker's own newline in front of the tail; strip
+        # leading newlines so repeated round trips do not accumulate one per pass.
+        tail = tail.lstrip('\n')
+    shell.append(tail)
     return ''.join(shell), {k: '\n\n'.join(v) for k,v in chunks.items()}
 
 def assemble(d):
     shell = open(os.path.join(d,'shell.html'), encoding='utf-8').read()
     parts = []
-    for name in ORDER:
+    for name in order_of(shell):
         p = os.path.join(d, 'content', name + '.html')
         if os.path.exists(p): parts.append(open(p, encoding='utf-8').read())
     return shell.replace(MARKER, '\n'.join(parts), 1)

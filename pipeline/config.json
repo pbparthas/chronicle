@@ -1,0 +1,4 @@
+{
+    "external_hunt_every": 5,
+    "budget_note": "model cost is governed by the Claude Code session; the session must report subagent token use in the PR"
+}
