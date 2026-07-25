@@ -2,5 +2,6 @@ node_modules/
 site/
 __pycache__/
 build/preview-*.png
+build/ui-*.png
 .map-cache/
 _extract/

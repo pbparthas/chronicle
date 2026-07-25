@@ -163,12 +163,12 @@ function indexView(viewEl) {
     for (const sec of art.querySelectorAll('section')) {
       const head = sec.querySelector('h2, h3');
       const secTitle = head ? norm(head.text) : chTitle;
-      index.push({ view, chTitle, secTitle, secId: sec.getAttribute('id') || '', text: norm(sec.text) });
+      index.push({ kind: 'section', view, chTitle, secTitle, secId: sec.getAttribute('id') || '', text: norm(sec.text) });
     }
   }
   for (const h of viewEl.querySelectorAll('.hint')) {
     index.push({
-      view, chTitle: 'Glossary', secTitle: norm(h.text), secId: '',
+      kind: 'hint', view, chTitle: 'Glossary', secTitle: norm(h.text), secId: '',
       text: norm(h.text) + ' — ' + norm(h.getAttribute('data-hint') || ''),
     });
   }
@@ -185,7 +185,7 @@ if (home) {
   for (const card of home.querySelectorAll('.chap')) {
     const h4 = card.querySelector('h4');
     if (!h4) continue;
-    index.push({ view: 'home', chTitle: 'The Shelf', secTitle: norm(h4.text), secId: '', text: norm(card.text) });
+    index.push({ kind: 'card', view: 'home', chTitle: 'The Shelf', secTitle: norm(h4.text), secId: '', text: norm(card.text) });
   }
 }
 for (const c of chunkFiles) {
@@ -262,13 +262,11 @@ const bodyInject = `<div id="chunk-loading">opening chapter…</div>
 ${MAIN_SCRIPT}`;
 shell = replaceOnce(shell, MAIN_SCRIPT, bodyInject, 'main <script>');
 
-// 6d. install hint inside the settings sheet (before the sheet's closing div)
+// 6d. install hint inside the settings sheet (after the reset-progress row)
 shell = replaceOnce(shell,
-  `    <button class="lh-btn" data-lh="1.95">Relaxed</button>
-  </div>
+  `  <button id="reset-progress">Reset reading progress</button>
 </div>`,
-  `    <button class="lh-btn" data-lh="1.95">Relaxed</button>
-  </div>
+  `  <button id="reset-progress">Reset reading progress</button>
   <div class="set-h">This Book</div>
   <button id="btn-install">⤓ Add to home screen</button>
 </div>`,
@@ -373,29 +371,10 @@ const searchLoader = `  /* ---------- search (build-time index, loaded lazily) -
 `;
 shell = shell.slice(0, idxStart) + searchLoader + shell.slice(idxEnd);
 
-// 6h. guard the search input handler against a not-yet-loaded index
-shell = replaceOnce(shell,
-  `  sInput.addEventListener('input', function(){
-    var q = sInput.value.trim().toLowerCase();`,
-  `  sInput.addEventListener('input', function(){
-    if (!index) { loadIndex().then(function(){ sInput.dispatchEvent(new Event('input')); }); return; }
-    var q = sInput.value.trim().toLowerCase();`,
-  'search input handler');
-
-// 6i. search result tap: navigate (async chunk load), then jump by section id
-shell = replaceOnce(shell,
-  `      div.addEventListener('click', function(){
-        show(h.item.view, { scrollTo: 0 });
-        var target = h.item.el || (h.item.secId ? document.getElementById(h.item.secId) : null);
-        if (target) setTimeout(function(){ target.scrollIntoView(); window.scrollBy(0,-60); }, 40);
-      });`,
-  `      div.addEventListener('click', function(){
-        show(h.item.view, { scrollTo: 0 }).then(function(){
-          var target = h.item.secId ? document.getElementById(h.item.secId) : null;
-          if (target) { target.scrollIntoView(); window.scrollBy(0,-60); }
-        });
-      });`,
-  'search tap handler');
+// 6h/6i. The ranked search (runSearch) lives in the shell below the `var sInput`
+// boundary, so it survives the slice above and drives BOTH artifacts. Its
+// lazy-load guard (`if (index === null) loadIndex().then(runSearch)`) and its
+// section-aware result tap are built in — no separate PWA patch is needed.
 
 // 6j. read-time: turn the one-shot pass into a reusable per-root function
 shell = replaceOnce(shell,
@@ -445,11 +424,31 @@ shell = replaceOnce(shell,
 shell = replaceOnce(shell,
   `  if (window.requestIdleCallback) { requestIdleCallback(buildIndex, { timeout: 4000 }); }
   else { setTimeout(buildIndex, 600); }
-  var last = store.get('lastView');
-  if (last && views[last] && last !== 'search') { show(last); } else { show('home'); }`,
+  markShelfFinished();      /* F5: paint finished ticks */
+  applyShelfFilter();       /* F7: restore Ready/All choice */
+  updateProgressStrip();    /* F6: hero counts */
+  initTimelineRegions();    /* F8: region attrs + chips */
+  var _r = parseHash();     /* F9: deep-link if a URL was shared/bookmarked */
+  if (location.hash && location.hash !== '#/' && views[_r.view]) {
+    show(_r.view, { replace:true, scrollToSection: _r.section });
+  } else {
+    var last = store.get('lastView');
+    var start = (last && views[last] && last !== 'search') ? last : 'home';
+    show(start, { replace:true });
+  }`,
   `  addReadTimes(document);
-  var last = store.get('lastView');
-  if (last && views[last] && last !== 'search') { show(last); } else { show('home'); }
+  markShelfFinished();
+  applyShelfFilter();
+  updateProgressStrip();
+  initTimelineRegions();
+  var _r = parseHash();
+  if (location.hash && location.hash !== '#/' && views[_r.view]) {
+    show(_r.view, { replace:true, scrollToSection: _r.section });
+  } else {
+    var last = store.get('lastView');
+    var start = (last && views[last] && last !== 'search') ? last : 'home';
+    show(start, { replace:true });
+  }
 
   /* ---------- PWA boot: service worker, offline warm, update check, install ---------- */
   function showUpdateToast(){
