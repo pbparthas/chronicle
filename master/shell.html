@@ -495,6 +495,67 @@
   .era-head .era-about { margin-left:auto; align-self:center; font-family:'Barlow Condensed',sans-serif;
     font-size:12.5px; letter-spacing:0.06em; color:var(--clay-deep); text-decoration:none; white-space:nowrap; }
   .era-head .era-about:active { color:var(--clay); }
+
+  /* ============================================================
+     UI v2 (owner-approved: items 1-8, 10-14; tab bar deferred)
+     ============================================================ */
+
+  /* [v2·2] safe areas: fold the status-bar inset into --topbar-h so every
+     dependent calc (body padding, progress bar, scroll margins, map top)
+     adapts; pad the bottom chrome past the gesture bar. */
+  :root { --sab: env(safe-area-inset-bottom, 0px); --topbar-h: calc(52px + env(safe-area-inset-top, 0px)); }
+  .topbar { padding-top: env(safe-area-inset-top, 0px); }
+  .top-fab, .toc-fab { bottom: calc(22px + var(--sab)); }
+  .toast { bottom: calc(30px + var(--sab)); }
+  #hint-pop, #cite-pop { bottom: calc(18px + var(--sab)); }
+  #settings-sheet, #contents-sheet { padding-bottom: calc(30px + var(--sab)); }
+
+  /* [v2·3] views change like screens: shorten the default crossfade */
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .18s; }
+  }
+
+  /* [v2·4] every tappable presses */
+  .chap.ready, .world-cta, .s-hit, .shelf-nav a, .resume-card {
+    transition: transform .08s ease, filter .08s ease; }
+  .chap.ready:active, .world-cta:active, .s-hit:active, .shelf-nav a:active, .resume-card:active {
+    transform: scale(.982); filter: brightness(.96); }
+
+  /* [v2·5] no accidental pull-to-refresh; no overscroll glow against focus mode */
+  html, body { overscroll-behavior-y: none; }
+
+  /* [v2·8] icon toolbar */
+  .topbar #btn-home, .topbar #btn-search, .topbar #btn-aa {
+    width:44px; height:44px; padding:0; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; flex:0 0 auto; }
+  .topbar button svg { width:20px; height:20px; fill:none; stroke:currentColor;
+    stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .topbar #btn-aa { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:18px;
+    letter-spacing:0; text-transform:none; }
+
+  /* [v2·10] shelf remembers: reading-progress hairline on partly-read cards */
+  .chap .rp { grid-column:1/-1; height:2px; background:var(--sand-deep); border-radius:1px;
+    margin-top:8px; overflow:hidden; }
+  .chap .rp i { display:block; height:100%; width:0; background:var(--clay); }
+
+  /* [v2·11] title-page moment: the cover owns the first viewport */
+  article .cover { min-height: calc(100vh - var(--topbar-h) - 44px);
+    min-height: calc(100svh - var(--topbar-h) - 44px);
+    display:flex; flex-direction:column; justify-content:center; }
+
+  /* [v2·13] tap-to-page setting buttons (own class so the line-height
+     bindings never touch them; styled to match .lh-btn) */
+  .tap-btn { flex:1; background:var(--sand); border:1px solid var(--sand-deep); border-radius:8px;
+    padding:10px 6px; font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-soft); cursor:pointer; }
+  .tap-btn.active { border-color:var(--clay); color:var(--clay-deep); box-shadow:0 0 0 1px var(--clay); }
+
+  /* [v2·14] quiet reading footer, appears with hidden chrome */
+  #read-foot { position:fixed; left:0; right:0; bottom: calc(8px + var(--sab)); z-index:57;
+    text-align:center; font-family:'Barlow Condensed',sans-serif; font-weight:600;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft);
+    opacity:0; pointer-events:none; transition:opacity .2s; }
+  #read-foot.show { opacity:.85; }
 </style>
 </head>
 <body>
@@ -504,10 +565,10 @@ function imgFail(i){ i.style.display = 'none'; }
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <button id="btn-home">⌂ Home</button>
+  <button id="btn-home" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v9h14v-9"/></svg></button>
   <div class="bar-title" id="bar-title">The Chronicle</div>
-  <button id="btn-aa" title="Reading settings">Aa</button>
-  <button id="btn-search">Search</button>
+  <button id="btn-aa" aria-label="Reading settings" title="Reading settings">Aa</button>
+  <button id="btn-search" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></button>
 </div>
 <div class="scroll-progress" id="progress"></div>
 
@@ -516,6 +577,7 @@ function imgFail(i){ i.style.display = 'none'; }
 <button class="top-fab" id="top-fab" title="Back to top">↑</button>
 <button class="toc-fab" id="toc-fab" title="Contents">≡</button>
 <div class="toast" id="toast"></div>
+<div id="read-foot"></div>
 
 <!-- ============ HOME VIEW ============ -->
 <div class="view active" id="view-home">
@@ -799,6 +861,11 @@ function imgFail(i){ i.style.display = 'none'; }
     <button class="lh-btn" data-lh="1.75">Normal</button>
     <button class="lh-btn" data-lh="1.95">Relaxed</button>
   </div>
+  <div class="set-h">Tap to Page</div>
+  <div class="lh-row">
+    <button class="tap-btn" data-taps="0">Off</button>
+    <button class="tap-btn" data-taps="1">Tap edges to turn</button>
+  </div>
   <div class="set-h">Reading Progress</div>
   <button id="reset-progress">Reset reading progress</button>
 </div>
@@ -883,31 +950,42 @@ function imgFail(i){ i.style.display = 'none'; }
     opts = opts || {};
     if (!views[name]) name = 'home';
     if (current !== 'home' && current !== 'search') { store.set('pos:'+current, String(window.scrollY|0)); }
-    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-    document.getElementById(views[name]).classList.add('active');
-    current = name;
-    barTitle.textContent = shortTitle(titles[name] || 'The Chronicle');
-    fab.classList.toggle('show', name !== 'home' && name !== 'search');
-    if (name === 'search') { setTimeout(function(){ document.getElementById('s-input').focus(); }, 60); }
-    var sec = opts.scrollToSection ? document.getElementById(opts.scrollToSection) : null;
-    if (!opts.keepScroll) {
-      /* restore now AND on the next frame: switching a view (display + the
-         content-visibility:auto sections) can leave the page briefly un-laid-out,
-         which would clamp a synchronous scroll to the top. */
-      var doScroll = function(fn){ fn(); requestAnimationFrame(fn); };
-      if (sec) { doScroll(function(){ sec.scrollIntoView(); }); }
-      else if (name !== 'home' && name !== 'search') {
-        var target = opts.scrollTo != null ? opts.scrollTo : parseInt(store.get('pos:'+name) || '0', 10);
-        doScroll(function(){ window.scrollTo(0, target); });
-      } else {
-        window.scrollTo(0, 0);
+    var switching = name !== current;
+    var apply = function(){
+      document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+      document.getElementById(views[name]).classList.add('active');
+      current = name;
+      barTitle.textContent = shortTitle(titles[name] || 'The Chronicle');
+      fab.classList.toggle('show', name !== 'home' && name !== 'search');
+      if (name === 'search') { setTimeout(function(){ document.getElementById('s-input').focus(); }, 60); }
+      var sec = opts.scrollToSection ? document.getElementById(opts.scrollToSection) : null;
+      if (!opts.keepScroll) {
+        /* restore now AND on the next frame: switching a view (display + the
+           content-visibility:auto sections) can leave the page briefly un-laid-out,
+           which would clamp a synchronous scroll to the top. */
+        var doScroll = function(fn){ fn(); requestAnimationFrame(fn); };
+        if (sec) { doScroll(function(){ sec.scrollIntoView(); }); }
+        else if (name !== 'home' && name !== 'search') {
+          var target = opts.scrollTo != null ? opts.scrollTo : parseInt(store.get('pos:'+name) || '0', 10);
+          doScroll(function(){ window.scrollTo(0, target); });
+        } else {
+          window.scrollTo(0, 0);
+        }
       }
+      store.set('lastView', name);
+      syncHistory(name, opts);
+      resetChrome();
+      if (isChapter(name)) observeNexts();
+      if (name === 'home') markShelfFinished(); /* [v2·10] hairlines reflect the session, not just boot */
+      updateProgress();
+    };
+    /* [v2·3] views crossfade like app screens where the browser supports it */
+    if (switching && document.startViewTransition &&
+        !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.startViewTransition(apply);
+    } else {
+      apply();
     }
-    store.set('lastView', name);
-    syncHistory(name, opts);
-    resetChrome();
-    if (isChapter(name)) observeNexts();
-    updateProgress();
   }
 
   document.getElementById('btn-home').addEventListener('click', function(){ show('home'); });
@@ -951,20 +1029,60 @@ function imgFail(i){ i.style.display = 'none'; }
   /* [F1/F4] chrome: progress-bar scoping, contents fab, focus mode */
   var tocFab = document.getElementById('toc-fab');
   var lastScrollY = 0;
+  var chromeGraceUntil = 0;
   function resetChrome(){
     document.body.classList.remove('chrome-hidden');
     var chap = isChapter(current);
     bar.classList.toggle('hide', !chap);
     tocFab.classList.toggle('show', chap);
     lastScrollY = window.scrollY;
+    /* navigation just landed the reader here — don't let its own scroll hide the chrome */
+    chromeGraceUntil = Date.now() + 500;
+    updateReadFoot();
   }
   function onFocusScroll(){
     if (!isChapter(current)) { document.body.classList.remove('chrome-hidden'); lastScrollY = window.scrollY; return; }
+    if (Date.now() < chromeGraceUntil) { lastScrollY = window.scrollY; return; }
     var y = window.scrollY;
     if (y > 120 && y > lastScrollY + 4) document.body.classList.add('chrome-hidden');
     else if (y < lastScrollY - 4 || y <= 4) document.body.classList.remove('chrome-hidden');
     lastScrollY = y;
+    updateReadFoot();
   }
+
+  /* [v2·14] quiet reading footer — percent + minutes left, shown with hidden chrome */
+  var readFoot = document.getElementById('read-foot');
+  var wordCache = {};
+  function chapterWords(){
+    var art = activeArticle(); if (!art) return 0;
+    if (!wordCache[current]) wordCache[current] = art.textContent.trim().split(/\s+/).length;
+    return wordCache[current];
+  }
+  function updateReadFoot(){
+    if (!readFoot) return;
+    var on = isChapter(current) && document.body.classList.contains('chrome-hidden');
+    readFoot.classList.toggle('show', on);
+    if (!on) return;
+    var f = viewFraction();
+    var mins = Math.max(0, Math.round(chapterWords() * (1 - f) / 220));
+    readFoot.textContent = Math.round(f * 100) + '% · ~' + mins + ' min left in chapter';
+  }
+
+  /* [v2·12/13] Kindle taps: centre toggles the chrome; with "Tap to page" on,
+     the side thirds turn the page (still a scroll underneath — bookmarks,
+     citations, and progress all keep working). */
+  document.addEventListener('click', function(e){
+    if (!isChapter(current)) return;
+    if (window.getSelection && String(window.getSelection())) return;
+    if (e.target.closest('a,button,input,sup.cite,.hint,[data-goto],#hint-pop,#cite-pop,#contents-sheet,#settings-sheet,#settings-backdrop,.topbar,#read-foot,.voices,figure')) return;
+    var w = window.innerWidth, x = e.clientX;
+    var paging = store.get('set:taps') === '1';
+    if (paging && x > w * 0.72) { window.scrollBy(0, window.innerHeight - 90); return; }
+    if (paging && x < w * 0.28) { window.scrollBy(0, -(window.innerHeight - 90)); return; }
+    document.body.classList.toggle('chrome-hidden');
+    lastScrollY = window.scrollY;
+    updateReadFoot();
+  });
 
   /* current-section tracking → shareable URL (replaceState) + contents highlight */
   var curSection = null;
@@ -1055,15 +1173,23 @@ function imgFail(i){ i.style.display = 'none'; }
     document.querySelectorAll('#view-home .chap.ready').forEach(function(card){
       var slug = card.getAttribute('data-ch'), status = card.querySelector('.status');
       if (!status) return;
+      var fin = store.get('fin:'+slug) === '1';
       var chk = status.querySelector('.fin-check');
-      if (store.get('fin:'+slug) === '1'){ if (!chk){ var s=document.createElement('span'); s.className='fin-check'; s.textContent='✓'; status.appendChild(s); } }
+      if (fin){ if (!chk){ var s=document.createElement('span'); s.className='fin-check'; s.textContent='✓'; status.appendChild(s); } }
       else if (chk){ chk.remove(); }
+      /* [v2·10] reading-progress hairline on partly-read, unfinished cards */
+      var pct = parseInt(store.get('pct:'+slug) || '0', 10);
+      var rp = card.querySelector('.rp');
+      if (!fin && pct > 3){
+        if (!rp){ rp = document.createElement('div'); rp.className = 'rp'; rp.appendChild(document.createElement('i')); card.appendChild(rp); }
+        rp.firstChild.style.width = Math.min(97, pct) + '%';
+      } else if (rp){ rp.remove(); }
     });
     updateProgressStrip();
   }
   document.getElementById('reset-progress').addEventListener('click', function(){
     if (!window.confirm('Reset reading progress? This clears which chapters are marked finished.')) return;
-    store.keys().forEach(function(k){ if (k.indexOf('fin:') === 0) store.remove(k); });
+    store.keys().forEach(function(k){ if (k.indexOf('fin:') === 0 || k.indexOf('pct:') === 0) store.remove(k); });
     markShelfFinished();
     toast('Reading progress reset');
   });
@@ -1142,7 +1268,10 @@ function imgFail(i){ i.style.display = 'none'; }
     if (current === 'home' || current === 'search') return;
     store.set('lastReadView', current);
     if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(function(){ store.set('pos:'+current, String(window.scrollY|0)); }, 250);
+    saveTimer = setTimeout(function(){
+      store.set('pos:'+current, String(window.scrollY|0));
+      if (isChapter(current)) store.set('pct:'+current, String(Math.round(viewFraction()*100)));
+    }, 250);
   }
   window.addEventListener('scroll', function(){
     if (scrollTicking) return;
@@ -1365,10 +1494,18 @@ function imgFail(i){ i.style.display = 'none'; }
     serif: "Georgia, 'Times New Roman', serif",
     sans: "system-ui, Roboto, 'Segoe UI', sans-serif"
   };
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
   function applySettings(){
-    var t = store.get('set:theme') || 'parchment';
+    /* [v2·7] before the reader ever chooses, follow the system scheme */
+    var t = store.get('set:theme');
+    if (!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'parchment';
     document.body.classList.remove('t-white','t-sepia','t-mint','t-dark','t-black');
     if (t !== 'parchment') document.body.classList.add('t-' + t);
+    /* [v2·1] the Android status bar joins the reader theme */
+    if (themeMeta) {
+      var paper = getComputedStyle(document.body).getPropertyValue('--paper').trim();
+      if (paper) themeMeta.setAttribute('content', paper);
+    }
     var f = store.get('set:font') || 'spectral';
     document.body.style.setProperty('--body-font', FONTS[f] || FONTS.spectral);
     var lh = store.get('set:lh') || '1.75';
@@ -1378,8 +1515,14 @@ function imgFail(i){ i.style.display = 'none'; }
     document.querySelectorAll('.swatch').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-theme') === t); });
     document.querySelectorAll('.font-card').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-font') === f); });
     document.querySelectorAll('.lh-btn').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-lh') === lh); });
+    /* [v2·13] tap-to-page choice */
+    var taps = store.get('set:taps') || '0';
+    document.querySelectorAll('.tap-btn').forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-taps') === taps); });
     var r = document.getElementById('fs-range'); if (r) r.value = sc;
   }
+  document.querySelectorAll('.tap-btn').forEach(function(el){
+    el.addEventListener('click', function(){ store.set('set:taps', el.getAttribute('data-taps')); applySettings(); });
+  });
   document.querySelectorAll('.swatch').forEach(function(el){
     el.addEventListener('click', function(){ store.set('set:theme', el.getAttribute('data-theme')); applySettings(); });
   });

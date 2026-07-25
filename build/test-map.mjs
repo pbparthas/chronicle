@@ -43,14 +43,16 @@ await page.waitForFunction(() => document.getElementById('map-year').textContent
 const year1 = await page.evaluate(() => document.getElementById('map-year').textContent);
 check('First Cradles preset year', year1.includes('2500 BCE'), year1);
 
-// canvas actually painted polities (non-background pixels present)
-const painted = await page.evaluate(() => {
+// canvas actually painted polities (non-background pixels present) — poll,
+// since the view-transition crossfade can delay the first full draw
+const painted = await page.waitForFunction(() => {
   const c = document.getElementById('map-canvas');
+  if (!c || !c.width) return 0;
   const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
   const colors = new Set();
   for (let i = 0; i < d.length; i += 1013 * 4) colors.add(`${d[i]},${d[i + 1]},${d[i + 2]}`);
-  return colors.size;
-});
+  return colors.size > 3 ? colors.size : 0;
+}, { timeout: 6000 }).then((h) => h.jsonValue()).catch(() => 0);
 check('canvas painted with multiple colors', painted > 3, `${painted} sampled colors`);
 
 // 3. era chip → Classical, tap Persia (55E, 32N at 450 BCE) → popover → chapter
