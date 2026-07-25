@@ -86,6 +86,8 @@ const mapFiles = existsSync(MAPDATA)
   : [];
 for (const f of mapFiles) hash.update('\0map:' + f + '\0').update(readFileSync(join(MAPDATA, f)));
 for (const t of ['sw.js', 'map.js']) hash.update('\0tpl:' + t + '\0').update(readFileSync(join(TEMPLATES, t)));
+const FONTS = join(ROOT, 'fonts');
+if (existsSync(join(FONTS, 'fonts.css'))) hash.update('\0fonts\0').update(readFileSync(join(FONTS, 'fonts.css')));
 const VERSION = hash.digest('hex').slice(0, 12);
 
 // ---------------------------------------------------------------------------
@@ -227,6 +229,17 @@ shell = replaceOnce(shell,
       <a class="world-cta" data-goto="map" href="#"><b>The Map of Time →</b> Every border on earth, 3400 BCE to today — drag the year and watch empires breathe. Tap one to read its chapter.</a>`,
   'world nav card');
 
+// 6a-ter. [UI v2 item 6] self-hosted fonts: swap the Google @import for the
+// committed latin subsets so the app never flashes fallback serif and reads
+// offline in its own faces. The standalone keeps the @import (share-anywhere).
+if (existsSync(join(FONTS, 'fonts.css'))) {
+  const importRe = /@import url\('https:\/\/fonts\.googleapis\.com[^']*'\);/;
+  if (!importRe.test(shell)) die('font @import anchor not found in shell');
+  shell = shell.replace(importRe,
+    '/* fonts self-hosted at build (see build/fetch-fonts.mjs) */\n' +
+    readFileSync(join(FONTS, 'fonts.css'), 'utf8'));
+}
+
 // 6b. head: manifest, iOS meta, icons, PWA styles
 const headInject = `
 <link rel="manifest" href="app.webmanifest">
@@ -242,7 +255,7 @@ const headInject = `
     font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:.05em;
     z-index:80;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 4px 16px var(--shadow);}
   #chunk-loading.show{opacity:1;}
-  #update-toast{position:fixed;left:12px;right:12px;bottom:16px;margin:0 auto;max-width:420px;
+  #update-toast{position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom, 0px));margin:0 auto;max-width:420px;
     background:var(--ink);color:var(--paper);border-radius:12px;padding:12px 16px;
     font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:.02em;text-align:center;cursor:pointer;
     z-index:90;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s;box-shadow:0 6px 24px var(--shadow);}
@@ -551,6 +564,14 @@ if (mapFiles.length) {
   mkdirSync(join(SITE, 'map'), { recursive: true });
   for (const f of mapFiles) cpSync(join(MAPDATA, f), join(SITE, 'map', f));
   writeFileSync(join(SITE, 'map', 'map.js'), readFileSync(join(TEMPLATES, 'map.js'), 'utf8'));
+}
+
+// self-hosted font files (UI v2 item 6)
+if (existsSync(FONTS)) {
+  mkdirSync(join(SITE, 'fonts'), { recursive: true });
+  for (const f of readdirSync(FONTS)) {
+    if (f.endsWith('.woff2')) cpSync(join(FONTS, f), join(SITE, 'fonts', f));
+  }
 }
 writeFileSync(join(SITE, 'search-index.json'), JSON.stringify(index));
 writeFileSync(join(SITE, 'manifest-chunks.json'), JSON.stringify(CHUNKS, null, 2));

@@ -3,5 +3,7 @@ site/
 __pycache__/
 build/preview-*.png
 build/ui-*.png
+build/v2-*.png
+build/dbg-*.png
 .map-cache/
 _extract/

@@ -385,13 +385,13 @@
       '</div>';
     var style = document.createElement('style');
     style.textContent =
-      '#map-wrap{position:fixed;left:0;right:0;bottom:0;top:52px;overflow:hidden;background:var(--paper);}' +
+      '#map-wrap{position:fixed;left:0;right:0;bottom:0;top:var(--topbar-h,52px);overflow:hidden;background:var(--paper);}' +
       '#map-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;}' +
       '#map-chips{position:absolute;top:10px;left:0;right:0;display:flex;gap:8px;overflow-x:auto;padding:0 12px 6px;scrollbar-width:none;}' +
       '#map-chips button{flex:0 0 auto;border:1px solid var(--sand-deep);background:var(--sand);color:var(--ink-soft);' +
       'border-radius:16px;padding:6px 13px;font-family:"Barlow Condensed",sans-serif;font-size:13.5px;letter-spacing:.04em;cursor:pointer;}' +
       '#map-chips button.on{background:var(--clay);border-color:var(--clay-deep);color:#fff;}' +
-      '#map-controls{position:absolute;left:12px;right:12px;bottom:42px;display:flex;align-items:center;gap:10px;' +
+      '#map-controls{position:absolute;left:12px;right:12px;bottom:calc(42px + var(--sab,0px));display:flex;align-items:center;gap:10px;' +
       'background:var(--topbar-bg,rgba(245,237,221,.94));border:1px solid var(--sand-deep);border-radius:14px;padding:8px 14px;box-shadow:0 4px 16px var(--shadow);}' +
       '#map-play{border:none;background:var(--clay);color:#fff;width:34px;height:34px;border-radius:50%;font-size:13px;cursor:pointer;flex:0 0 auto;}' +
       '#map-slider{flex:1;accent-color:var(--clay);min-width:0;}' +
@@ -403,7 +403,7 @@
       '#map-pop span{font-size:12.5px;color:var(--ink-soft);}' +
       '#map-pop button{margin-top:5px;border:1px solid var(--clay-deep);background:var(--clay);color:#fff;border-radius:8px;' +
       'padding:7px 10px;font-family:"Barlow Condensed",sans-serif;font-size:13.5px;cursor:pointer;}' +
-      '#map-attrib{position:absolute;left:0;right:0;bottom:0;padding:5px 12px 7px;font-size:10.5px;color:var(--ink-soft);' +
+      '#map-attrib{position:absolute;left:0;right:0;bottom:0;padding:5px 12px calc(7px + var(--sab,0px));font-size:10.5px;color:var(--ink-soft);' +
       'background:var(--topbar-bg,rgba(245,237,221,.9));text-align:center;}' +
       '#map-attrib a{color:var(--clay-deep);}' +
       '#map-loading{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);background:var(--topbar-bg,rgba(245,237,221,.96));' +
@@ -447,6 +447,9 @@
       canvas.width = Math.round(r.width * dpr());
       canvas.height = Math.round(r.height * dpr());
       scene = null;
+      /* if the view was hidden when the era loaded (e.g. behind a view
+         transition), fitVisible computed a degenerate zoom — refit now */
+      if (!(state.k > 0.001) && state.era && eraCache[state.era.file] && canvas.width) fitVisible();
       requestDraw(false);
     }
     new ResizeObserver(resize).observe(wrap);
