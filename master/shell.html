@@ -979,10 +979,18 @@ function imgFail(i){ i.style.display = 'none'; }
       if (name === 'home') markShelfFinished(); /* [v2·10] hairlines reflect the session, not just boot */
       updateProgress();
     };
-    /* [v2·3] views crossfade like app screens where the browser supports it */
-    if (switching && document.startViewTransition &&
+    /* [v2·3] views crossfade like app screens where the browser supports it.
+       Watchdog: browsers can pause animations (battery saver, "remove
+       animations") WITHOUT reporting prefers-reduced-motion — a paused
+       view transition freezes the whole page, scroll included. Force-complete
+       within 600ms no matter what, and never transition the boot navigation. */
+    if (switching && !opts.noVT && document.startViewTransition &&
         !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      document.startViewTransition(apply);
+      try {
+        var vt = document.startViewTransition(apply);
+        if (vt && vt.finished && vt.finished.catch) vt.finished.catch(function(){});
+        if (vt && vt.skipTransition) setTimeout(function(){ try { vt.skipTransition(); } catch(e){} }, 600);
+      } catch(e) { apply(); }
     } else {
       apply();
     }
@@ -1547,11 +1555,11 @@ function imgFail(i){ i.style.display = 'none'; }
   initTimelineRegions();    /* F8: region attrs + chips */
   var _r = parseHash();     /* F9: deep-link if a URL was shared/bookmarked */
   if (location.hash && location.hash !== '#/' && views[_r.view]) {
-    show(_r.view, { replace:true, scrollToSection: _r.section });
+    show(_r.view, { replace:true, scrollToSection: _r.section, noVT:true });
   } else {
     var last = store.get('lastView');
     var start = (last && views[last] && last !== 'search') ? last : 'home';
-    show(start, { replace:true });
+    show(start, { replace:true, noVT:true });
   }
 })();
 </script>
