@@ -471,9 +471,11 @@ function imgFail(i){ i.style.display = 'none'; }
     <div class="shelf">
       <h2>The Chapters</h2>
 
-      <div class="era-head" id="era-before"><span class="num">0</span><h3>Before History</h3><span class="span">The thaw, the first villages — the world that made the world</span></div>
-        <div class="chap ready" data-ch="thaw"><div class="rn">0·1</div><div><h4>The Thaw</h4><p>The end of the Ice Age — seas rise a hundred metres, coastlines drown, the Gulf floods, the Sahara greens: the remaking of the earth that made civilization possible.</p><div class="where">The whole planet · c. 20,000–6000 BCE</div></div><div class="status">Read</div></div>
-        <div class="chap ready" data-ch="villages"><div class="rn">0·2</div><div><h4>The First Villages</h4><p>Temples before farming at Göbekli Tepe, the town with no streets at Çatalhöyük, Jericho’s tower — the ten-thousand-year runway to Sumer.</p><div class="where">The Fertile Crescent · c. 12,000–4000 BCE</div></div><div class="status">Read</div></div>
+      <div class="era-head" id="era-before"><span class="num">0</span><h3>Before History</h3><span class="span">The long dawn, the thaw, the first villages, the first metal — the world that made the world</span></div>
+        <div class="chap ready" data-ch="longdawn"><div class="rn">0·1</div><div><h4>The Long Dawn</h4><p>Jebel Irhoud, the Neanderthals and Denisovans, the painted caves of Sulawesi and Cantabria — how one African population became the last human species standing, and how we know it.</p><div class="where">Africa, then the whole planet · c. 300,000–15,000 BCE</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="thaw"><div class="rn">0·2</div><div><h4>The Thaw</h4><p>The end of the Ice Age — seas rise a hundred metres, coastlines drown, the Gulf floods, the Sahara greens: the remaking of the earth that made civilization possible.</p><div class="where">The whole planet · c. 20,000–6000 BCE</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="villages"><div class="rn">0·3</div><div><h4>The First Villages</h4><p>Temples before farming at Göbekli Tepe, the town with no streets at Çatalhöyük, Jericho’s tower — the ten-thousand-year runway to Sumer.</p><div class="where">The Fertile Crescent · c. 12,000–4000 BCE</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="metalgold"><div class="rn">0·4</div><div><h4>Metal, Gold, and the Plough</h4><p>The Ubaid, Varna's buried gold, the wheel and the sail, Ötzi on his mountain — the Chalcolithic bridge from village to city.</p><div class="where">Europe &amp; the Fertile Crescent · c. 6000–3100 BCE</div></div><div class="status">Read</div></div>
 
         <div class="era-head" id="era-cradles"><span class="num">I</span><h3>The First Cradles</h3><span class="span">c. 3500–539 BCE</span></div>
       <div class="chapters">
@@ -483,7 +485,7 @@ function imgFail(i){ i.style.display = 'none'; }
           <div class="status">Read</div>
         </div>
         <div class="chap ready" data-ch="akkad"><div class="rn">I·2</div><div><h4>Akkad &amp; Old Babylon</h4><p>Sargon’s empire, the pious Gudea, Hammurabi’s law in stone — ending the night the Hittites broke in.</p><div class="where">Mesopotamia · modern Iraq</div></div><div class="status">Read</div></div>
-        <div class="chap ready" data-ch="babylonia"><div class="rn">I·3</div><div><h4>Babylon: Kassites to the Fall</h4><p>The longest dynasty, Nebuchadnezzar’s city of wonders, the exile — and the night the gates opened to Cyrus.</p><div class="where">Mesopotamia</div></div><div class="status">Read</div></div>
+        <div class="chap ready" data-ch="babylonia"><div class="rn">I·3</div><div><h4>Babylonia: Kassites to the Fall</h4><p>The longest dynasty, Nebuchadnezzar’s city of wonders, the exile — and the night the gates opened to Cyrus.</p><div class="where">Mesopotamia</div></div><div class="status">Read</div></div>
         <div class="chap ready" data-ch="assyria"><div class="rn">I·4</div><div><h4>Assyria</h4><p>Fourteen centuries beside Babylon — from the merchant caravans of Kanesh to the war machine of the Iron Age and the burning of Nineveh.</p><div class="where">Northern Mesopotamia</div></div><div class="status">Read</div></div>
         <div class="chap ready" data-ch="egypt-ok"><div class="rn">I·5</div><div><h4>Egypt: The Old Kingdom</h4><p>Unification, the god-kings, and the age of the pyramids — and the inspector's logbook that reveals who really built them.</p><div class="where">The Nile Valley</div></div><div class="status">Read</div></div>
         <div class="chap ready" data-ch="egypt-nk"><div class="rn">I·6</div><div><h4>Egypt: Middle &amp; New Kingdoms</h4><p>The empire age — Hatshepsut, Akhenaten, Tutankhamun, Ramesses and Kadesh.</p><div class="where">The Nile Valley</div></div><div class="status">Read</div></div>
@@ -624,7 +626,7 @@ function imgFail(i){ i.style.display = 'none'; }
 <!-- ============ GRAND TIMELINE VIEW ============ -->
 <div class="view" id="view-tl">
   <div class="tl-note2">Time flows downward · scroll sideways for more lanes · tap a clay-red spine to open its chapter · side-by-side bars = alive at the same time</div>
-  <div class="tl-vert"><svg viewBox="0 0 520 1982" xmlns="http://www.w3.org/2000/svg" font-family="Barlow Condensed, sans-serif"><line x1="6" y1="40" x2="514" y2="40" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="35" font-size="13" style="fill:var(--reed)">3500 BCE</text><line x1="6" y1="215" x2="514" y2="215" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="210" font-size="13" style="fill:var(--reed)">3000 BCE</text><line x1="6" y1="390" x2="514" y2="390" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="385" font-size="13" style="fill:var(--reed)">2500 BCE</text><line x1="6" y1="565" x2="514" y2="565" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="560" font-size="13" style="fill:var(--reed)">2000 BCE</text><line x1="6" y1="740" x2="514" y2="740" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="735" font-size="13" style="fill:var(--reed)">1500 BCE</text><line x1="6" y1="915" x2="514" y2="915" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="910" font-size="13" style="fill:var(--reed)">1000 BCE</text><line x1="6" y1="1090" x2="514" y2="1090" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1085" font-size="13" style="fill:var(--reed)">500 BCE</text><line x1="6" y1="1265" x2="514" y2="1265" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1260" font-size="13" style="fill:var(--reed)">1 CE</text><line x1="6" y1="1440" x2="514" y2="1440" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1435" font-size="13" style="fill:var(--reed)">500 CE</text><line x1="6" y1="1615" x2="514" y2="1615" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1610" font-size="13" style="fill:var(--reed)">1000 CE</text><line x1="6" y1="1790" x2="514" y2="1790" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1785" font-size="13" style="fill:var(--reed)">1500 CE</text><line x1="6" y1="1930" x2="514" y2="1930" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1925" font-size="13" style="fill:var(--reed)">1900 CE</text><g data-goto="sumer" style="cursor:pointer"><rect x="58" y="40" width="42" height="612" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 50)" x="85" y="50" font-size="15" style="fill:#fff3e2" font-weight="600">Sumer · 3500 BCE – 1750 BCE</text></g><g data-goto="egypt-ok" style="cursor:pointer"><rect x="108" y="180" width="42" height="322" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 190)" x="135" y="190" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Old Kingdom · 3100 BCE – 2181 BCE</text></g><g data-goto="indus" style="cursor:pointer"><rect x="158" y="355" width="42" height="245" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 365)" x="185" y="365" font-size="15" style="fill:#fff3e2" font-weight="600">Indus Valley · 2600 BCE – 1900 BCE</text></g><g data-goto="akkad" style="cursor:pointer"><rect x="208" y="448" width="42" height="259" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 458)" x="235" y="458" font-size="15" style="fill:#fff3e2" font-weight="600">Akkad &amp; Old Babylon · 2334 – 1595 BCE</text></g><g data-goto="babylonia" style="cursor:pointer"><rect x="208" y="712" width="42" height="365" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 722)" x="235" y="722" font-size="15" style="fill:#fff3e2" font-weight="600">Babylon · 1595 – 539 BCE</text></g><g data-goto="egypt-nk" style="cursor:pointer"><rect x="108" y="546" width="42" height="342" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 556)" x="135" y="556" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Middle &amp; New Kingdoms · 2055 BCE – 1077 BCE</text></g><g data-goto="assyria" style="cursor:pointer"><rect x="258" y="556" width="42" height="496" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 566)" x="285" y="566" font-size="15" style="fill:#fff3e2" font-weight="600">Assyria · 2025 BCE – 609 BCE</text></g><g data-goto="hittites" style="cursor:pointer"><rect x="58" y="688" width="42" height="164" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 698)" x="85" y="698" font-size="15" style="fill:#fff3e2" font-weight="600">Hittites · 1650 BCE – 1180 BCE</text></g><g data-goto="minoans" style="cursor:pointer"><rect x="158" y="605" width="42" height="275" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 610)" x="185" y="610" font-size="15" style="fill:#fff3e2" font-weight="600">Minoans &amp; Mycenaeans · 1900 BCE – 1100 BCE</text></g><g data-goto="greece" style="cursor:pointer"><rect x="58" y="985" width="42" height="229" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 995)" x="85" y="995" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Classical Greece &amp; Hellenistic · 800 BCE – 146 BCE</text></g><g data-goto="rome" style="cursor:pointer"><rect x="108" y="1001" width="42" height="430" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 1011)" x="135" y="1011" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Rome · 753 BCE – 476 CE</text></g><g data-goto="egypt-twilight" style="cursor:pointer"><rect x="158" y="888" width="42" height="366" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 898)" x="185" y="898" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: The Long Twilight · 1077 – 30 BCE</text></g><g data-goto="persia" style="cursor:pointer"><rect x="258" y="1072" width="42" height="77" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 1082)" x="285" y="1082" font-size="15" style="fill:#fff3e2" font-weight="600">Achaemenid Persia · 550 BCE – 330 BCE</text></g><g><rect x="208" y="1188" width="42" height="154" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1198)" x="235" y="1198" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Qin &amp; Han China · 221 BCE – 220 CE</text></g><g><rect x="58" y="1432" width="42" height="342" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1442)" x="85" y="1442" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Byzantium · 476 CE – 1453 CE</text></g><g><rect x="108" y="1486" width="42" height="219" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 135 1496)" x="135" y="1496" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Islamic Caliphates · 632 CE – 1258 CE</text></g><g><rect x="158" y="1687" width="42" height="57" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 185 1697)" x="185" y="1697" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mongol Empire · 1206 CE – 1368 CE</text></g><g><rect x="208" y="1720" width="42" height="218" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1730)" x="235" y="1730" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ottoman Empire · 1299 CE – 1922 CE</text></g><g><rect x="258" y="1744" width="42" height="190" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 285 1754)" x="285" y="1754" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ming &amp; Qing China · 1368 CE – 1912 CE</text></g><g><rect x="58" y="1799" width="42" height="116" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1809)" x="85" y="1809" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mughal India · 1526 CE – 1857 CE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="215" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 225)" x="335" y="225" font-size="15" style="fill:#fff3e2" font-weight="600">Caral &amp; Norte Chico · 3000 – 1800 BCE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="705" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 715)" x="335" y="715" font-size="15" style="fill:#fff3e2" font-weight="600">The Olmec · 1600 – 400 BCE</text></g><g data-goto="kush" style="cursor:pointer"><rect x="358" y="891" width="42" height="497" rx="4" style="fill:#c07b52"/><text transform="rotate(90 385 901)" x="385" y="901" font-size="15" style="fill:#fff3e2" font-weight="600">Kush &amp; Nubia · 1069 BCE – 350 CE</text></g><g data-goto="israel-judah" style="cursor:pointer"><rect x="408" y="905" width="42" height="155" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 915)" x="435" y="915" font-size="15" style="fill:#fff3e2" font-weight="600">Israel &amp; Judah · c. 1030 – 586 BCE</text></g><g data-goto="phoenicians" style="cursor:pointer"><rect x="458" y="845" width="42" height="304" rx="4" style="fill:#c07b52"/><text transform="rotate(90 485 855)" x="485" y="855" font-size="15" style="fill:#fff3e2" font-weight="600">The Phoenicians · 1200 – 332 BCE</text></g><g data-goto="judea-maccabees" style="cursor:pointer"><rect x="408" y="1207" width="42" height="84" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 1217)" x="435" y="1217" font-size="15" style="fill:#fff3e2" font-weight="600">Judea · 167 BCE – 73 CE</text></g></svg></div>
+  <div class="tl-vert"><svg viewBox="0 0 520 1982" xmlns="http://www.w3.org/2000/svg" font-family="Barlow Condensed, sans-serif"><line x1="6" y1="40" x2="514" y2="40" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="35" font-size="13" style="fill:var(--reed)">3500 BCE</text><line x1="6" y1="215" x2="514" y2="215" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="210" font-size="13" style="fill:var(--reed)">3000 BCE</text><line x1="6" y1="390" x2="514" y2="390" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="385" font-size="13" style="fill:var(--reed)">2500 BCE</text><line x1="6" y1="565" x2="514" y2="565" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="560" font-size="13" style="fill:var(--reed)">2000 BCE</text><line x1="6" y1="740" x2="514" y2="740" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="735" font-size="13" style="fill:var(--reed)">1500 BCE</text><line x1="6" y1="915" x2="514" y2="915" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="910" font-size="13" style="fill:var(--reed)">1000 BCE</text><line x1="6" y1="1090" x2="514" y2="1090" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1085" font-size="13" style="fill:var(--reed)">500 BCE</text><line x1="6" y1="1265" x2="514" y2="1265" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1260" font-size="13" style="fill:var(--reed)">1 CE</text><line x1="6" y1="1440" x2="514" y2="1440" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1435" font-size="13" style="fill:var(--reed)">500 CE</text><line x1="6" y1="1615" x2="514" y2="1615" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1610" font-size="13" style="fill:var(--reed)">1000 CE</text><line x1="6" y1="1790" x2="514" y2="1790" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1785" font-size="13" style="fill:var(--reed)">1500 CE</text><line x1="6" y1="1930" x2="514" y2="1930" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1925" font-size="13" style="fill:var(--reed)">1900 CE</text><g data-goto="sumer" style="cursor:pointer"><rect x="58" y="40" width="42" height="612" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 50)" x="85" y="50" font-size="15" style="fill:#fff3e2" font-weight="600">Sumer · 3500 BCE – 1750 BCE</text></g><g data-goto="egypt-ok" style="cursor:pointer"><rect x="108" y="180" width="42" height="322" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 190)" x="135" y="190" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Old Kingdom · 3100 BCE – 2181 BCE</text></g><g data-goto="indus" style="cursor:pointer"><rect x="158" y="355" width="42" height="245" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 365)" x="185" y="365" font-size="15" style="fill:#fff3e2" font-weight="600">Indus Valley · 2600 BCE – 1900 BCE</text></g><g data-goto="akkad" style="cursor:pointer"><rect x="208" y="448" width="42" height="259" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 458)" x="235" y="458" font-size="15" style="fill:#fff3e2" font-weight="600">Akkad &amp; Old Babylon · 2334 – 1595 BCE</text></g><g data-goto="babylonia" style="cursor:pointer"><rect x="208" y="712" width="42" height="365" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 722)" x="235" y="722" font-size="15" style="fill:#fff3e2" font-weight="600">Babylonia · 1595 – 539 BCE</text></g><g data-goto="egypt-nk" style="cursor:pointer"><rect x="108" y="546" width="42" height="342" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 556)" x="135" y="556" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Middle &amp; New Kingdoms · 2055 BCE – 1077 BCE</text></g><g data-goto="assyria" style="cursor:pointer"><rect x="258" y="556" width="42" height="496" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 566)" x="285" y="566" font-size="15" style="fill:#fff3e2" font-weight="600">Assyria · 2025 BCE – 609 BCE</text></g><g data-goto="hittites" style="cursor:pointer"><rect x="58" y="688" width="42" height="164" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 698)" x="85" y="698" font-size="15" style="fill:#fff3e2" font-weight="600">Hittites · 1650 BCE – 1180 BCE</text></g><g data-goto="minoans" style="cursor:pointer"><rect x="158" y="605" width="42" height="275" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 610)" x="185" y="610" font-size="15" style="fill:#fff3e2" font-weight="600">Minoans &amp; Mycenaeans · 1900 BCE – 1100 BCE</text></g><g data-goto="greece" style="cursor:pointer"><rect x="58" y="985" width="42" height="229" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 995)" x="85" y="995" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Classical Greece &amp; Hellenistic · 800 BCE – 146 BCE</text></g><g data-goto="rome" style="cursor:pointer"><rect x="108" y="1001" width="42" height="430" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 1011)" x="135" y="1011" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Rome · 753 BCE – 476 CE</text></g><g data-goto="egypt-twilight" style="cursor:pointer"><rect x="158" y="888" width="42" height="366" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 898)" x="185" y="898" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: The Long Twilight · 1077 – 30 BCE</text></g><g data-goto="persia" style="cursor:pointer"><rect x="258" y="1072" width="42" height="77" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 1082)" x="285" y="1082" font-size="15" style="fill:#fff3e2" font-weight="600">Achaemenid Persia · 550 BCE – 330 BCE</text></g><g><rect x="208" y="1188" width="42" height="154" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1198)" x="235" y="1198" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Qin &amp; Han China · 221 BCE – 220 CE</text></g><g><rect x="58" y="1432" width="42" height="342" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1442)" x="85" y="1442" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Byzantium · 476 CE – 1453 CE</text></g><g><rect x="108" y="1486" width="42" height="219" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 135 1496)" x="135" y="1496" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Islamic Caliphates · 632 CE – 1258 CE</text></g><g><rect x="158" y="1687" width="42" height="57" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 185 1697)" x="185" y="1697" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mongol Empire · 1206 CE – 1368 CE</text></g><g><rect x="208" y="1720" width="42" height="218" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1730)" x="235" y="1730" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ottoman Empire · 1299 CE – 1922 CE</text></g><g><rect x="258" y="1744" width="42" height="190" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 285 1754)" x="285" y="1754" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ming &amp; Qing China · 1368 CE – 1912 CE</text></g><g><rect x="58" y="1799" width="42" height="116" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1809)" x="85" y="1809" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mughal India · 1526 CE – 1857 CE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="215" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 225)" x="335" y="225" font-size="15" style="fill:#fff3e2" font-weight="600">Caral &amp; Norte Chico · 3000 – 1800 BCE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="705" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 715)" x="335" y="715" font-size="15" style="fill:#fff3e2" font-weight="600">The Olmec · 1600 – 400 BCE</text></g><g data-goto="kush" style="cursor:pointer"><rect x="358" y="891" width="42" height="497" rx="4" style="fill:#c07b52"/><text transform="rotate(90 385 901)" x="385" y="901" font-size="15" style="fill:#fff3e2" font-weight="600">Kush &amp; Nubia · 1069 BCE – 350 CE</text></g><g data-goto="israel-judah" style="cursor:pointer"><rect x="408" y="905" width="42" height="155" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 915)" x="435" y="915" font-size="15" style="fill:#fff3e2" font-weight="600">Israel &amp; Judah · c. 1030 – 586 BCE</text></g><g data-goto="phoenicians" style="cursor:pointer"><rect x="458" y="845" width="42" height="304" rx="4" style="fill:#c07b52"/><text transform="rotate(90 485 855)" x="485" y="855" font-size="15" style="fill:#fff3e2" font-weight="600">The Phoenicians · 1200 – 332 BCE</text></g><g data-goto="judea-maccabees" style="cursor:pointer"><rect x="408" y="1207" width="42" height="84" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 1217)" x="435" y="1217" font-size="15" style="fill:#fff3e2" font-weight="600">Judea · 167 BCE – 73 CE</text></g></svg></div>
 </div>
 
 <!-- ============ WORLD VIEW ============ -->
@@ -659,266 +661,6 @@ function imgFail(i){ i.style.display = 'none'; }
 </div>
 
 <!-- @CHAPTER-CHUNKS -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- HINT POPOVER -->
 <div id="hint-pop"><span class="hint-x">✕</span><div class="hint-term" id="hint-term"></div><div class="hint-body" id="hint-body"></div></div>
 
@@ -1019,8 +761,8 @@ function imgFail(i){ i.style.display = 'none'; }
   };
 
   /* ---------- views / router ---------- */
-  var views = { home: 'view-home', search: 'view-search', world: 'view-world', tl: 'view-tl', thaw: 'view-thaw', villages: 'view-villages', sumer: 'view-sumer', akkad: 'view-akkad', babylonia: 'view-babylonia', 'egypt-ok': 'view-egypt-ok', 'egypt-nk': 'view-egypt-nk', kush: 'view-kush', indus: 'view-indus', minoans: 'view-minoans', caral: 'view-caral', hittites: 'view-hittites', assyria: 'view-assyria', persia: 'view-persia', 'egypt-twilight': 'view-egypt-twilight', 'israel-judah': 'view-israel-judah', 'judea-maccabees': 'view-judea-maccabees', phoenicians: 'view-phoenicians', gilgamesh: 'view-gilgamesh', babylon: 'view-babylon', elam: 'view-elam', 'egyptian-pantheon': 'view-egyptian-pantheon', alexandria: 'view-alexandria', zoroastrianism: 'view-zoroastrianism', iliad: 'view-iliad', greece: 'view-greece', rome: 'view-rome', 'rome-empire': 'view-rome-empire', 'rome-fall': 'view-rome-fall' };
-  var titles = { home: 'The Chronicle', search: 'Search', world: 'The World, Year by Year', tl: 'The Grand Timeline', thaw: 'Chapter 0·1 — The Thaw', villages: 'Chapter 0·2 — The First Villages', sumer: 'Chapter I·1 — Sumer', akkad: 'Chapter I·2 — Akkad & Old Babylon', babylonia: 'Chapter I·3 — Babylon', 'egypt-ok': 'Chapter I·5 — Egypt: The Old Kingdom', 'egypt-nk': 'Chapter I·6 — Egypt: Middle & New Kingdoms', kush: 'Chapter I·7 — Kush & Nubia', indus: 'Chapter I·8 — The Indus Valley', minoans: 'Chapter I·9 — The Minoans & Mycenaeans', caral: 'Chapter I·10 — Caral, Olmec & the First Americas', hittites: 'Chapter I·11 — The Hittites & the Bronze Age Collapse', assyria: 'Chapter I·4 — Assyria', persia: 'Chapter II·5 — Achaemenid Persia', 'egypt-twilight': 'Chapter II·1 — Egypt: The Long Twilight', 'israel-judah': 'Chapter II·2 — Israel & Judah', 'judea-maccabees': 'Chapter II·3 — Judea: Maccabees to Masada', phoenicians: 'Chapter II·4 — The Phoenicians', gilgamesh: 'Chapter M·I — Gilgamesh', babylon: 'Chapter C·I — Babylon', elam: 'Chapter In·I — Elam', 'egyptian-pantheon': 'Chapter M·VII — The Egyptian Pantheon', alexandria: 'Chapter C·IV — Alexandria', zoroastrianism: 'Chapter F·VI — Zoroastrianism', iliad: 'Chapter M·II — The Iliad & the Trojan War', greece: 'Chapter II·11 — Greece & Alexander', rome: 'Chapter II·8 — Rome: The Republic', 'rome-empire': 'Chapter II·9 — Rome: The Empire', 'rome-fall': 'Chapter II·10 — Rome: The Fall of the West' };
+  var views = { home: 'view-home', search: 'view-search', world: 'view-world', tl: 'view-tl', longdawn: 'view-longdawn', thaw: 'view-thaw', villages: 'view-villages', metalgold: 'view-metalgold', sumer: 'view-sumer', akkad: 'view-akkad', babylonia: 'view-babylonia', 'egypt-ok': 'view-egypt-ok', 'egypt-nk': 'view-egypt-nk', kush: 'view-kush', indus: 'view-indus', minoans: 'view-minoans', caral: 'view-caral', hittites: 'view-hittites', assyria: 'view-assyria', persia: 'view-persia', 'egypt-twilight': 'view-egypt-twilight', 'israel-judah': 'view-israel-judah', 'judea-maccabees': 'view-judea-maccabees', phoenicians: 'view-phoenicians', gilgamesh: 'view-gilgamesh', babylon: 'view-babylon', elam: 'view-elam', 'egyptian-pantheon': 'view-egyptian-pantheon', alexandria: 'view-alexandria', zoroastrianism: 'view-zoroastrianism', iliad: 'view-iliad', greece: 'view-greece', rome: 'view-rome', 'rome-empire': 'view-rome-empire', 'rome-fall': 'view-rome-fall' };
+  var titles = { home: 'The Chronicle', search: 'Search', world: 'The World, Year by Year', tl: 'The Grand Timeline', longdawn: 'Chapter 0·1 — The Long Dawn', thaw: 'Chapter 0·2 — The Thaw', villages: 'Chapter 0·3 — The First Villages', metalgold: 'Chapter 0·4 — Metal, Gold, and the Plough', sumer: 'Chapter I·1 — Sumer', akkad: 'Chapter I·2 — Akkad & Old Babylon', babylonia: 'Chapter I·3 — Babylonia', 'egypt-ok': 'Chapter I·5 — Egypt: The Old Kingdom', 'egypt-nk': 'Chapter I·6 — Egypt: Middle & New Kingdoms', kush: 'Chapter I·7 — Kush & Nubia', indus: 'Chapter I·8 — The Indus Valley', minoans: 'Chapter I·9 — The Minoans & Mycenaeans', caral: 'Chapter I·10 — Caral, Olmec & the First Americas', hittites: 'Chapter I·11 — The Hittites & the Bronze Age Collapse', assyria: 'Chapter I·4 — Assyria', persia: 'Chapter II·5 — Achaemenid Persia', 'egypt-twilight': 'Chapter II·1 — Egypt: The Long Twilight', 'israel-judah': 'Chapter II·2 — Israel & Judah', 'judea-maccabees': 'Chapter II·3 — Judea: Maccabees to Masada', phoenicians: 'Chapter II·4 — The Phoenicians', gilgamesh: 'Chapter M·I — Gilgamesh', babylon: 'Chapter C·I — Babylon', elam: 'Chapter In·I — Elam', 'egyptian-pantheon': 'Chapter M·VII — The Egyptian Pantheon', alexandria: 'Chapter C·IV — Alexandria', zoroastrianism: 'Chapter F·VI — Zoroastrianism', iliad: 'Chapter M·II — The Iliad & the Trojan War', greece: 'Chapter II·11 — Greece & Alexander', rome: 'Chapter II·8 — Rome: The Republic', 'rome-empire': 'Chapter II·9 — Rome: The Empire', 'rome-fall': 'Chapter II·10 — Rome: The Fall of the West' };
   var current = 'home';
   var fab = document.getElementById('bm-fab');
   var barTitle = document.getElementById('bar-title');

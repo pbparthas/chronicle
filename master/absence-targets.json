@@ -1,0 +1,1097 @@
+{
+ "_README": [
+  "Curated attested-target lists, one per view. Built from RESEARCH before reading the chapter.",
+  "Format: [ \"human readable name\", [\"regex\", \"regex\", ...] ]. Patterns are case-insensitive.",
+  "Give diacritic and spelling variants. Escape backslashes for JSON (\\\\b for a word boundary).",
+  "SEEDED so far: babylonia, caral. Every other chapter needs its list built before its cycle."
+ ],
+ "babylonia": [
+  [
+   "Kurigalzu / Dur-Kurigalzu (Kassite new capital)",
+   [
+    "Kurigalzu"
+   ]
+  ],
+  [
+   "Kassite horse-breeding and the chariot economy",
+   [
+    "horse"
+   ]
+  ],
+  [
+   "kudurru boundary stones",
+   [
+    "kudurru"
+   ]
+  ],
+  [
+   "Amarna correspondence / Burna-Buriash",
+   [
+    "Burna-?Buriash",
+    "Amarna"
+   ]
+  ],
+  [
+   "Elamite sack; Hammurabi's stele and Marduk statue carried to Susa",
+   [
+    "Shutruk",
+    "carried off",
+    "stele.{0,60}Susa"
+   ]
+  ],
+  [
+   "Nebuchadnezzar I recovers Marduk from Elam",
+   [
+    "Nebuchadnezzar I\\b",
+    "Nebuchadrezzar I\\b"
+   ]
+  ],
+  [
+   "Enuma Elish as Babylon's political scripture",
+   [
+    "Enuma Elish",
+    "Enūma"
+   ]
+  ],
+  [
+   "Akitu festival and the ritual slapping of the king",
+   [
+    "Akitu",
+    "Akītu"
+   ]
+  ],
+  [
+   "Chaldean and Aramean influx",
+   [
+    "Chaldea",
+    "Aramean",
+    "Aramaean"
+   ]
+  ],
+  [
+   "Sennacherib's destruction of Babylon, 689",
+   [
+    "689",
+    "Sennacherib"
+   ]
+  ],
+  [
+   "Esarhaddon rebuilds Babylon",
+   [
+    "Esarhaddon"
+   ]
+  ],
+  [
+   "Shamash-shum-ukin's revolt, 652-648",
+   [
+    "Shamash-shum",
+    "Šamaš-šuma"
+   ]
+  ],
+  [
+   "Nabopolassar and the fall of Nineveh, 612",
+   [
+    "Nabopolassar"
+   ]
+  ],
+  [
+   "Carchemish, 605",
+   [
+    "Carchemish"
+   ]
+  ],
+  [
+   "Jerusalem 597/587 and the Exile",
+   [
+    "\\b597\\b",
+    "\\b587\\b",
+    "\\b586\\b"
+   ]
+  ],
+  [
+   "Amel-Marduk, Neriglissar, Labashi-Marduk (the succession)",
+   [
+    "Amel-Marduk",
+    "Neriglissar",
+    "Labashi"
+   ]
+  ],
+  [
+   "Nabonidus at Tayma, ten years",
+   [
+    "Tayma",
+    "Teima",
+    "Tema\\b"
+   ]
+  ],
+  [
+   "Belshazzar as regent",
+   [
+    "Belshazzar"
+   ]
+  ],
+  [
+   "Battle of Opis, 539",
+   [
+    "Opis"
+   ]
+  ],
+  [
+   "Cyrus Cylinder",
+   [
+    "Cyrus Cylinder"
+   ]
+  ],
+  [
+   "Babylonian mathematical astronomy / Saros / System A-B",
+   [
+    "Saros",
+    "System A",
+    "mathematical astronom"
+   ]
+  ],
+  [
+   "Sexagesimal legacy: the 60-minute hour, the 360-degree circle",
+   [
+    "sexagesimal",
+    "sixty",
+    "360"
+   ]
+  ],
+  [
+   "Ludlul bel nemeqi and the Babylonian Theodicy",
+   [
+    "Ludlul",
+    "Theodicy"
+   ]
+  ],
+  [
+   "Hanging Gardens: the attribution problem",
+   [
+    "Hanging Garden"
+   ]
+  ],
+  [
+   "Etemenanki",
+   [
+    "Etemenanki"
+   ]
+  ],
+  [
+   "Processional Way",
+   [
+    "Processional"
+   ]
+  ],
+  [
+   "Marduk as city-god (the city-god-temple triad)",
+   [
+    "Marduk"
+   ]
+  ],
+  [
+   "Esagila",
+   [
+    "Esagila"
+   ]
+  ],
+  [
+   "Astronomical diaries as the longest scientific dataset",
+   [
+    "astronomical diar"
+   ]
+  ],
+  [
+   "Koldewey's excavation — OWNED BY BABYLON C-I, must be a deferral here",
+   [
+    "Koldewey"
+   ]
+  ]
+ ],
+ "caral": [
+  [
+   "Ruth Shady's 2001 radiocarbon paper",
+   [
+    "Shady"
+   ]
+  ],
+  [
+   "Norte Chico / Supe valley sites beyond Caral",
+   [
+    "Norte Chico",
+    "Aspero",
+    "Áspero",
+    "Bandurria",
+    "Caballete"
+   ]
+  ],
+  [
+   "quipu precursor at Caral",
+   [
+    "quipu",
+    "khipu"
+   ]
+  ],
+  [
+   "maritime-foundation debate (Moseley)",
+   [
+    "Moseley",
+    "maritime foundation"
+   ]
+  ],
+  [
+   "cotton nets and the fish-for-cotton exchange",
+   [
+    "cotton"
+   ]
+  ],
+  [
+   "sunken circular plazas",
+   [
+    "sunken",
+    "circular plaza"
+   ]
+  ],
+  [
+   "flutes of condor and pelican bone",
+   [
+    "flute"
+   ]
+  ],
+  [
+   "no pottery, no metal, no writing",
+   [
+    "no pottery",
+    "without pottery"
+   ]
+  ],
+  [
+   "Cascajal Block / earliest Mesoamerican writing debate",
+   [
+    "Cascajal",
+    "San Bartolo"
+   ]
+  ],
+  [
+   "Olmec were-jaguar and shamanic transformation",
+   [
+    "were-jaguar",
+    "jaguar"
+   ]
+  ],
+  [
+   "the rubber ballgame",
+   [
+    "ballgame",
+    "rubber ball"
+   ]
+  ],
+  [
+   "San Lorenzo",
+   [
+    "San Lorenzo"
+   ]
+  ],
+  [
+   "La Venta Complex A offerings and serpentine mosaics",
+   [
+    "serpentine",
+    "mosaic"
+   ]
+  ],
+  [
+   "Long Count calendar origins",
+   [
+    "Long Count"
+   ]
+  ],
+  [
+   "bar-and-dot numerals and zero",
+   [
+    "bar-and-dot",
+    "\\bzero\\b"
+   ]
+  ],
+  [
+   "Chavín de Huántar as successor",
+   [
+    "Chavín",
+    "Chavin"
+   ]
+  ],
+  [
+   "Monte Verde and the collapse of Clovis-first",
+   [
+    "Monte Verde"
+   ]
+  ],
+  [
+   "obsidian and long-distance exchange",
+   [
+    "obsidian"
+   ]
+  ],
+  [
+   "Matthew Stirling and the colossal heads",
+   [
+    "Stirling"
+   ]
+  ]
+ ],
+ "longdawn": [
+  [
+   "Jebel Irhoud / pan-African origin",
+   [
+    "Jebel Irhoud",
+    "pan-African"
+   ]
+  ],
+  [
+   "Omo Kibish and Herto",
+   [
+    "Omo Kibish",
+    "Herto"
+   ]
+  ],
+  [
+   "Neanderthals",
+   [
+    "Neanderthal"
+   ]
+  ],
+  [
+   "Denisovans / Denisova Cave",
+   [
+    "Denisovan",
+    "Denisova Cave"
+   ]
+  ],
+  [
+   "Homo floresiensis",
+   [
+    "floresiensis",
+    "hobbit"
+   ]
+  ],
+  [
+   "Homo naledi / Rising Star",
+   [
+    "naledi",
+    "Rising Star"
+   ]
+  ],
+  [
+   "Homo luzonensis",
+   [
+    "luzonensis"
+   ]
+  ],
+  [
+   "Interbreeding / Denny hybrid",
+   [
+    "Denny",
+    "hybrid"
+   ]
+  ],
+  [
+   "Svante Pääbo / ancient-DNA Nobel",
+   [
+    "Pääbo",
+    "Nobel"
+   ]
+  ],
+  [
+   "Sahul crossing / Madjedbebe",
+   [
+    "Madjedbebe",
+    "Sahul"
+   ]
+  ],
+  [
+   "Beringia",
+   [
+    "Beringia"
+   ]
+  ],
+  [
+   "Monte Verde / Clovis-first collapse",
+   [
+    "Monte Verde",
+    "Clovis"
+   ]
+  ],
+  [
+   "Chauvet, Lascaux, El Castillo, Maltravieso",
+   [
+    "Chauvet",
+    "Lascaux",
+    "El Castillo",
+    "Maltravieso"
+   ]
+  ],
+  [
+   "Sulawesi / Borneo cave art",
+   [
+    "Sulawesi",
+    "Leang",
+    "Lubang Jeriji"
+   ]
+  ],
+  [
+   "Altamira forgery scandal / Cartailhac recantation",
+   [
+    "Altamira",
+    "Sautuola",
+    "Cartailhac"
+   ]
+  ],
+  [
+   "Lion-man of Hohlenstein-Stadel",
+   [
+    "Löwenmensch",
+    "Lion-man",
+    "Hohlenstein"
+   ]
+  ],
+  [
+   "Venus figurines (Hohle Fels, Willendorf)",
+   [
+    "Venus of Hohle Fels",
+    "Willendorf"
+   ]
+  ],
+  [
+   "Earliest flutes",
+   [
+    "flute"
+   ]
+  ],
+  [
+   "FOXP2 / language origins revised",
+   [
+    "FOXP2"
+   ]
+  ],
+  [
+   "Upper Palaeolithic Lived Day",
+   [
+    "mammoth-bone",
+    "Mezhirich"
+   ]
+  ]
+ ],
+ "metalgold": [
+  [
+   "Ubaid period / Eridu temple sequence",
+   [
+    "Ubaid",
+    "Eridu"
+   ]
+  ],
+  [
+   "Earliest copper metallurgy (Belovode/Pločnik)",
+   [
+    "Belovode",
+    "Ploc"
+   ]
+  ],
+  [
+   "Varna necropolis / Grave 43",
+   [
+    "Varna",
+    "Grave 43"
+   ]
+  ],
+  [
+   "Secondary products revolution (Sherratt)",
+   [
+    "Sherratt",
+    "econdary [Pp]roducts"
+   ]
+  ],
+  [
+   "Lactase persistence",
+   [
+    "[Ll]actase"
+   ]
+  ],
+  [
+   "The wheel (Bronocice, Ljubljana Marshes, Uruk)",
+   [
+    "Bronocice",
+    "Ljubljana",
+    "wheel"
+   ]
+  ],
+  [
+   "The sail",
+   [
+    "sail",
+    "mast"
+   ]
+  ],
+  [
+   "Obsidian sourcing networks",
+   [
+    "[Oo]bsidian"
+   ]
+  ],
+  [
+   "Trypillia/Cucuteni mega-sites",
+   [
+    "Trypillia",
+    "Cucuteni",
+    "Talianki",
+    "Maidanetske"
+   ]
+  ],
+  [
+   "Megaliths / radiocarbon revolution (Renfrew)",
+   [
+    "Renfrew",
+    "Newgrange",
+    "Stonehenge",
+    "megalith"
+   ]
+  ],
+  [
+   "Yamnaya / steppe ancestry / Indo-European debate",
+   [
+    "Yamnaya",
+    "steppe ancestry",
+    "Indo-European"
+   ]
+  ],
+  [
+   "Ötzi Lived Day",
+   [
+    "tzi",
+    "Iceman"
+   ]
+  ]
+ ],
+ "thaw": [
+  [
+   "Meltwater Pulse 1A",
+   [
+    "Meltwater Pulse 1[Aa]",
+    "MWP-1[Aa]",
+    "MWP1[Aa]"
+   ]
+  ],
+  [
+   "Black Sea deluge hypothesis (Ryan & Pitman)",
+   [
+    "Black Sea",
+    "Ryan.{0,20}Pitman",
+    "Bosporus"
+   ]
+  ],
+  [
+   "Atlit Yam submerged village",
+   [
+    "Atlit",
+    "Atlit.?Yam"
+   ]
+  ],
+  [
+   "Sunda Shelf / Sundaland drowning",
+   [
+    "Sunda"
+   ]
+  ]
+ ],
+ "villages": [
+  [
+   "Eight founder crops (Zohary & Hopf)",
+   [
+    "founder crop",
+    "Zohary"
+   ]
+  ],
+  [
+   "Çayönü",
+   [
+    "ay.n.",
+    "Cayonu",
+    "Çayönü"
+   ]
+  ],
+  [
+   "Nevalı Çori",
+   [
+    "Neval",
+    "vali .ori"
+   ]
+  ],
+  [
+   "Hallan Çemi",
+   [
+    "Hallan"
+   ]
+  ],
+  [
+   "Gordon Childe / \"Neolithic Revolution\" term",
+   [
+    "Gordon Childe",
+    "Neolithic Revolution"
+   ]
+  ],
+  [
+   "Farming health decline (skeletal stress, stature)",
+   [
+    "skeletal stress",
+    "stature decline",
+    "health decline",
+    "worst mistake"
+   ]
+  ]
+ ],
+ "assyria": [
+  [
+   "LAND: rain-fed north vs irrigated south (the dry-farming line)",
+   [
+    "rain-fed",
+    "dry farming",
+    "dry-farming",
+    "isohyet",
+    "rainfall agriculture"
+   ]
+  ],
+  [
+   "LAND: the Assyrian triangle — Ashur, Nineveh, Arbela, Kalhu",
+   [
+    "Arbela",
+    "Erbil"
+   ]
+  ],
+  [
+   "LAND: the Tigris and the Upper/Lower Zab",
+   [
+    "Zab\\b"
+   ]
+  ],
+  [
+   "LAND: no natural frontiers — the vulnerability thesis",
+   [
+    "no natural",
+    "open on every",
+    "exposed frontier",
+    "defensible frontier"
+   ]
+  ],
+  [
+   "LAND: the campaign season set by the agricultural calendar",
+   [
+    "campaign season",
+    "campaigning season",
+    "every year",
+    "annual campaign"
+   ]
+  ],
+  [
+   "PEOPLE: Ashur the god = the city = the state",
+   [
+    "Ashur",
+    "Aššur"
+   ]
+  ],
+  [
+   "PEOPLE: the limmu / eponym dating system",
+   [
+    "limmu",
+    "eponym"
+   ]
+  ],
+  [
+   "PEOPLE: Aramaic overtakes Akkadian; alphabet vs cuneiform",
+   [
+    "Aramaic"
+   ]
+  ],
+  [
+   "PEOPLE: deportation as demographic engineering",
+   [
+    "deport"
+   ]
+  ],
+  [
+   "PEOPLE: Sammu-ramat / Semiramis",
+   [
+    "Sammu-ramat",
+    "Semiramis"
+   ]
+  ],
+  [
+   "PEOPLE: the queen's household; Nimrud queens' tombs (1988-89)",
+   [
+    "queens' tomb",
+    "Queens' Tomb",
+    "Yaba",
+    "Atalia"
+   ]
+  ],
+  [
+   "Kanesh / Kültepe karum and the merchant archives",
+   [
+    "Kanesh",
+    "Kültepe",
+    "Kultepe",
+    "karum"
+   ]
+  ],
+  [
+   "donkey caravans: tin and textiles out, silver back",
+   [
+    "donkey",
+    "caravan"
+   ]
+  ],
+  [
+   "women's letters from Ashur — merchant wives running the firm",
+   [
+    "Lamassi",
+    "Ahaha",
+    "merchant wives",
+    "women.{0,30}letters"
+   ]
+  ],
+  [
+   "Shamshi-Adad I",
+   [
+    "Shamshi-Adad",
+    "Šamšī-Adad"
+   ]
+  ],
+  [
+   "Ashur-uballit I and the Amarna correspondence",
+   [
+    "Ashur-uballit",
+    "Aššur-uballiṭ"
+   ]
+  ],
+  [
+   "Tukulti-Ninurta I: takes Babylon, takes Marduk, murdered by his son",
+   [
+    "Tukulti-Ninurta"
+   ]
+  ],
+  [
+   "Tiglath-Pileser I",
+   [
+    "Tiglath-Pileser I\\b",
+    "Tukultī-apil-Ešarra"
+   ]
+  ],
+  [
+   "Middle Assyrian Laws — the veiling statute",
+   [
+    "veil",
+    "Middle Assyrian Law"
+   ]
+  ],
+  [
+   "surviving the Bronze Age collapse",
+   [
+    "Bronze Age collapse",
+    "1200 BCE",
+    "Sea Peoples"
+   ]
+  ],
+  [
+   "Ashurnasirpal II and Kalhu/Nimrud",
+   [
+    "Ashurnasirpal",
+    "Kalhu",
+    "Nimrud"
+   ]
+  ],
+  [
+   "the Nimrud banquet stele — 69,574 guests",
+   [
+    "banquet stele",
+    "69,574",
+    "banquet"
+   ]
+  ],
+  [
+   "Shalmaneser III; Black Obelisk; Jehu",
+   [
+    "Shalmaneser",
+    "Black Obelisk",
+    "Jehu"
+   ]
+  ],
+  [
+   "Battle of Qarqar, 853",
+   [
+    "Qarqar"
+   ]
+  ],
+  [
+   "Tiglath-Pileser III: standing army, provincial system, reform",
+   [
+    "Tiglath-Pileser III"
+   ]
+  ],
+  [
+   "Sargon II; Dur-Sharrukin/Khorsabad; fall of Samaria 722",
+   [
+    "Sargon II",
+    "Dur-Sharrukin",
+    "Khorsabad",
+    "Samaria"
+   ]
+  ],
+  [
+   "Sargon II killed in battle, body never recovered — a theological crisis",
+   [
+    "body.{0,40}recover",
+    "unburied",
+    "killed in battle"
+   ]
+  ],
+  [
+   "Sennacherib; the Palace Without Rival at Nineveh",
+   [
+    "Sennacherib",
+    "Palace Without Rival"
+   ]
+  ],
+  [
+   "Sennacherib's aqueduct at Jerwan and the Nineveh canal system",
+   [
+    "Jerwan",
+    "aqueduct",
+    "canal"
+   ]
+  ],
+  [
+   "Lachish 701; the siege reliefs; Hezekiah",
+   [
+    "Lachish",
+    "Hezekiah"
+   ]
+  ],
+  [
+   "destruction of Babylon, 689; Sennacherib murdered by his sons",
+   [
+    "689",
+    "murdered",
+    "assassinat"
+   ]
+  ],
+  [
+   "Esarhaddon rebuilds Babylon; conquers Egypt 671",
+   [
+    "Esarhaddon"
+   ]
+  ],
+  [
+   "the substitute king ritual",
+   [
+    "substitute king"
+   ]
+  ],
+  [
+   "Esarhaddon's Succession Treaty and the Deuteronomy parallel",
+   [
+    "Succession Treaty",
+    "loyalty oath",
+    "adê",
+    "Deuteronomy"
+   ]
+  ],
+  [
+   "Ashurbanipal; the Elamite war; the sack of Susa",
+   [
+    "Ashurbanipal",
+    "Susa"
+   ]
+  ],
+  [
+   "the lion hunt reliefs",
+   [
+    "lion hunt",
+    "lion-hunt"
+   ]
+  ],
+  [
+   "Shamash-shum-ukin's revolt, 652-648",
+   [
+    "Shamash-shum",
+    "Šamaš-šuma"
+   ]
+  ],
+  [
+   "siege engineering: rams, ramps, sappers",
+   [
+    "siege ram",
+    "battering",
+    "siege engine",
+    "ramp"
+   ]
+  ],
+  [
+   "iron weapons and cavalry",
+   [
+    "iron weapon",
+    "cavalry",
+    "chariot"
+   ]
+  ],
+  [
+   "calculated terror as stated policy — the inscriptions' own boasts",
+   [
+    "flay",
+    "impal",
+    "terror"
+   ]
+  ],
+  [
+   "the royal road and messenger relay",
+   [
+    "royal road",
+    "messenger",
+    "relay"
+   ]
+  ],
+  [
+   "the scholars' letters: astrologers, exorcists, omen reports",
+   [
+    "astrolog",
+    "exorcist",
+    "omen",
+    "scholar"
+   ]
+  ],
+  [
+   "Arbela and the Ishtar oracles",
+   [
+    "oracle"
+   ]
+  ],
+  [
+   "the turtanu and the provincial governors",
+   [
+    "turtanu",
+    "turtānu",
+    "governor",
+    "province"
+   ]
+  ],
+  [
+   "Paul-Émile Botta at Khorsabad, 1843",
+   [
+    "Botta"
+   ]
+  ],
+  [
+   "Austen Henry Layard at Nimrud, 1845",
+   [
+    "Layard"
+   ]
+  ],
+  [
+   "'Nineveh and Its Remains' as a Victorian bestseller",
+   [
+    "Nineveh and Its Remains"
+   ]
+  ],
+  [
+   "Hormuzd Rassam — the Iraqi excavator whose credit was withheld",
+   [
+    "Rassam"
+   ]
+  ],
+  [
+   "George Smith and the Flood Tablet, 1872",
+   [
+    "George Smith",
+    "Flood Tablet"
+   ]
+  ],
+  [
+   "Ashurbanipal's library — scale and survival by fire",
+   [
+    "library"
+   ]
+  ],
+  [
+   "Rawlinson and the decipherment of Akkadian cuneiform",
+   [
+    "Rawlinson",
+    "Behistun"
+   ]
+  ],
+  [
+   "the British Museum / Louvre rivalry; the raft lost in the Tigris",
+   [
+    "Louvre",
+    "British Museum",
+    "raft"
+   ]
+  ],
+  [
+   "the 2015 destruction of Nimrud and the Mosul Museum",
+   [
+    "2015",
+    "ISIS",
+    "Mosul"
+   ]
+  ],
+  [
+   "Ashur falls 614; Nineveh falls 612; Harran 609",
+   [
+    "\\b614\\b",
+    "\\b612\\b",
+    "\\b609\\b",
+    "Harran"
+   ]
+  ],
+  [
+   "Cyaxares and the Medes; Nabopolassar; the Fall of Nineveh Chronicle",
+   [
+    "Cyaxares",
+    "Medes",
+    "Nabopolassar",
+    "Fall of Nineveh Chronicle"
+   ]
+  ],
+  [
+   "Scythians and Cimmerians",
+   [
+    "Scythian",
+    "Cimmerian"
+   ]
+  ],
+  [
+   "Nahum's oracle",
+   [
+    "Nahum"
+   ]
+  ],
+  [
+   "Xenophon marches past the ruins without knowing what they are",
+   [
+    "Xenophon"
+   ]
+  ],
+  [
+   "Jonah, Isaiah and the biblical memory of Nineveh",
+   [
+    "Jonah",
+    "Isaiah"
+   ]
+  ],
+  [
+   "Aramaic's survival; the modern Assyrians and the Church of the East",
+   [
+    "Church of the East",
+    "modern Assyrian",
+    "Syriac",
+    "Neo-Aramaic"
+   ]
+  ]
+ ]
+}
