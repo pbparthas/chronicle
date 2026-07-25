@@ -185,6 +185,10 @@
   .s-hit .s-snip { font-size:15px; color:var(--ink-soft); line-height:1.5; }
   .s-hit mark { background:rgba(189,148,51,0.3); color:inherit; padding:0 1px; }
   .s-empty { color:var(--ink-soft); font-style:italic; margin-top:20px; }
+  .s-count { font-family:'Barlow Condensed',sans-serif; font-size:12.5px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--reed); font-weight:600; }
+  .s-group { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--clay-deep);
+    margin-top:6px; padding-bottom:3px; border-bottom:1px solid var(--sand-deep); }
 
   /* ============ CHAPTER TYPOGRAPHY ============ */
   article section { content-visibility:auto; contain-intrinsic-size: auto 900px; margin-bottom:58px; scroll-margin-top:calc(var(--topbar-h) + 16px); }
@@ -399,6 +403,93 @@
     .chap { grid-template-columns:44px 1fr; gap:12px; }
     .chap .status { grid-column:2; text-align:left; margin-top:3px; }
   }
+
+  /* ============================================================
+     UI/UX UPGRADE (CHRONICLE-UI-SPEC v1.0 + ADDENDUM v1.1)
+     All rules below are new and additive; nothing above is altered.
+     ============================================================ */
+
+  /* [addendum §5] topbar overflow fix: let flex title shrink, buttons hold size, no horizontal pan */
+  html, body { overflow-x:hidden; }
+  .topbar button { flex:0 0 auto; }
+  .topbar .bar-title { min-width:0; }
+
+  /* [F4] focus mode: topbar slides up while reading; progress bar pins to top with it */
+  .topbar { transition:transform .25s ease; }
+  body.chrome-hidden .topbar { transform:translateY(-100%); }
+  body.chrome-hidden .scroll-progress { top:0; }
+  .scroll-progress { transition:width .1s linear, top .25s ease; }
+  .scroll-progress.hide { display:none; }
+
+  /* [F2] contents fab (bottom-left) + contents sheet (settings-sheet idiom) */
+  .toc-fab { position:fixed; left:14px; bottom:22px; z-index:58; width:44px; height:44px; border-radius:50%;
+    border:1px solid var(--sand-deep); background:var(--sand); color:var(--clay-deep);
+    font-size:21px; line-height:1; cursor:pointer; box-shadow:0 4px 14px var(--shadow);
+    opacity:0; pointer-events:none; transition:opacity .2s; }
+  .toc-fab.show { opacity:0.92; pointer-events:auto; }
+  #contents-sheet { position:fixed; left:0; right:0; bottom:0; z-index:80; background:var(--paper);
+    border-top:1px solid var(--sand-deep); border-radius:16px 16px 0 0;
+    box-shadow:0 -12px 44px rgba(0,0,0,0.3); padding:18px 22px 30px;
+    max-height:78vh; overflow-y:auto; transform:translateY(105%); transition:transform .28s; }
+  #contents-sheet.open { transform:none; }
+  #contents-sheet .toc-meta { font-family:'Barlow Condensed',sans-serif; letter-spacing:0.1em;
+    text-transform:uppercase; font-size:12px; color:var(--reed); font-weight:600; margin:2px 0 12px; }
+  #contents-sheet ol.toc-list { list-style:none; margin:0; padding:0; }
+  #contents-sheet ol.toc-list a { display:block; padding:9px 4px; color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--sand-deep); font-size:16px; line-height:1.35; }
+  #contents-sheet ol.toc-list a.here { color:var(--clay-deep); font-weight:600; }
+  #contents-sheet ol.toc-list li:last-child a { border-bottom:none; }
+
+  /* [F3] citation popover: same idiom as #hint-pop */
+  #cite-pop { position:fixed; left:12px; right:12px; bottom:18px; z-index:76; background:var(--sand);
+    border:1px solid var(--sand-deep); border-left:3px solid var(--clay); border-radius:8px;
+    padding:14px 40px 14px 16px; box-shadow:0 8px 30px var(--shadow); display:none; max-width:560px; margin:0 auto; }
+  #cite-pop.show { display:block; }
+  #cite-pop .cite-term { font-family:'Barlow Condensed',sans-serif; letter-spacing:0.12em;
+    text-transform:uppercase; font-size:12px; color:var(--clay-deep); font-weight:600; margin-bottom:6px; }
+  #cite-pop .cite-body { font-size:15.5px; color:var(--ink); line-height:1.5; }
+  #cite-pop .cite-body a { color:var(--clay-deep); }
+  #cite-pop .cite-all { display:inline-block; margin-top:10px; font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.08em; text-transform:uppercase; font-size:12px; color:var(--reed); font-weight:600;
+    cursor:pointer; border-bottom:1px solid var(--sand-deep); }
+  #cite-pop .cite-x { position:absolute; top:8px; right:10px; color:var(--ink-soft); font-size:15px; padding:4px 6px; cursor:pointer; }
+
+  /* [F5] finished-chapter check on shelf cards + reset row */
+  .chap .fin-check { color:var(--reed); font-weight:700; margin-left:6px; }
+  #reset-progress { width:100%; background:var(--sand); border:1px solid var(--sand-deep); border-radius:8px;
+    padding:11px; font-family:'Barlow Condensed',sans-serif; font-size:13.5px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-soft); cursor:pointer; }
+
+  /* [F6] hero progress strip */
+  .progress-strip { margin-top:10px; font-family:'Barlow Condensed',sans-serif; font-size:13.5px;
+    letter-spacing:0.06em; color:var(--reed); }
+  .progress-strip b { color:var(--clay-deep); font-weight:600; }
+
+  /* [F7] ready/all shelf filter */
+  .shelf-filter { display:flex; gap:8px; margin:22px 0 -8px; }
+  .shelf-filter button { font-family:'Barlow Condensed',sans-serif; letter-spacing:0.08em; text-transform:uppercase;
+    font-size:12.5px; font-weight:600; color:var(--ink-soft); background:var(--sand); border:1px solid var(--sand-deep);
+    border-radius:14px; padding:5px 15px; cursor:pointer; }
+  .shelf-filter button.active { color:var(--paper); background:var(--clay-deep); border-color:var(--clay-deep); }
+  body.filter-ready .chap.soon { display:none; }
+  body.filter-ready .era-head.era-empty { display:none; }
+  .shelf-nav a.nav-empty { opacity:0.4; pointer-events:none; }
+
+  /* [F8] timeline region filter */
+  .tl-regions { display:flex; gap:7px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding:6px 16px 2px; scrollbar-width:none; }
+  .tl-regions::-webkit-scrollbar { display:none; }
+  .tl-regions button { flex:0 0 auto; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.07em;
+    text-transform:uppercase; font-size:12px; font-weight:600; color:var(--ink-soft); background:var(--sand);
+    border:1px solid var(--sand-deep); border-radius:13px; padding:5px 12px; cursor:pointer; }
+  .tl-regions button.active { color:var(--paper); background:var(--clay-deep); border-color:var(--clay-deep); }
+  #view-tl [data-region] { transition:opacity .25s; }
+  #view-tl [data-region].tl-dim { opacity:0.15; }
+
+  /* [CSS-only slot] Era Prelude link inside .era-head (writing pipeline adds the anchors) */
+  .era-head .era-about { margin-left:auto; align-self:center; font-family:'Barlow Condensed',sans-serif;
+    font-size:12.5px; letter-spacing:0.06em; color:var(--clay-deep); text-decoration:none; white-space:nowrap; }
+  .era-head .era-about:active { color:var(--clay); }
 </style>
 </head>
 <body>
@@ -418,6 +509,7 @@ function imgFail(i){ i.style.display = 'none'; }
 <!-- FLOATING BOOKMARK BUTTON -->
 <button class="bm-fab" id="bm-fab" title="Bookmark this spot">⚑</button>
 <button class="top-fab" id="top-fab" title="Back to top">↑</button>
+<button class="toc-fab" id="toc-fab" title="Contents">≡</button>
 <div class="toast" id="toast"></div>
 
 <!-- ============ HOME VIEW ============ -->
@@ -455,6 +547,8 @@ function imgFail(i){ i.style.display = 'none'; }
         <span class="badge b-inf">inferred</span> (scholarly consensus from indirect evidence), or
         <span class="badge b-leg">legend</span> (tradition, told as tradition). Where scholars disagree, the disagreement is stated. Dates use BCE/CE — the same years as the older BC/AD. Chapters are numbered by era and position — II·3 is the third chapter of the Classical World. A civilization is shelved in the era where its story begins. Tap ⚑ while reading to bookmark your spot; ⚑ Resume returns to it from anywhere.
       </div>
+      <div class="progress-strip" id="progress-strip"></div>
+      <div class="shelf-filter" id="shelf-filter"><button data-filter="all">All</button><button data-filter="ready">Ready</button></div>
       <nav class="shelf-nav"><a href="#era-before"><span class="g">0</span>Before History</a><a href="#era-cradles"><span class="g">I</span>First Cradles</a><a href="#era-classical"><span class="g">II</span>Classical World</a><a href="#era-medieval"><span class="g">III</span>Medieval World</a><a href="#era-earlymodern"><span class="g">IV</span>Early Modern</a><a href="#era-modern"><span class="g">V</span>Modern World</a><a href="#era-interludes"><span class="g">In·</span>Interludes</a><a href="#era-eastasia"><span class="g">E·</span>East Asia</a><a href="#era-epics"><span class="g">M·</span>Epics &amp; Myths</a><a href="#era-cities"><span class="g">C·</span>Great Cities</a><a href="#era-faiths"><span class="g">F·</span>Faiths</a></nav>
     </header>
 
@@ -626,6 +720,7 @@ function imgFail(i){ i.style.display = 'none'; }
 <!-- ============ GRAND TIMELINE VIEW ============ -->
 <div class="view" id="view-tl">
   <div class="tl-note2">Time flows downward · scroll sideways for more lanes · tap a clay-red spine to open its chapter · side-by-side bars = alive at the same time</div>
+  <div class="tl-regions" id="tl-regions"><button data-region="all" class="active">All</button><button data-region="mesopotamia">Mesopotamia</button><button data-region="egypt-africa">Africa</button><button data-region="europe">Europe</button><button data-region="asia">Asia</button><button data-region="americas">Americas</button></div>
   <div class="tl-vert"><svg viewBox="0 0 520 1982" xmlns="http://www.w3.org/2000/svg" font-family="Barlow Condensed, sans-serif"><line x1="6" y1="40" x2="514" y2="40" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="35" font-size="13" style="fill:var(--reed)">3500 BCE</text><line x1="6" y1="215" x2="514" y2="215" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="210" font-size="13" style="fill:var(--reed)">3000 BCE</text><line x1="6" y1="390" x2="514" y2="390" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="385" font-size="13" style="fill:var(--reed)">2500 BCE</text><line x1="6" y1="565" x2="514" y2="565" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="560" font-size="13" style="fill:var(--reed)">2000 BCE</text><line x1="6" y1="740" x2="514" y2="740" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="735" font-size="13" style="fill:var(--reed)">1500 BCE</text><line x1="6" y1="915" x2="514" y2="915" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="910" font-size="13" style="fill:var(--reed)">1000 BCE</text><line x1="6" y1="1090" x2="514" y2="1090" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1085" font-size="13" style="fill:var(--reed)">500 BCE</text><line x1="6" y1="1265" x2="514" y2="1265" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1260" font-size="13" style="fill:var(--reed)">1 CE</text><line x1="6" y1="1440" x2="514" y2="1440" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1435" font-size="13" style="fill:var(--reed)">500 CE</text><line x1="6" y1="1615" x2="514" y2="1615" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1610" font-size="13" style="fill:var(--reed)">1000 CE</text><line x1="6" y1="1790" x2="514" y2="1790" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1785" font-size="13" style="fill:var(--reed)">1500 CE</text><line x1="6" y1="1930" x2="514" y2="1930" style="stroke:var(--sand-deep)" stroke-width="1"/><text x="8" y="1925" font-size="13" style="fill:var(--reed)">1900 CE</text><g data-goto="sumer" style="cursor:pointer"><rect x="58" y="40" width="42" height="612" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 50)" x="85" y="50" font-size="15" style="fill:#fff3e2" font-weight="600">Sumer · 3500 BCE – 1750 BCE</text></g><g data-goto="egypt-ok" style="cursor:pointer"><rect x="108" y="180" width="42" height="322" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 190)" x="135" y="190" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Old Kingdom · 3100 BCE – 2181 BCE</text></g><g data-goto="indus" style="cursor:pointer"><rect x="158" y="355" width="42" height="245" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 365)" x="185" y="365" font-size="15" style="fill:#fff3e2" font-weight="600">Indus Valley · 2600 BCE – 1900 BCE</text></g><g data-goto="akkad" style="cursor:pointer"><rect x="208" y="448" width="42" height="259" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 458)" x="235" y="458" font-size="15" style="fill:#fff3e2" font-weight="600">Akkad &amp; Old Babylon · 2334 – 1595 BCE</text></g><g data-goto="babylonia" style="cursor:pointer"><rect x="208" y="712" width="42" height="365" rx="4" style="fill:#c07b52"/><text transform="rotate(90 235 722)" x="235" y="722" font-size="15" style="fill:#fff3e2" font-weight="600">Babylonia · 1595 – 539 BCE</text></g><g data-goto="egypt-nk" style="cursor:pointer"><rect x="108" y="546" width="42" height="342" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 556)" x="135" y="556" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: Middle &amp; New Kingdoms · 2055 BCE – 1077 BCE</text></g><g data-goto="assyria" style="cursor:pointer"><rect x="258" y="556" width="42" height="496" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 566)" x="285" y="566" font-size="15" style="fill:#fff3e2" font-weight="600">Assyria · 2025 BCE – 609 BCE</text></g><g data-goto="hittites" style="cursor:pointer"><rect x="58" y="688" width="42" height="164" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 698)" x="85" y="698" font-size="15" style="fill:#fff3e2" font-weight="600">Hittites · 1650 BCE – 1180 BCE</text></g><g data-goto="minoans" style="cursor:pointer"><rect x="158" y="605" width="42" height="275" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 610)" x="185" y="610" font-size="15" style="fill:#fff3e2" font-weight="600">Minoans &amp; Mycenaeans · 1900 BCE – 1100 BCE</text></g><g data-goto="greece" style="cursor:pointer"><rect x="58" y="985" width="42" height="229" rx="4" style="fill:#c07b52"/><text transform="rotate(90 85 995)" x="85" y="995" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Classical Greece &amp; Hellenistic · 800 BCE – 146 BCE</text></g><g data-goto="rome" style="cursor:pointer"><rect x="108" y="1001" width="42" height="430" rx="4" style="fill:#c07b52"/><text transform="rotate(90 135 1011)" x="135" y="1011" font-size="15" style="fill:#fff3e2" font-weight="600" font-weight="600">Rome · 753 BCE – 476 CE</text></g><g data-goto="egypt-twilight" style="cursor:pointer"><rect x="158" y="888" width="42" height="366" rx="4" style="fill:#c07b52"/><text transform="rotate(90 185 898)" x="185" y="898" font-size="15" style="fill:#fff3e2" font-weight="600">Egypt: The Long Twilight · 1077 – 30 BCE</text></g><g data-goto="persia" style="cursor:pointer"><rect x="258" y="1072" width="42" height="77" rx="4" style="fill:#c07b52"/><text transform="rotate(90 285 1082)" x="285" y="1082" font-size="15" style="fill:#fff3e2" font-weight="600">Achaemenid Persia · 550 BCE – 330 BCE</text></g><g><rect x="208" y="1188" width="42" height="154" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1198)" x="235" y="1198" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Qin &amp; Han China · 221 BCE – 220 CE</text></g><g><rect x="58" y="1432" width="42" height="342" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1442)" x="85" y="1442" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Byzantium · 476 CE – 1453 CE</text></g><g><rect x="108" y="1486" width="42" height="219" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 135 1496)" x="135" y="1496" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Islamic Caliphates · 632 CE – 1258 CE</text></g><g><rect x="158" y="1687" width="42" height="57" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 185 1697)" x="185" y="1697" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mongol Empire · 1206 CE – 1368 CE</text></g><g><rect x="208" y="1720" width="42" height="218" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 235 1730)" x="235" y="1730" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ottoman Empire · 1299 CE – 1922 CE</text></g><g><rect x="258" y="1744" width="42" height="190" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 285 1754)" x="285" y="1754" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Ming &amp; Qing China · 1368 CE – 1912 CE</text></g><g><rect x="58" y="1799" width="42" height="116" rx="4" style="fill:var(--sand-deep)"/><text transform="rotate(90 85 1809)" x="85" y="1809" font-size="15" style="fill:var(--ink-soft)" font-weight="600">Mughal India · 1526 CE – 1857 CE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="215" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 225)" x="335" y="225" font-size="15" style="fill:#fff3e2" font-weight="600">Caral &amp; Norte Chico · 3000 – 1800 BCE</text></g><g data-goto="caral" style="cursor:pointer"><rect x="308" y="705" width="42" height="420" rx="4" style="fill:#c07b52"/><text transform="rotate(90 335 715)" x="335" y="715" font-size="15" style="fill:#fff3e2" font-weight="600">The Olmec · 1600 – 400 BCE</text></g><g data-goto="kush" style="cursor:pointer"><rect x="358" y="891" width="42" height="497" rx="4" style="fill:#c07b52"/><text transform="rotate(90 385 901)" x="385" y="901" font-size="15" style="fill:#fff3e2" font-weight="600">Kush &amp; Nubia · 1069 BCE – 350 CE</text></g><g data-goto="israel-judah" style="cursor:pointer"><rect x="408" y="905" width="42" height="155" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 915)" x="435" y="915" font-size="15" style="fill:#fff3e2" font-weight="600">Israel &amp; Judah · c. 1030 – 586 BCE</text></g><g data-goto="phoenicians" style="cursor:pointer"><rect x="458" y="845" width="42" height="304" rx="4" style="fill:#c07b52"/><text transform="rotate(90 485 855)" x="485" y="855" font-size="15" style="fill:#fff3e2" font-weight="600">The Phoenicians · 1200 – 332 BCE</text></g><g data-goto="judea-maccabees" style="cursor:pointer"><rect x="408" y="1207" width="42" height="84" rx="4" style="fill:#c07b52"/><text transform="rotate(90 435 1217)" x="435" y="1217" font-size="15" style="fill:#fff3e2" font-weight="600">Judea · 167 BCE – 73 CE</text></g></svg></div>
 </div>
 
@@ -663,6 +758,8 @@ function imgFail(i){ i.style.display = 'none'; }
 <!-- @CHAPTER-CHUNKS -->
 <!-- HINT POPOVER -->
 <div id="hint-pop"><span class="hint-x">✕</span><div class="hint-term" id="hint-term"></div><div class="hint-body" id="hint-body"></div></div>
+<div id="cite-pop"><span class="cite-x">✕</span><div class="cite-term" id="cite-term">Source</div><div class="cite-body" id="cite-body"></div><span class="cite-all" id="cite-all">View all sources →</span></div>
+<div id="contents-sheet"><div class="sheet-top"><div class="set-title" id="contents-title">Contents</div><button id="contents-close">✕</button></div><div class="toc-meta" id="contents-meta"></div><ol class="toc-list" id="contents-list"></ol></div>
 
 <!-- SETTINGS SHEET -->
 <div id="settings-backdrop"></div>
@@ -697,6 +794,8 @@ function imgFail(i){ i.style.display = 'none'; }
     <button class="lh-btn" data-lh="1.75">Normal</button>
     <button class="lh-btn" data-lh="1.95">Relaxed</button>
   </div>
+  <div class="set-h">Reading Progress</div>
+  <button id="reset-progress">Reset reading progress</button>
 </div>
 
 
@@ -757,7 +856,9 @@ function imgFail(i){ i.style.display = 'none'; }
   var mem = {};
   var store = {
     get: function(k){ try { var v = localStorage.getItem(k); return v===null ? (k in mem ? mem[k] : null) : v; } catch(e){ return k in mem ? mem[k] : null; } },
-    set: function(k,v){ mem[k]=v; try { localStorage.setItem(k,v); } catch(e){} }
+    set: function(k,v){ mem[k]=v; try { localStorage.setItem(k,v); } catch(e){} },
+    remove: function(k){ delete mem[k]; try { localStorage.removeItem(k); } catch(e){} },
+    keys: function(){ var ks=[]; try { for (var i=0;i<localStorage.length;i++){ ks.push(localStorage.key(i)); } } catch(e){} for (var m in mem){ if (ks.indexOf(m)<0) ks.push(m); } return ks; }
   };
 
   /* ---------- views / router ---------- */
@@ -767,24 +868,40 @@ function imgFail(i){ i.style.display = 'none'; }
   var fab = document.getElementById('bm-fab');
   var barTitle = document.getElementById('bar-title');
 
+  /* [addendum §5] bar shows the name only — the chapter number lives on the cover */
+  function shortTitle(t){ return t ? t.replace(/^Chapter\s+[^—]*—\s*/, '') : t; }
+  /* views that are not chapters (no progress bar / contents fab / focus mode) */
+  var NONCHAPTER = { home:1, search:1, world:1, tl:1, map:1, about:1 };
+  function isChapter(name){ return !NONCHAPTER[name]; }
+
   function show(name, opts){
     opts = opts || {};
     if (!views[name]) name = 'home';
+    if (current !== 'home' && current !== 'search') { store.set('pos:'+current, String(window.scrollY|0)); }
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     document.getElementById(views[name]).classList.add('active');
     current = name;
-    barTitle.textContent = titles[name] || 'The Chronicle';
+    barTitle.textContent = shortTitle(titles[name] || 'The Chronicle');
     fab.classList.toggle('show', name !== 'home' && name !== 'search');
     if (name === 'search') { setTimeout(function(){ document.getElementById('s-input').focus(); }, 60); }
+    var sec = opts.scrollToSection ? document.getElementById(opts.scrollToSection) : null;
     if (!opts.keepScroll) {
-      if (name !== 'home' && name !== 'search') {
-        var saved = parseInt(store.get('pos:'+name) || '0', 10);
-        window.scrollTo(0, opts.scrollTo != null ? opts.scrollTo : saved);
+      /* restore now AND on the next frame: switching a view (display + the
+         content-visibility:auto sections) can leave the page briefly un-laid-out,
+         which would clamp a synchronous scroll to the top. */
+      var doScroll = function(fn){ fn(); requestAnimationFrame(fn); };
+      if (sec) { doScroll(function(){ sec.scrollIntoView(); }); }
+      else if (name !== 'home' && name !== 'search') {
+        var target = opts.scrollTo != null ? opts.scrollTo : parseInt(store.get('pos:'+name) || '0', 10);
+        doScroll(function(){ window.scrollTo(0, target); });
       } else {
         window.scrollTo(0, 0);
       }
     }
     store.set('lastView', name);
+    syncHistory(name, opts);
+    resetChrome();
+    if (isChapter(name)) observeNexts();
     updateProgress();
   }
 
@@ -799,14 +916,233 @@ function imgFail(i){ i.style.display = 'none'; }
     el.addEventListener('click', function(e){ e.preventDefault(); show(el.getAttribute('data-goto')); });
   });
 
-  /* ---------- reading position: auto-save ---------- */
-  var saveTimer = null;
-  window.addEventListener('scroll', function(){
+  /* ============ UI/UX UPGRADE runtime (CHRONICLE-UI-SPEC v1.0 + ADDENDUM v1.1) ============ */
+
+  /* [F9] hash routing + history — #/<slug>[/<section-id>] */
+  function syncHistory(name, opts){
+    if (opts.fromPop) return;
+    var h = '#/' + (name === 'home' ? '' : name);
+    if (opts.scrollToSection) h += '/' + opts.scrollToSection;
+    try {
+      if (opts.replace) history.replaceState({ v:name }, '', h);
+      else if (location.hash !== h) history.pushState({ v:name }, '', h);
+    } catch(e){}
+  }
+  function parseHash(){
+    var h = (location.hash || '').replace(/^#\/?/, '');
+    if (!h) return { view:'home', section:null };
+    var parts = h.split('/'), v = parts[0];
+    if (!views[v]) return { view:'home', section:null };
+    return { view:v, section: parts[1] || null };
+  }
+  window.addEventListener('popstate', function(){
+    var r = parseHash();
+    /* back/forward within a session restores the EXACT saved scroll position
+       (the URL already carries the section); section-scroll is only for cold
+       deep-links from a shared URL, handled at init. */
+    show(r.view, { fromPop:true });
+  });
+
+  /* [F1/F4] chrome: progress-bar scoping, contents fab, focus mode */
+  var tocFab = document.getElementById('toc-fab');
+  var lastScrollY = 0;
+  function resetChrome(){
+    document.body.classList.remove('chrome-hidden');
+    var chap = isChapter(current);
+    bar.classList.toggle('hide', !chap);
+    tocFab.classList.toggle('show', chap);
+    lastScrollY = window.scrollY;
+  }
+  function onFocusScroll(){
+    if (!isChapter(current)) { document.body.classList.remove('chrome-hidden'); lastScrollY = window.scrollY; return; }
+    var y = window.scrollY;
+    if (y > 120 && y > lastScrollY + 4) document.body.classList.add('chrome-hidden');
+    else if (y < lastScrollY - 4 || y <= 4) document.body.classList.remove('chrome-hidden');
+    lastScrollY = y;
+  }
+
+  /* current-section tracking → shareable URL (replaceState) + contents highlight */
+  var curSection = null;
+  function activeArticle(){ var v = document.getElementById(views[current]); return v ? v.querySelector('article') : null; }
+  function trackSection(){
+    if (!isChapter(current)) return;
+    var art = activeArticle(); if (!art) return;
+    var secs = art.querySelectorAll('section[id]'), found = null;
+    for (var i=0;i<secs.length;i++){ if (secs[i].getBoundingClientRect().top < 90) found = secs[i].id; else break; }
+    if (found && found !== curSection){
+      curSection = found;
+      try { history.replaceState({ v:current }, '', '#/' + current + '/' + found); } catch(e){}
+    }
+  }
+  function viewFraction(){
+    var v = document.getElementById(views[current]); if (!v) return 0;
+    var top = window.scrollY + v.getBoundingClientRect().top;
+    var range = v.offsetHeight - window.innerHeight;
+    if (range <= 0) return 1;
+    return Math.min(1, Math.max(0, (window.scrollY - top) / range));
+  }
+
+  /* [F2] contents sheet (clones the active article's nav.toc) */
+  var contentsSheet = document.getElementById('contents-sheet');
+  var contentsList = document.getElementById('contents-list');
+  function openContents(){
+    var art = activeArticle(); if (!art) return;
+    document.getElementById('contents-title').textContent = shortTitle(titles[current] || 'Contents');
+    var total = art.textContent.trim().split(/\s+/).length;
+    var left = Math.max(1, Math.round(total * (1 - viewFraction()) / 220));
+    document.getElementById('contents-meta').textContent = '~' + left + ' min left';
+    contentsList.innerHTML = '';
+    var toc = art.querySelector('nav.toc ol');
+    if (toc){
+      toc.querySelectorAll('a').forEach(function(a){
+        var sec = (a.getAttribute('href') || '').replace(/^#/, '');
+        var li = document.createElement('li'), na = document.createElement('a');
+        na.textContent = a.textContent; na.href = a.getAttribute('href');
+        if (sec && sec === curSection) na.className = 'here';
+        na.addEventListener('click', function(e){ e.preventDefault(); closeContents(); show(current, { scrollToSection: sec }); });
+        li.appendChild(na); contentsList.appendChild(li);
+      });
+    }
+    contentsSheet.classList.add('open'); backdrop.classList.add('show');
+  }
+  function closeContents(){ contentsSheet.classList.remove('open'); backdrop.classList.remove('show'); }
+  tocFab.addEventListener('click', openContents);
+  document.getElementById('contents-close').addEventListener('click', closeContents);
+
+  /* [F3] citation popovers — same idiom as the glossary hint-pop */
+  var citePop = document.getElementById('cite-pop');
+  var citeBody = document.getElementById('cite-body');
+  var citeTargetId = null;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('sup.cite a');
+    if (a){
+      var id = (a.getAttribute('href') || '').replace(/^#/, '');
+      var li = id ? document.getElementById(id) : null;
+      if (li){
+        e.preventDefault(); e.stopPropagation();
+        citeTargetId = id;
+        citeBody.innerHTML = li.innerHTML;
+        citeBody.querySelectorAll('a').forEach(function(x){ x.target='_blank'; x.rel='noopener'; });
+        citePop.classList.add('show');
+        return;
+      }
+    }
+    if (!e.target.closest('#cite-pop')) citePop.classList.remove('show');
+  });
+  document.querySelector('#cite-pop .cite-x').addEventListener('click', function(){ citePop.classList.remove('show'); });
+  document.getElementById('cite-all').addEventListener('click', function(){
+    citePop.classList.remove('show');
+    var el = citeTargetId && document.getElementById(citeTargetId);
+    if (el) el.scrollIntoView();
+  });
+
+  /* [F5] finished-chapter tracking (IntersectionObserver on .next) */
+  var finIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        var v = en.target.closest('.view');
+        if (v){ var slug = v.id.replace('view-',''); if (views[slug]){ store.set('fin:'+slug,'1'); markShelfFinished(); } }
+      }
+    });
+  }, { threshold: 0.5 }) : null;
+  function observeNexts(){ if (!finIO) return; document.querySelectorAll('.next').forEach(function(n){ finIO.observe(n); }); }
+  function markShelfFinished(){
+    document.querySelectorAll('#view-home .chap.ready').forEach(function(card){
+      var slug = card.getAttribute('data-ch'), status = card.querySelector('.status');
+      if (!status) return;
+      var chk = status.querySelector('.fin-check');
+      if (store.get('fin:'+slug) === '1'){ if (!chk){ var s=document.createElement('span'); s.className='fin-check'; s.textContent='✓'; status.appendChild(s); } }
+      else if (chk){ chk.remove(); }
+    });
+    updateProgressStrip();
+  }
+  document.getElementById('reset-progress').addEventListener('click', function(){
+    if (!window.confirm('Reset reading progress? This clears which chapters are marked finished.')) return;
+    store.keys().forEach(function(k){ if (k.indexOf('fin:') === 0) store.remove(k); });
+    markShelfFinished();
+    toast('Reading progress reset');
+  });
+
+  /* [F6] hero progress strip */
+  function updateProgressStrip(){
+    var el = document.getElementById('progress-strip'); if (!el) return;
+    var all = document.querySelectorAll('#view-home .chap').length;
+    var written = document.querySelectorAll('#view-home .chap.ready').length;
+    var finished = 0;
+    document.querySelectorAll('#view-home .chap.ready').forEach(function(c){ if (store.get('fin:'+c.getAttribute('data-ch'))==='1') finished++; });
+    el.innerHTML = '<b>'+written+'</b> of <b>'+all+'</b> chapters written · <b>'+finished+'</b> finished by you';
+  }
+
+  /* [F7] ready / all shelf filter */
+  var shelfFilter = store.get('shelf:filter') || 'all';
+  function applyShelfFilter(){
+    var ready = shelfFilter === 'ready';
+    document.body.classList.toggle('filter-ready', ready);
+    var nodes = document.querySelectorAll('#view-home .era-head, #view-home .chap');
+    var head = null, count = 0, seen = [];
+    function flush(){ if (head){ head.classList.toggle('era-empty', count === 0); seen.push([head, count]); } }
+    nodes.forEach(function(n){
+      if (n.classList.contains('era-head')){ flush(); head = n; count = 0; }
+      else if (n.classList.contains('ready')) count++;
+    });
+    flush();
+    var navById = {};
+    document.querySelectorAll('.shelf-nav a').forEach(function(a){ navById[(a.getAttribute('href')||'').replace(/^#/,'')] = a; });
+    seen.forEach(function(pair){
+      var chip = navById[pair[0].id];
+      if (chip) chip.classList.toggle('nav-empty', ready && pair[1] === 0);
+    });
+    document.querySelectorAll('#shelf-filter button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-filter') === shelfFilter); });
+  }
+  document.querySelectorAll('#shelf-filter button').forEach(function(b){
+    b.addEventListener('click', function(){ shelfFilter = b.getAttribute('data-filter'); store.set('shelf:filter', shelfFilter); applyShelfFilter(); });
+  });
+
+  /* [F8] timeline region filter (data-region assigned at runtime by bar label) */
+  var TL_REGION = {
+    mesopotamia:['Sumer','Akkad','Babylon','Assyria','Hittite','Persia','Israel','Judah','Phoenician','Judea','Elam','Caliphate','Ottoman'],
+    'egypt-africa':['Egypt','Kush','Nubia'],
+    europe:['Minoan','Mycenae','Greece','Hellenistic','Rome','Byzantium'],
+    asia:['Indus','China','Mongol','Mughal'],
+    americas:['Caral','Norte Chico','Olmec']
+  };
+  function regionOfBar(text){
+    for (var r in TL_REGION){ for (var i=0;i<TL_REGION[r].length;i++){ if (text.indexOf(TL_REGION[r][i]) !== -1) return r; } }
+    return null;
+  }
+  function initTimelineRegions(){
+    var svg = document.querySelector('#view-tl .tl-vert svg'); if (!svg) return;
+    svg.querySelectorAll('g').forEach(function(g){
+      var t = g.querySelector('text'); if (!t) return;
+      var reg = regionOfBar(t.textContent); if (reg) g.setAttribute('data-region', reg);
+    });
+    document.querySelectorAll('#tl-regions button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var sel = b.getAttribute('data-region');
+        document.querySelectorAll('#tl-regions button').forEach(function(x){ x.classList.toggle('active', x === b); });
+        svg.querySelectorAll('g[data-region]').forEach(function(g){
+          g.classList.toggle('tl-dim', sel !== 'all' && g.getAttribute('data-region') !== sel);
+        });
+      });
+    });
+  }
+
+  /* ---------- reading position + chrome: rAF-throttled ---------- */
+  var saveTimer = null, scrollTicking = false;
+  function onScrollFrame(){
+    scrollTicking = false;
     updateProgress();
+    onFocusScroll();
+    trackSection();
     if (current === 'home' || current === 'search') return;
     store.set('lastReadView', current);
     if (saveTimer) clearTimeout(saveTimer);
     saveTimer = setTimeout(function(){ store.set('pos:'+current, String(window.scrollY|0)); }, 250);
+  }
+  window.addEventListener('scroll', function(){
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(onScrollFrame);
   }, { passive:true });
   window.addEventListener('pagehide', function(){
     if (current !== 'home' && current !== 'search') store.set('pos:'+current, String(window.scrollY|0));
@@ -858,12 +1194,11 @@ function imgFail(i){ i.style.display = 'none'; }
     toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
   }
 
-  /* ---------- progress bar ---------- */
+  /* ---------- progress bar (measures the active chapter view only) ---------- */
   var bar = document.getElementById('progress');
   function updateProgress(){
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    if (!isChapter(current)) { bar.style.width = '0%'; return; }
+    bar.style.width = (viewFraction() * 100) + '%';
   }
 
   /* ---------- search (built from live DOM) ---------- */
@@ -877,50 +1212,99 @@ function imgFail(i){ i.style.display = 'none'; }
         var head = sec.querySelector('h2, h3');
         var secTitle = head ? head.textContent : chTitle;
         var text = sec.textContent.replace(/\s+/g,' ').trim();
-        index.push({ view: chView, chTitle: chTitle, secTitle: secTitle, secId: sec.id || '', text: text, lower: text.toLowerCase() });
+        index.push({ kind:'section', view: chView, chTitle: chTitle, secTitle: secTitle, secId: sec.id || '', text: text, lower: text.toLowerCase() });
       });
     });
     // Shelf cards (written and planned) — every name on the shelf is findable
     document.querySelectorAll('#view-home .chap').forEach(function(card){
       var h4 = card.querySelector('h4'); if (!h4) return;
       var text = card.textContent.replace(/\s+/g,' ').trim();
-      index.push({ view: 'home', chTitle: 'The Shelf', secTitle: h4.textContent, text: text, lower: text.toLowerCase(), el: card });
+      index.push({ kind:'card', view: 'home', chTitle: 'The Shelf', secTitle: h4.textContent, text: text, lower: text.toLowerCase(), el: card });
     });
     // Hint glossary
     document.querySelectorAll('.hint').forEach(function(h){
       var chView = h.closest('.view'); if (!chView) return;
       var text = h.textContent + ' \u2014 ' + (h.getAttribute('data-hint') || '');
-      index.push({ view: chView.id.replace('view-',''), chTitle: 'Glossary', secTitle: h.textContent, text: text, lower: text.toLowerCase(), el: h });
+      index.push({ kind:'hint', view: chView.id.replace('view-',''), chTitle: 'Glossary', secTitle: h.textContent, text: text, lower: text.toLowerCase(), el: h });
     });
   }
   var sInput = document.getElementById('s-input');
   var sResults = document.getElementById('s-results');
-  sInput.addEventListener('input', function(){
+  /* [F10] word-boundary matching + field-weighted ranking, grouped by chapter.
+     (kept below the `var sInput` boundary so the PWA build, which swaps the
+     runtime indexer for a JSON loader above, still carries these helpers.) */
+  function escapeRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+  function fieldRank(str, q, wordRe, exactRe){
+    if (!str) return 0;
+    if (str.toLowerCase().indexOf(q) === -1) return 0;
+    if (exactRe.test(str)) return 3;   // whole word
+    if (wordRe.test(str)) return 2;    // word-boundary prefix
+    return 1;                          // substring only
+  }
+  function rankItem(item, q, wordRe, exactRe){
+    var base = 0, fr = 0;
+    if (item.kind === 'hint'){ fr = fieldRank(item.secTitle, q, wordRe, exactRe) || fieldRank(item.text, q, wordRe, exactRe); base = 500; }
+    else if (item.kind === 'card'){ fr = fieldRank(item.secTitle, q, wordRe, exactRe) || fieldRank(item.text, q, wordRe, exactRe); base = 420; }
+    else {
+      var sc = fieldRank(item.secTitle, q, wordRe, exactRe);
+      var cc = fieldRank(item.chTitle, q, wordRe, exactRe);
+      var bc = fieldRank(item.text, q, wordRe, exactRe);
+      if (sc){ base = 1000; fr = sc; }
+      else if (cc){ base = 700; fr = cc; }
+      else if (bc){ base = 100; fr = bc; }
+    }
+    if (!fr) return null;
+    var pos = item.lower.indexOf(q); if (pos < 0) pos = 0;
+    return { item: item, pos: pos, score: base + fr * 25 - Math.min(40, pos / 40) };
+  }
+  function runSearch(){
+    if (index === null){ if (typeof loadIndex === 'function'){ loadIndex().then(runSearch); } return; }
     var q = sInput.value.trim().toLowerCase();
     sResults.innerHTML = '';
     if (q.length < 2) return;
+    var wordRe = new RegExp('\\b' + escapeRe(q), 'i');
+    var exactRe = new RegExp('\\b' + escapeRe(q) + '\\b', 'i');
     var hits = [];
-    index.forEach(function(item){
-      var pos = item.lower.indexOf(q);
-      if (pos !== -1) hits.push({ item: item, pos: pos });
-    });
+    index.forEach(function(item){ var h = rankItem(item, q, wordRe, exactRe); if (h) hits.push(h); });
     if (!hits.length){ sResults.innerHTML = '<div class="s-empty">Nothing found for that — yet. More chapters are coming.</div>'; return; }
-    hits.slice(0, 30).forEach(function(h){
-      var t = h.item.text;
-      var start = Math.max(0, h.pos - 60), end = Math.min(t.length, h.pos + q.length + 90);
-      var snip = (start>0?'…':'') + t.slice(start, end) + (end<t.length?'…':'');
-      snip = snip.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'), '<mark>$1</mark>');
-      var div = document.createElement('div');
-      div.className = 's-hit';
-      div.innerHTML = '<div class="s-ch">'+h.item.chTitle+'</div><div class="s-sec">'+h.item.secTitle+'</div><div class="s-snip">'+snip+'</div>';
-      div.addEventListener('click', function(){
-        show(h.item.view, { scrollTo: 0 });
-        var target = h.item.el || (h.item.secId ? document.getElementById(h.item.secId) : null);
-        if (target) setTimeout(function(){ target.scrollIntoView(); window.scrollBy(0,-60); }, 40);
-      });
-      sResults.appendChild(div);
+    hits.sort(function(a,b){ return b.score - a.score || a.pos - b.pos; });
+    var capped = hits.length > 60;
+    hits = hits.slice(0, 60);
+    var count = document.createElement('div');
+    count.className = 's-count';
+    count.textContent = hits.length + (capped ? '+' : '') + ' result' + (hits.length === 1 ? '' : 's');
+    sResults.appendChild(count);
+    var groups = [], byCh = {};
+    hits.forEach(function(h){
+      var key = h.item.chTitle;
+      if (!byCh[key]){ byCh[key] = { title: key, items: [] }; groups.push(byCh[key]); }
+      byCh[key].items.push(h);
     });
-  });
+    var reHi = new RegExp('(' + escapeRe(q) + ')', 'ig');
+    groups.forEach(function(g){
+      var gh = document.createElement('div'); gh.className = 's-group'; gh.textContent = g.title;
+      sResults.appendChild(gh);
+      g.items.forEach(function(h){
+        var t = h.item.text;
+        var start = Math.max(0, h.pos - 60), end = Math.min(t.length, h.pos + q.length + 90);
+        var snip = (start>0?'…':'') + t.slice(start, end) + (end<t.length?'…':'');
+        snip = snip.replace(reHi, '<mark>$1</mark>');
+        var div = document.createElement('div');
+        div.className = 's-hit';
+        div.innerHTML = '<div class="s-sec">'+h.item.secTitle+'</div><div class="s-snip">'+snip+'</div>';
+        div.addEventListener('click', function(){
+          var sec = h.item.secId || null;
+          show(h.item.view, { scrollTo: 0, scrollToSection: sec });
+          if (!sec){
+            var target = h.item.el || null;
+            if (target) setTimeout(function(){ target.scrollIntoView(); window.scrollBy(0,-60); }, 40);
+          }
+        });
+        sResults.appendChild(div);
+      });
+    });
+  }
+  sInput.addEventListener('input', runSearch);
 
   /* ---------- reading time + back to top ---------- */
   document.querySelectorAll('article').forEach(function(art){
@@ -962,7 +1346,7 @@ function imgFail(i){ i.style.display = 'none'; }
     sheet.classList.add('open'); backdrop.classList.add('show');
   });
   function closeSheet(){ sheet.classList.remove('open'); backdrop.classList.remove('show'); }
-  backdrop.addEventListener('click', closeSheet);
+  backdrop.addEventListener('click', function(){ closeSheet(); closeContents(); });
   document.getElementById('sheet-close').addEventListener('click', closeSheet);
 
   var FONTS = {
@@ -1006,11 +1390,21 @@ function imgFail(i){ i.style.display = 'none'; }
   });
   applySettings();
 
-  /* ---------- init: restore last view + position ---------- */
+  /* ---------- init: build index, restore state, honour incoming URL ---------- */
   if (window.requestIdleCallback) { requestIdleCallback(buildIndex, { timeout: 4000 }); }
   else { setTimeout(buildIndex, 600); }
-  var last = store.get('lastView');
-  if (last && views[last] && last !== 'search') { show(last); } else { show('home'); }
+  markShelfFinished();      /* F5: paint finished ticks */
+  applyShelfFilter();       /* F7: restore Ready/All choice */
+  updateProgressStrip();    /* F6: hero counts */
+  initTimelineRegions();    /* F8: region attrs + chips */
+  var _r = parseHash();     /* F9: deep-link if a URL was shared/bookmarked */
+  if (location.hash && location.hash !== '#/' && views[_r.view]) {
+    show(_r.view, { replace:true, scrollToSection: _r.section });
+  } else {
+    var last = store.get('lastView');
+    var start = (last && views[last] && last !== 'search') ? last : 'home';
+    show(start, { replace:true });
+  }
 })();
 </script>
 </body>
