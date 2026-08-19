@@ -1,0 +1,12 @@
+part                                                             chars   ~tokens
+SYSTEM: referee skill                                             9710      2427
+honeypot doctrine                                                 1576       394
+work order                                                       33817      8454
+launch notes — standing owner rulings                             1691       422
+brief                                                             2927       731
+unified diff of the cycle branch                                 41006     10251
+absence hunt BEFORE                                               4314      1078
+absence hunt AFTER                                                4247      1061
+gate logs                                                         1792       448
+OUTPUT CONTRACT                                                   1495       373
+TOTAL                                                           102575     25643

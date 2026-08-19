@@ -1,0 +1,70 @@
+
+========================================================================
+ASSYRIA  —  60 targets probed
+========================================================================
+  NAME-DROP (6) — present but untreated; verify context before briefing:
+     [~] LAND: rain-fed north vs irrigated south (the dry-farming line)  (2 mentions)
+     [~] LAND: no natural frontiers — the vulnerability thesis  (1 mention)
+     [~] women's letters from Ashur — merchant wives running the firm  (2 mentions)
+     [~] Sargon II killed in battle, body never recovered — a theological crisis  (1 mention)
+     [~] the lion hunt reliefs  (2 mentions)
+     [~] 'Nineveh and Its Remains' as a Victorian bestseller  (1 mention)
+  COVERED (54):
+     [x] LAND: the Assyrian triangle — Ashur, Nineveh, Arbela, Kalhu  (8)
+     [x] LAND: the Tigris and the Upper/Lower Zab  (3)
+     [x] LAND: the campaign season set by the agricultural calendar  (4)
+     [x] PEOPLE: Ashur the god = the city = the state  (73)
+     [x] PEOPLE: the limmu / eponym dating system  (7)
+     [x] PEOPLE: Aramaic overtakes Akkadian; alphabet vs cuneiform  (9)
+     [x] PEOPLE: deportation as demographic engineering  (9)
+     [x] PEOPLE: Sammu-ramat / Semiramis  (10)
+     [x] PEOPLE: the queen's household; Nimrud queens' tombs (1988-89)  (8)
+     [x] Kanesh / Kültepe karum and the merchant archives  (18)  · owns a section
+     [x] donkey caravans: tin and textiles out, silver back  (12)
+     [x] Shamshi-Adad I  (4)
+     [x] Ashur-uballit I and the Amarna correspondence  (3)
+     [x] Tukulti-Ninurta I: takes Babylon, takes Marduk, murdered by his son  (4)
+     [x] Tiglath-Pileser I  (4)
+     [x] Middle Assyrian Laws — the veiling statute  (5)
+     [x] surviving the Bronze Age collapse  (4)
+     [x] Ashurnasirpal II and Kalhu/Nimrud  (30)
+     [x] the Nimrud banquet stele — 69,574 guests  (7)
+     [x] Shalmaneser III; Black Obelisk; Jehu  (13)
+     [x] Battle of Qarqar, 853  (3)
+     [x] Tiglath-Pileser III: standing army, provincial system, reform  (8)  · owns a section
+     [x] Sargon II; Dur-Sharrukin/Khorsabad; fall of Samaria 722  (23)
+     [x] Sennacherib; the Palace Without Rival at Nineveh  (19)
+     [x] Sennacherib's aqueduct at Jerwan and the Nineveh canal system  (4)
+     [x] Lachish 701; the siege reliefs; Hezekiah  (9)
+     [x] destruction of Babylon, 689; Sennacherib murdered by his sons  (8)
+     [x] Esarhaddon rebuilds Babylon; conquers Egypt 671  (11)
+     [x] the substitute king ritual  (3)
+     [x] Esarhaddon's Succession Treaty and the Deuteronomy parallel  (5)
+     [x] Ashurbanipal; the Elamite war; the sack of Susa  (34)
+     [x] Shamash-shum-ukin's revolt, 652-648  (14)
+     [x] siege engineering: rams, ramps, sappers  (6)
+     [x] iron weapons and cavalry  (7)
+     [x] calculated terror as stated policy — the inscriptions' own boasts  (22)  · owns a section
+     [x] the royal road and messenger relay  (9)
+     [x] the scholars' letters: astrologers, exorcists, omen reports  (25)
+     [x] Arbela and the Ishtar oracles  (3)
+     [x] the turtanu and the provincial governors  (9)
+     [x] Paul-Émile Botta at Khorsabad, 1843  (5)
+     [x] Austen Henry Layard at Nimrud, 1845  (3)
+     [x] Hormuzd Rassam — the Iraqi excavator whose credit was withheld  (3)
+     [x] George Smith and the Flood Tablet, 1872  (5)
+     [x] Ashurbanipal's library — scale and survival by fire  (16)  · owns a section
+     [x] Rawlinson and the decipherment of Akkadian cuneiform  (10)
+     [x] the British Museum / Louvre rivalry; the raft lost in the Tigris  (12)
+     [x] the 2015 destruction of Nimrud and the Mosul Museum  (12)
+     [x] Ashur falls 614; Nineveh falls 612; Harran 609  (16)
+     [x] Cyaxares and the Medes; Nabopolassar; the Fall of Nineveh Chronicle  (12)
+     [x] Scythians and Cimmerians  (8)
+     [x] Nahum's oracle  (7)
+     [x] Xenophon marches past the ruins without knowing what they are  (4)
+     [x] Jonah, Isaiah and the biblical memory of Nineveh  (3)
+     [x] Aramaic's survival; the modern Assyrians and the Church of the East  (3)
+
+------------------------------------------------------------------------
+TOTAL: 0 absent, 6 name-drop
+Absences and name-drops become the next brief. Read context before accepting any verdict.

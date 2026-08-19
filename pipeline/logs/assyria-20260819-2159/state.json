@@ -15,5 +15,6 @@
  "baseline_dir": "/tmp/chronicle-baseline-assyria-20260819-2159",
  "cycle_count": 1,
  "external_hunt": false,
- "dry_run": false
+ "dry_run": false,
+ "fragments_applied": 11
 }

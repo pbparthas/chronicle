@@ -1,0 +1,39 @@
+PASS  G1 validate_codex (incl. round-trip)
+ALL CHECKS PASS  (1,624,064 chars, 1314 ids, 762 citations)
+
+PASS  G2 regression vs baseline
+file                                 ids         cites          refs      sections           bytes
+--------------------------------------------------------------------------------------------------
+content/cities.html                   45            83            18            23           64644
+content/epics.html                    77           120            34            37           99997
+content/era-0.html                   207           251           141            58          231052
+content/era-1.html        504->514 (+10)674->689 (+15)326->336 (+10)           156578785->592267 (+13482)   CHANGED
+content/era-2.html                   359           516           220           121          442891
+content/faiths.html                   20            34             7            11           26143
+content/interludes.html               27            45            13            12           35012
+shell.html                            65             0             0            17          141952
+
+  note: content/cities.html: unchanged
+  note: content/epics.html: unchanged
+  note: content/era-0.html: unchanged
+  note: content/era-2.html: unchanged
+  note: content/faiths.html: unchanged
+  note: content/interludes.html: unchanged
+  note: shell.html: unchanged
+
+PASS — no file regressed. (Still confirm the CHANGED set matches what the session was asked to do.)
+
+PASS  G3 assemble
+assembled 1,624,064 chars -> /tmp/gate-assembled.html
+
+PASS  G4 absence hunt
+recorded separately in logs/<run>/hunt-after.txt
+
+PASS  G5 encoding sweep of fragments
+clean
+
+PASS  G6 scene/prov parity
+29 scenes vs 29 prov notes
+
+PASS  G7 no <h2> inside .scene
+clean
