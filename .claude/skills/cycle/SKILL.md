@@ -54,8 +54,24 @@ PR. The referee's verdict can halt you earlier. One invocation = one cycle.
 10. `python3 pipeline/run_cycle.py prbody --run <run>`. Commit EVERYTHING
     (master change + briefs/next.md + pipeline/logs/<run>/) on the cycle
     branch; push; open the PR with `pr-body.md` as the body, base `main`.
-11. Post the PR link to the owner and HALT. Nothing merges. Do not start
-    another cycle unless explicitly told to.
+11. OWNER-PROXY REVIEW (standing owner delegation, 2026-08): launch a
+    **fable** subagent with a FRESH context — never the orchestrating
+    session reviewing its own cycle — playing the owner's role. It receives
+    the brief, the referee verdict, and the repo paths to the changed
+    chapter; its duty is precisely what no gate can do: **read the prose.**
+    Hollow-but-well-formed chapters, duplication with other entries,
+    register drift, invented texture — its call is
+    approve / approve-with-patch / reject, with reasons, saved verbatim to
+    `pipeline/logs/<run>/owner-proxy-review.md` and posted as a PR comment.
+12. Outcome:
+    - approve → merge the PR (squash, message `<slug>: <one-line verdict>`),
+      archive the served brief to `briefs/archive/<slug>.md` on main.
+    - approve-with-patch → referee applies it as a bounded patch, re-gates,
+      then merge as above. Out of bounds → escalate to the human owner.
+    - reject → fold the review into the brief on the branch, re-run from
+      step 4 (one rewrite); a second rejection escalates to the human owner.
+    The HUMAN owner reads the merged PRs at leisure; any of their comments
+    override everything above retroactively (revert is one commit).
 
 ## Stage 2 (only when the owner replies on the PR)
 `/approve`: verify main hasn't advanced past the merge-base (if it has:
