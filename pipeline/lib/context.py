@@ -78,6 +78,7 @@ def assemble_writer(run_dir, brief, hunt_before_text):
         ("SYSTEM: writer skill", _read("pipeline/prompts/chronicle-writer/SKILL.md")),
         ("style guide", _read("pipeline/prompts/chronicle-writer/references/style-guide.md")),
         ("work order", _read("pipeline/prompts/work-order.md")),
+        ("launch notes — standing owner rulings", _read("pipeline/prompts/launch-notes.md")),
         ("brief", brief["raw"]),
         ("absence hunt (this IS your target list — close every ABSENT and "
          "upgrade every NAME-DROP)", hunt_before_text),
@@ -98,6 +99,7 @@ def assemble_referee(run_dir, brief, diff_text, hunt_before, hunt_after, gate_lo
         ("SYSTEM: referee skill", _read("pipeline/prompts/chronicle-referee/SKILL.md")),
         ("honeypot doctrine", _read("pipeline/prompts/chronicle-referee/references/referee-honeypots.md")),
         ("work order", _read("pipeline/prompts/work-order.md")),
+        ("launch notes — standing owner rulings", _read("pipeline/prompts/launch-notes.md")),
         ("brief", brief["raw"]),
         ("unified diff of the cycle branch", diff_text),
         ("absence hunt BEFORE", hunt_before),
