@@ -8,3 +8,4 @@ build/dbg-*.png
 .map-cache/
 _extract/
 secrets.env
+.claude/settings.local.json

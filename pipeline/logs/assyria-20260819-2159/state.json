@@ -1,0 +1,20 @@
+{
+ "run_id": "assyria-20260819-2159",
+ "slug": "assyria",
+ "chunk": "era-1",
+ "fields": {
+  "model": "sonnet",
+  "new-chapter": "no",
+  "shell-work": "no",
+  "chunk": "era-1",
+  "phase": "2",
+  "slug": "assyria",
+  "status": "ready"
+ },
+ "baseline_sha": "c57310a6344a9c5e13df0da994755ce152561997",
+ "baseline_dir": "/tmp/chronicle-baseline-assyria-20260819-2159",
+ "cycle_count": 1,
+ "external_hunt": false,
+ "dry_run": false,
+ "fragments_applied": 14
+}

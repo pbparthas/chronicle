@@ -19,9 +19,11 @@ order. They are owner rulings relayed by the pipeline; do not re-litigate.
    include that update as a fragment-free file edit request in your notes for
    the referee, who patches it. A hunted chapter with no list written back has
    thrown the work away.
-6. **Phase state as of this repo's history**: Phase 1 (Era 0) is SHIPPED
-   (0·1–0·4 live). Phase 2 (Era I) is in progress: Babylonia and the Assyria
-   structural retrofit are QA-accepted; the owner's sequence is Assyria
-   completion → Caral completion (briefs/queue/caral.md) → onward per §5.3,
-   then Era 2 opens on the owner's word. Phase 3 (clusters/Cities) is NOT
-   authorized.
+6. **Phase state and owner-ruled sequence (2026-08)**: Phase 1 (Era 0) is
+   SHIPPED (0·1–0·4 live). Babylonia and the Assyria structural retrofit are
+   QA-accepted. The owner's explicit cycle queue is:
+   **Assyria completion → Persia II·5 rewrite (Era 2 opened by owner ruling,
+   writer: opus-4.8) → Caral completion (briefs/queue/caral.md, writer:
+   sonnet) → Greece & Alexander II·11 (writer: opus-4.8 per the skill's own
+   routing list).** Each cycle's referee proposes the brief for the next name
+   in this queue. Phase 3 (clusters/Cities) is NOT authorized.

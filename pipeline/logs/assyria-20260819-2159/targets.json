@@ -1,0 +1,449 @@
+{
+ "assyria": [
+  [
+   "LAND: rain-fed north vs irrigated south (the dry-farming line)",
+   [
+    "rain-fed",
+    "dry farming",
+    "dry-farming",
+    "isohyet",
+    "rainfall agriculture"
+   ]
+  ],
+  [
+   "LAND: the Assyrian triangle \u2014 Ashur, Nineveh, Arbela, Kalhu",
+   [
+    "Arbela",
+    "Erbil"
+   ]
+  ],
+  [
+   "LAND: the Tigris and the Upper/Lower Zab",
+   [
+    "Zab\\b"
+   ]
+  ],
+  [
+   "LAND: no natural frontiers \u2014 the vulnerability thesis",
+   [
+    "no natural",
+    "open on every",
+    "exposed frontier",
+    "defensible frontier"
+   ]
+  ],
+  [
+   "LAND: the campaign season set by the agricultural calendar",
+   [
+    "campaign season",
+    "campaigning season",
+    "every year",
+    "annual campaign"
+   ]
+  ],
+  [
+   "PEOPLE: Ashur the god = the city = the state",
+   [
+    "Ashur",
+    "A\u0161\u0161ur"
+   ]
+  ],
+  [
+   "PEOPLE: the limmu / eponym dating system",
+   [
+    "limmu",
+    "eponym"
+   ]
+  ],
+  [
+   "PEOPLE: Aramaic overtakes Akkadian; alphabet vs cuneiform",
+   [
+    "Aramaic"
+   ]
+  ],
+  [
+   "PEOPLE: deportation as demographic engineering",
+   [
+    "deport"
+   ]
+  ],
+  [
+   "PEOPLE: Sammu-ramat / Semiramis",
+   [
+    "Sammu-ramat",
+    "Semiramis"
+   ]
+  ],
+  [
+   "PEOPLE: the queen's household; Nimrud queens' tombs (1988-89)",
+   [
+    "queens' tomb",
+    "Queens' Tomb",
+    "Yaba",
+    "Atalia"
+   ]
+  ],
+  [
+   "Kanesh / K\u00fcltepe karum and the merchant archives",
+   [
+    "Kanesh",
+    "K\u00fcltepe",
+    "Kultepe",
+    "karum"
+   ]
+  ],
+  [
+   "donkey caravans: tin and textiles out, silver back",
+   [
+    "donkey",
+    "caravan"
+   ]
+  ],
+  [
+   "women's letters from Ashur \u2014 merchant wives running the firm",
+   [
+    "Lamassi",
+    "Ahaha",
+    "merchant wives",
+    "women.{0,30}letters"
+   ]
+  ],
+  [
+   "Shamshi-Adad I",
+   [
+    "Shamshi-Adad",
+    "\u0160am\u0161\u012b-Adad"
+   ]
+  ],
+  [
+   "Ashur-uballit I and the Amarna correspondence",
+   [
+    "Ashur-uballit",
+    "A\u0161\u0161ur-uballi\u1e6d"
+   ]
+  ],
+  [
+   "Tukulti-Ninurta I: takes Babylon, takes Marduk, murdered by his son",
+   [
+    "Tukulti-Ninurta"
+   ]
+  ],
+  [
+   "Tiglath-Pileser I",
+   [
+    "Tiglath-Pileser I\\b",
+    "Tukult\u012b-apil-E\u0161arra"
+   ]
+  ],
+  [
+   "Middle Assyrian Laws \u2014 the veiling statute",
+   [
+    "veil",
+    "Middle Assyrian Law"
+   ]
+  ],
+  [
+   "surviving the Bronze Age collapse",
+   [
+    "Bronze Age collapse",
+    "1200 BCE",
+    "Sea Peoples"
+   ]
+  ],
+  [
+   "Ashurnasirpal II and Kalhu/Nimrud",
+   [
+    "Ashurnasirpal",
+    "Kalhu",
+    "Nimrud"
+   ]
+  ],
+  [
+   "the Nimrud banquet stele \u2014 69,574 guests",
+   [
+    "banquet stele",
+    "69,574",
+    "banquet"
+   ]
+  ],
+  [
+   "Shalmaneser III; Black Obelisk; Jehu",
+   [
+    "Shalmaneser",
+    "Black Obelisk",
+    "Jehu"
+   ]
+  ],
+  [
+   "Battle of Qarqar, 853",
+   [
+    "Qarqar"
+   ]
+  ],
+  [
+   "Tiglath-Pileser III: standing army, provincial system, reform",
+   [
+    "Tiglath-Pileser III"
+   ]
+  ],
+  [
+   "Sargon II; Dur-Sharrukin/Khorsabad; fall of Samaria 722",
+   [
+    "Sargon II",
+    "Dur-Sharrukin",
+    "Khorsabad",
+    "Samaria"
+   ]
+  ],
+  [
+   "Sargon II killed in battle, body never recovered \u2014 a theological crisis",
+   [
+    "body.{0,40}recover",
+    "unburied",
+    "killed in battle"
+   ]
+  ],
+  [
+   "Sennacherib; the Palace Without Rival at Nineveh",
+   [
+    "Sennacherib",
+    "Palace Without Rival"
+   ]
+  ],
+  [
+   "Sennacherib's aqueduct at Jerwan and the Nineveh canal system",
+   [
+    "Jerwan",
+    "aqueduct",
+    "canal"
+   ]
+  ],
+  [
+   "Lachish 701; the siege reliefs; Hezekiah",
+   [
+    "Lachish",
+    "Hezekiah"
+   ]
+  ],
+  [
+   "destruction of Babylon, 689; Sennacherib murdered by his sons",
+   [
+    "689",
+    "murdered",
+    "assassinat"
+   ]
+  ],
+  [
+   "Esarhaddon rebuilds Babylon; conquers Egypt 671",
+   [
+    "Esarhaddon"
+   ]
+  ],
+  [
+   "the substitute king ritual",
+   [
+    "substitute king"
+   ]
+  ],
+  [
+   "Esarhaddon's Succession Treaty and the Deuteronomy parallel",
+   [
+    "Succession Treaty",
+    "loyalty oath",
+    "ad\u00ea",
+    "Deuteronomy"
+   ]
+  ],
+  [
+   "Ashurbanipal; the Elamite war; the sack of Susa",
+   [
+    "Ashurbanipal",
+    "Susa"
+   ]
+  ],
+  [
+   "the lion hunt reliefs",
+   [
+    "lion hunt",
+    "lion-hunt"
+   ]
+  ],
+  [
+   "Shamash-shum-ukin's revolt, 652-648",
+   [
+    "Shamash-shum",
+    "\u0160ama\u0161-\u0161uma"
+   ]
+  ],
+  [
+   "siege engineering: rams, ramps, sappers",
+   [
+    "siege ram",
+    "battering",
+    "siege engine",
+    "ramp"
+   ]
+  ],
+  [
+   "iron weapons and cavalry",
+   [
+    "iron weapon",
+    "cavalry",
+    "chariot"
+   ]
+  ],
+  [
+   "calculated terror as stated policy \u2014 the inscriptions' own boasts",
+   [
+    "flay",
+    "impal",
+    "terror"
+   ]
+  ],
+  [
+   "the royal road and messenger relay",
+   [
+    "royal road",
+    "messenger",
+    "relay"
+   ]
+  ],
+  [
+   "the scholars' letters: astrologers, exorcists, omen reports",
+   [
+    "astrolog",
+    "exorcist",
+    "omen",
+    "scholar"
+   ]
+  ],
+  [
+   "Arbela and the Ishtar oracles",
+   [
+    "oracle"
+   ]
+  ],
+  [
+   "the turtanu and the provincial governors",
+   [
+    "turtanu",
+    "turt\u0101nu",
+    "governor",
+    "province"
+   ]
+  ],
+  [
+   "Paul-\u00c9mile Botta at Khorsabad, 1843",
+   [
+    "Botta"
+   ]
+  ],
+  [
+   "Austen Henry Layard at Nimrud, 1845",
+   [
+    "Layard"
+   ]
+  ],
+  [
+   "'Nineveh and Its Remains' as a Victorian bestseller",
+   [
+    "Nineveh and Its Remains"
+   ]
+  ],
+  [
+   "Hormuzd Rassam \u2014 the Iraqi excavator whose credit was withheld",
+   [
+    "Rassam"
+   ]
+  ],
+  [
+   "George Smith and the Flood Tablet, 1872",
+   [
+    "George Smith",
+    "Flood Tablet"
+   ]
+  ],
+  [
+   "Ashurbanipal's library \u2014 scale and survival by fire",
+   [
+    "library"
+   ]
+  ],
+  [
+   "Rawlinson and the decipherment of Akkadian cuneiform",
+   [
+    "Rawlinson",
+    "Behistun"
+   ]
+  ],
+  [
+   "the British Museum / Louvre rivalry; the raft lost in the Tigris",
+   [
+    "Louvre",
+    "British Museum",
+    "raft"
+   ]
+  ],
+  [
+   "the 2015 destruction of Nimrud and the Mosul Museum",
+   [
+    "2015",
+    "ISIS",
+    "Mosul"
+   ]
+  ],
+  [
+   "Ashur falls 614; Nineveh falls 612; Harran 609",
+   [
+    "\\b614\\b",
+    "\\b612\\b",
+    "\\b609\\b",
+    "Harran"
+   ]
+  ],
+  [
+   "Cyaxares and the Medes; Nabopolassar; the Fall of Nineveh Chronicle",
+   [
+    "Cyaxares",
+    "Medes",
+    "Nabopolassar",
+    "Fall of Nineveh Chronicle"
+   ]
+  ],
+  [
+   "Scythians and Cimmerians",
+   [
+    "Scythian",
+    "Cimmerian"
+   ]
+  ],
+  [
+   "Nahum's oracle",
+   [
+    "Nahum"
+   ]
+  ],
+  [
+   "Xenophon marches past the ruins without knowing what they are",
+   [
+    "Xenophon"
+   ]
+  ],
+  [
+   "Jonah, Isaiah and the biblical memory of Nineveh",
+   [
+    "Jonah",
+    "Isaiah"
+   ]
+  ],
+  [
+   "Aramaic's survival; the modern Assyrians and the Church of the East",
+   [
+    "Church of the East",
+    "modern Assyrian",
+    "Syriac",
+    "Neo-Aramaic"
+   ]
+  ]
+ ]
+}
