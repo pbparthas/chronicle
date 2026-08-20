@@ -1,0 +1,538 @@
+{
+ "persia": [
+  [
+   "Cyrus II the Great and the overthrow of Astyages the Mede",
+   [
+    "Cyrus (the Great|II)",
+    "K[u\u016b]ru(sh|\u0161)",
+    "Astyages|I(sh|\u0161)tumegu"
+   ]
+  ],
+  [
+   "Croesus and the fall of Lydia (Sardis, c. 547/546 BCE)",
+   [
+    "Croesus|Kroisos",
+    "Lydia(n|ns)?\\b",
+    "Sardis|Sardes"
+   ]
+  ],
+  [
+   "The fall of Babylon 539 BCE \u2014 Nabonidus, Opis, Gubaru/Ugbaru, the Nabonidus Chronicle",
+   [
+    "Nabonidus|Nabu-na'?id",
+    "\\bOpis\\b",
+    "Gubaru|Ugbaru|Gobryas",
+    "Nabonidus Chronicle"
+   ]
+  ],
+  [
+   "Cyrus's death on the eastern frontier \u2014 the Massagetae and Tomyris",
+   [
+    "Massaget(ae|an|es)",
+    "Tomyris",
+    "death of Cyrus|Cyrus (was killed|died|fell)"
+   ]
+  ],
+  [
+   "Pasargadae and the tomb of Cyrus \u2014 the garden capital, and Alexander's remorse at the plundered tomb",
+   [
+    "Pasargad(ae|a|e)",
+    "tomb of Cyrus",
+    "Aristobulus|winged (genius|figure)",
+    "(restore|repair).{0,40}tomb"
+   ]
+  ],
+  [
+   "The Cyrus Cylinder \u2014 the object (Rassam 1879) and its Babylonian rhetoric of Marduk and restored cults",
+   [
+    "Cyrus Cylinder",
+    "(Hormuzd )?Rassam|barrel[- ]shaped (clay )?cylinder",
+    "Marduk",
+    "Esagila|Esagil|restor(ed|ing|ation) (of )?(the )?(gods|cults|sanctuaries|temples)"
+   ]
+  ],
+  [
+   "The 'first charter of human rights' myth \u2014 UN 1971 replica, Finkel/MacGregor pushback",
+   [
+    "(first )?(charter|declaration) of human rights",
+    "United Nations|\\bU\\.?N\\.?\\b",
+    "Irving Finkel|Neil MacGregor"
+   ]
+  ],
+  [
+   "Cyrus in the Hebrew Bible \u2014 Isaiah 45's gentile 'anointed', the Ezra edict, the return and the Second Temple",
+   [
+    "Isaiah",
+    "anointed|messiah|mashiach",
+    "Second Temple|Zerubbabel|Sheshbazzar",
+    "return (from|of the) (Babylonian )?exile"
+   ]
+  ],
+  [
+   "The Elephantine papyri \u2014 the Jewish garrison in Egypt, the temple of Yahu, the Passover letter",
+   [
+    "Elephantine",
+    "\\bYahu\\b|\\bYHW\\b",
+    "Passover (letter|papyrus)"
+   ]
+  ],
+  [
+   "Cambyses II and the conquest of Egypt \u2014 Pelusium 525 BCE, Psamtik III",
+   [
+    "Cambyses",
+    "Pelusium",
+    "Psam(m)?t(ik|ek) III|Psammenitus"
+   ]
+  ],
+  [
+   "The Apis bull libel \u2014 Herodotus's mad Cambyses vs the Serapeum stelae",
+   [
+    "Apis (bull|calf)?",
+    "Serapeum",
+    "mad(ness)? of Cambyses|Cambyses.{0,40}mad"
+   ]
+  ],
+  [
+   "Cambyses' lost army and the failed Nubian/Ammon expeditions",
+   [
+    "lost army|army of Cambyses",
+    "Siwa|Ammon",
+    "Nubia|Kush|Ethiopian expedition"
+   ]
+  ],
+  [
+   "Udjahorresnet and the naophorous statue \u2014 collaboration and Cambyses' pharaonic titulary",
+   [
+    "Udjahorresn?et|Wedjahor[- ]?Resne",
+    "naophorous|naophoros",
+    "Sais|Neith"
+   ]
+  ],
+  [
+   "Egypt as the 27th Dynasty \u2014 Persian kings as pharaohs, the Wadi Hammamat and Suez canal stelae",
+   [
+    "(Twenty[- ]?seventh|27th|XXVII) Dynasty",
+    "Suez|canal of Darius|Wadi Tumilat",
+    "Persian pharaoh"
+   ]
+  ],
+  [
+   "Bardiya/Gaumata and the coup of Darius \u2014 the usurpation question and the seven conspirators",
+   [
+    "Bardiya|Smerdis",
+    "Gaumata|Gaum[a\u0101]ta|(false|pseudo)[- ]?Smerdis",
+    "seven (Persian )?(nobles|conspirators)|Otanes|Intaphren(es|s)",
+    "usurp(er|ation)|coup"
+   ]
+  ],
+  [
+   "The Behistun inscription \u2014 the trilingual relief, the Lie (drauga), the year of nineteen battles",
+   [
+    "Be(h|)istun|B[ie]s[ui]tun|Bagastana",
+    "\\bdrauga\\b|the Lie\\b",
+    "nine (rebel )?kings|nineteen battles",
+    "Aramaic (copy|version)|copies .{0,30}(circulated|sent)"
+   ]
+  ],
+  [
+   "Rawlinson and the decipherment of cuneiform \u2014 Grotefend, Hincks, Norris, the 1857 Royal Asiatic test",
+   [
+    "Rawlinson",
+    "Grotefend",
+    "decipher(ed|ment|ing)",
+    "Hincks|Edward Hincks|Talbot",
+    "Old Persian cuneiform|invented (script|writing)|newly devised script"
+   ]
+  ],
+  [
+   "The Achaemenid vs Teispid problem \u2014 was Cyrus an Achaemenid, or did Darius invent the lineage?",
+   [
+    "Teispid|Teispes|(Ci|Chi)(sh|\u0161)pi(sh|\u0161)",
+    "Ha(kh|x)[a\u0101]mani(sh|\u0161)|Achaemen(es|id) (ancestor|lineage|claim)",
+    "invent(ed)? (a |the )?(genealogy|descent|lineage)"
+   ]
+  ],
+  [
+   "Satrapies \u2014 x\u0161a\u00e7ap\u0101van, the tribute lists, the balance of autonomy and control",
+   [
+    "satrap(y|ies|s)?",
+    "x(sh|\u0161)a[c\u00e7]ap[a\u0101]van|khshathrapavan",
+    "tribute list|assessment of tribute"
+   ]
+  ],
+  [
+   "The King's Eye (and King's Ear) \u2014 royal inspectors and the surveillance state",
+   [
+    "King'?s Eye|Eye of the King",
+    "King'?s Ear",
+    "royal inspector"
+   ]
+  ],
+  [
+   "The Royal Road \u2014 Sardis to Susa, 111 stations, 90 days on foot",
+   [
+    "Royal Road",
+    "(Sardis|Sardes).{0,40}Susa|Susa.{0,40}Sardis",
+    "way[- ]?station|caravanserai|posting station"
+   ]
+  ],
+  [
+   "The angareion \u2014 mounted express couriers; Herodotus 8.98 and the 'neither snow nor rain' afterlife",
+   [
+    "angar(e|)ion|angareion|angaros",
+    "courier(s)?|relay riders?",
+    "neither snow nor rain|snow nor rain"
+   ]
+  ],
+  [
+   "The daric and the siglos \u2014 the royal archer coinage and imperial gold",
+   [
+    "\\bdaric(s)?\\b",
+    "siglo(i|s)|shekel of silver",
+    "(royal )?archer.{0,20}coin|coin.{0,30}archer"
+   ]
+  ],
+  [
+   "Imperial Aramaic \u2014 the chancellery language that outlived the empire",
+   [
+    "(Imperial |Official )?Aramaic",
+    "chancell?ery|scribal administration",
+    "lingua franca"
+   ]
+  ],
+  [
+   "Qanats / kariz \u2014 the underground water engineering that made the plateau habitable",
+   [
+    "qan[a\u0101]t(s)?|kar[i\u012b]z|kah[rn]iz",
+    "underground (channel|aqueduct|water)",
+    "mother well|shaft(s)? sunk"
+   ]
+  ],
+  [
+   "Paradayadam / pairida\u0113za \u2014 the walled garden and the word's journey into 'paradise'",
+   [
+    "pairida[e\u0113]za|paridaida|paradayadam|paradaida",
+    "parade[is]sos|para[dv]eisos",
+    "word .{0,20}paradise|paradise.{0,30}(comes|derives)"
+   ]
+  ],
+  [
+   "The Susa foundation charter (DSf) \u2014 cedar from Lebanon, gold from Sardis, craftsmen from everywhere",
+   [
+    "\\bDSf\\b|foundation charter",
+    "(cedar|timber).{0,30}Lebanon",
+    "lapis lazuli|carnelian|turquoise.{0,30}Chorasmia"
+   ]
+  ],
+  [
+   "The four capitals and the itinerant court \u2014 Susa, Ecbatana, Babylon, Persepolis",
+   [
+    "Ecbatana|Hagmatana",
+    "(moved|migrat|travell?ed) .{0,30}(seasons?|summer|winter)",
+    "(Susa|Babylon).{0,60}(Persepolis|capital)"
+   ]
+  ],
+  [
+   "The Persepolis Fortification Archive \u2014 tens of thousands of Elamite ration tablets",
+   [
+    "Fortification (Archive|Tablets|texts)",
+    "ration (tablet|text|record)s?",
+    "Elamite tablet"
+   ]
+  ],
+  [
+   "Kurta\u0161 \u2014 paid workers, not slaves; the archive as refutation of 'slave-built' Persepolis",
+   [
+    "kurta(sh|\u0161)|kurtash",
+    "(paid|wage(s|d)?) (labour|labor|worker)",
+    "not (built by )?slaves|no slaves"
+   ]
+  ],
+  [
+   "Women's rations, skilled-pay parity, and the new-mother bonus (boy vs girl differential)",
+   [
+    "(women|female).{0,30}ration",
+    "new mother|mothers of new(-| )?born|maternity",
+    "(boy|son).{0,40}(girl|daughter).{0,40}ration|double ration"
+   ]
+  ],
+  [
+   "Irdabama and Irta\u0161duna (Artystone) \u2014 royal women with estates, seals and workforces",
+   [
+    "Irdabama",
+    "Irta(sh|\u0161)duna|Artystone",
+    "(her|women'?s) (own )?(seal|estate)"
+   ]
+  ],
+  [
+   "Atossa and the court women vs the Greek harem trope",
+   [
+    "Atossa|Hutaosa",
+    "harem|seraglio",
+    "(queen|royal women).{0,40}(power|influence|property)"
+   ]
+  ],
+  [
+   "The Persepolis Treasury Archive \u2014 the second tablet corpus and payments in silver",
+   [
+    "Treasury (Archive|Tablets|texts)",
+    "paid in silver|silver equivalent",
+    "Cameron|Persepolis Treasury"
+   ]
+  ],
+  [
+   "Persepolis / Parsa \u2014 the Apadana, the Gate of All Nations, the terrace",
+   [
+    "Persepolis|Parsa\\b|Takht-?e[ -]?Jamshid",
+    "Apadana",
+    "Gate of All (Nations|Lands)"
+   ]
+  ],
+  [
+   "The Apadana delegation reliefs \u2014 twenty-three nations bearing gifts, and the New Year debate",
+   [
+    "delegation(s)? (relief|procession)|tribute[- ]?bearers?",
+    "twenty[- ]three|23 (nations|delegations|peoples)",
+    "gift[- ]?bearer",
+    "throne[- ]bearer|list of (lands|peoples|countries)"
+   ]
+  ],
+  [
+   "Naqsh-e Rustam \u2014 the cliff tombs of Darius and his heirs, and the Ka'ba-ye Zardosht",
+   [
+    "Naqsh-?[ei][ -]Rustam|Naqsh-i-Rustam",
+    "Ka'?ba-?[- ]?(ye|i|yi)?[- ]?Zar(d|t)o(sh|\u0161)t",
+    "(rock|cliff)[- ]cut tomb"
+   ]
+  ],
+  [
+   "Achaemenid court art as synthesis \u2014 Susa glazed-brick archers, the Oxus Treasure, foundation deposits",
+   [
+    "glazed brick|Frieze of Archers",
+    "Oxus Treasure",
+    "foundation (deposit|tablet|plaque)"
+   ]
+  ],
+  [
+   "The Immortals \u2014 Herodotus's Athanatoi and the an\u016b\u0161iya mistranslation argument",
+   [
+    "Immortals",
+    "Athanatoi|athanatoi",
+    "anu(sh|\u0161)iya|anushiya|companions"
+   ]
+  ],
+  [
+   "The Ionian Revolt \u2014 Aristagoras, Histiaeus, the burning of Sardis, Lade and Miletus",
+   [
+    "Ionian Revolt|Ionian rebellion",
+    "Aristagoras|Histiaeus",
+    "\\bLade\\b|Miletus"
+   ]
+  ],
+  [
+   "Marathon 490 as a punitive frontier expedition \u2014 Datis, Artaphernes, Hippias",
+   [
+    "Marathon",
+    "Datis|Artaphernes",
+    "punitive (expedition|raid)|Hippias"
+   ]
+  ],
+  [
+   "Xerxes' invasion \u2014 Thermopylae, Salamis, Plataea, Mardonius, Hydarnes, Artemisia",
+   [
+    "Thermopylae",
+    "Salamis",
+    "Plataea",
+    "Mardonius|Artemisia"
+   ]
+  ],
+  [
+   "The historiographic asymmetry \u2014 no Persian narrative of the wars; Herodotus's bias and the Greek lens",
+   [
+    "Herodotus",
+    "(bias|one[- ]sided|Greek (sources|lens|perspective))",
+    "no Persian (account|source|narrative)|silence of the Persian"
+   ]
+  ],
+  [
+   "Xerxes' daiva inscription (XPh) and the 'destroyer of Babylon' myth",
+   [
+    "daiva inscription|\\bXPh\\b|daeva inscription",
+    "daiva(s)?|daeva(s)?",
+    "(destroy|sack|melt).{0,40}(Babylon|Marduk statue)"
+   ]
+  ],
+  [
+   "Ahura Mazda, the magi, and the contested Zoroastrianism of the crown (Zarathustra never named)",
+   [
+    "Ahura ?Mazd[a\u0101]|Auramazda",
+    "Zoroastrian(ism)?|Mazdaean|Mazdayasnian",
+    "\\bmagi\\b|magu(sh|\u0161)",
+    "Zarathu(sh|\u0161)tra|Zoroaster",
+    "fire altar|(Elamite|Babylonian) (gods|deities).{0,40}(offerings|rations)"
+   ]
+  ],
+  [
+   "The tolerance-empire debate \u2014 pragmatic patronage vs propaganda (Kuhrt, Briant)",
+   [
+    "toleran(t|ce)",
+    "(Amelie |Am\u00e9lie )?Kuhrt|Briant",
+    "propaganda|pragmati(c|sm)"
+   ]
+  ],
+  [
+   "The assassination of Xerxes (465 BCE) \u2014 Artabanus the hazarapat and the eunuch Aspamitres",
+   [
+    "Artabanus",
+    "assassinat(ed|ion) of Xerxes|murder(ed)? .{0,20}Xerxes",
+    "hazarapat|chiliarch|Aspamitres"
+   ]
+  ],
+  [
+   "Artaxerxes I \u2014 Ezra and Nehemiah, and the revolt of Inaros in Egypt",
+   [
+    "Artaxerxes I\\b|Artaxerxes the First|Longimanus",
+    "Nehemiah",
+    "Inaros|Inarus"
+   ]
+  ],
+  [
+   "Cyrus the Younger, Cunaxa 401 BCE, and Xenophon's Ten Thousand",
+   [
+    "Cyrus the Younger",
+    "Cunaxa",
+    "Ten Thousand|Anabasis|Xenophon"
+   ]
+  ],
+  [
+   "The King's Peace / Peace of Antalcidas 387 BCE \u2014 Persia as arbiter of Greece",
+   [
+    "King'?s Peace",
+    "Antalcidas",
+    "arbiter|dictated (the )?terms.{0,30}Greek"
+   ]
+  ],
+  [
+   "Artaxerxes II, Ctesias, and the Great Satraps' Revolt",
+   [
+    "Artaxerxes II|Mnemon",
+    "Ctesias|Persica",
+    "Satraps'? Revolt|revolt of the satraps"
+   ]
+  ],
+  [
+   "The late-empire poisonings \u2014 Artaxerxes III's reconquest of Egypt, the eunuch Bagoas, Arses, and Darius III's accession",
+   [
+    "Artaxerxes III|Ochus",
+    "Bagoas",
+    "Arses|Artaxerxes IV|poison(ed|ing)",
+    "Darius III|Codomannus|Artashata"
+   ]
+  ],
+  [
+   "Alexander's invasion compressed \u2014 Granicus 334, Issus 333, Gaugamela 331",
+   [
+    "Granicus",
+    "Issus",
+    "Gaugamela|Arbela",
+    "Persian Gate(s)?|Ariobarzanes"
+   ]
+  ],
+  [
+   "The burning of Persepolis 330 BCE \u2014 Tha\u00efs, drunken revenge or policy, and the archaeological ash",
+   [
+    "burn(ing|ed|t) (of )?Persepolis|Persepolis.{0,30}(burn|fire|flames)",
+    "Tha[i\u00ef]s",
+    "(deliberate|accident|calculated|drunken)"
+   ]
+  ],
+  [
+   "The death of Darius III and Bessus as 'Artaxerxes V'",
+   [
+    "death of Darius III|Darius III.{0,40}(killed|murder|stabbed)",
+    "Bessus",
+    "Artaxerxes V|Bactria(n satrap)?"
+   ]
+  ],
+  [
+   "Herzfeld and Erich Schmidt at Persepolis \u2014 the 1930s excavation and the aerial photographs",
+   [
+    "Herzfeld",
+    "(Erich )?Schmidt",
+    "aerial photograph|Friend of Iran|excavation of Persepolis"
+   ]
+  ],
+  [
+   "The Oriental Institute loan and the Rubin v. Iran litigation over the tablets",
+   [
+    "Oriental Institute|Institute for the Study of Ancient Cultures",
+    "Rubin v\\.? (the )?Islamic Republic|lawsuit|Supreme Court",
+    "loan(ed)? .{0,30}(tablets|Iran)|returned to Iran"
+   ]
+  ],
+  [
+   "The Persepolis Fortification Archive Project \u2014 Stolper, digitization, decades of unread tablets",
+   [
+    "Fortification Archive Project",
+    "Stolper|Hallock",
+    "digiti(z|s)ation|high[- ]resolution imaging"
+   ]
+  ],
+  [
+   "Achaemenid History Workshops and Briant \u2014 reading the empire out from under the Greeks",
+   [
+    "Achaemenid History Workshop",
+    "Sancisi-?Weerdenburg",
+    "From Cyrus to Alexander|Pierre Briant"
+   ]
+  ],
+  [
+   "The Median question \u2014 was there ever a Median empire?",
+   [
+    "Median (Empire|kingdom)",
+    "Medes\\b",
+    "(question|debate|doubt).{0,40}Median|Median.{0,30}(myth|construct)"
+   ]
+  ],
+  [
+   "The Elamite substrate \u2014 Anshan, Elamite scribes, and Persia's inheritance from Susa",
+   [
+    "Elam(ite|ites)?\\b",
+    "Anshan|An(sh|\u0161)an",
+    "(substrate|inheritance|continuity).{0,30}Elam"
+   ]
+  ],
+  [
+   "Takht-e Jamshid \u2014 the Achaemenids forgotten in Iranian memory, and the Shahnameh's silence",
+   [
+    "Takht-?e[ -]?Jamshid|Throne of Jamshid",
+    "Jamshid",
+    "Shahnameh|Sh[a\u0101]hn[a\u0101]ma|Ferdowsi"
+   ]
+  ],
+  [
+   "The 1971 celebration of 2,500 years of monarchy at Persepolis",
+   [
+    "1971",
+    "2,?500(th)? (years?|anniversary)",
+    "(Mohammad Reza )?(Shah|Pahlavi)"
+   ]
+  ],
+  [
+   "Nowruz and the Achaemenid claim \u2014 contested continuity",
+   [
+    "Now?[- ]?ruz|Nawruz|Nouruz|New Year festival",
+    "(contest|dispute|no evidence|debate).{0,40}(Nowruz|New Year)",
+    "Ghirshman|Nylander|Mousavi"
+   ]
+  ],
+  [
+   "The gift to the present \u2014 satrap, paradise, postal relay, imperial pluralism in modern rhetoric",
+   [
+    "gift (to|of) the present|what (they|Persia) left",
+    "(word|term) .{0,20}(satrap|paradise|bazaar|check)",
+    "legacy|inheritance|still with us"
+   ]
+  ]
+ ]
+}

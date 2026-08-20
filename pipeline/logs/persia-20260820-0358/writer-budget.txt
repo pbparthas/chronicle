@@ -1,0 +1,13 @@
+part                                                             chars   ~tokens
+SYSTEM: writer skill                                             15399      3849
+style guide                                                      18667      4666
+work order                                                       33817      8454
+launch notes — standing owner rulings                             1874       468
+brief                                                             7126      1781
+absence hunt (this IS your target list — close every ABSENT       6848      1712
+current target chapter HTML                                      50124     12531
+style exemplar — Sumer, the flagship standard (match its reg    114908     28727
+adjacent chapters (titles + teasers only, for chain continui       276        69
+existing ids in the target chunk (do not collide)                 2978       744
+OUTPUT CONTRACT                                                   1876       469
+TOTAL                                                           253893     63473

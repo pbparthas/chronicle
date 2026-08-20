@@ -1,0 +1,19 @@
+{
+ "run_id": "persia-20260820-0358",
+ "slug": "persia",
+ "chunk": "era-2",
+ "fields": {
+  "model": "opus",
+  "new-chapter": "no",
+  "shell-work": "no",
+  "chunk": "era-2",
+  "phase": "2",
+  "slug": "persia",
+  "status": "ready"
+ },
+ "baseline_sha": "5f51b97e4ee208ba7f002fc01234dfeaa358ebfe",
+ "baseline_dir": "/tmp/chronicle-baseline-persia-20260820-0358",
+ "cycle_count": 2,
+ "external_hunt": false,
+ "dry_run": false
+}

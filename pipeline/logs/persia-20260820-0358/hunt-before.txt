@@ -1,0 +1,76 @@
+
+========================================================================
+PERSIA  —  65 targets probed
+========================================================================
+  ABSENT (21) — history that belongs here and is not here:
+     [ ] The 'first charter of human rights' myth — UN 1971 replica, Finkel/MacGregor pushback
+     [ ] The Elephantine papyri — the Jewish garrison in Egypt, the temple of Yahu, the Passover letter
+     [ ] Egypt as the 27th Dynasty — Persian kings as pharaohs, the Wadi Hammamat and Suez canal stelae
+     [ ] Imperial Aramaic — the chancellery language that outlived the empire
+     [ ] Qanats / kariz — the underground water engineering that made the plateau habitable
+     [ ] The Susa foundation charter (DSf) — cedar from Lebanon, gold from Sardis, craftsmen from everywhere
+     [ ] Kurtaš — paid workers, not slaves; the archive as refutation of 'slave-built' Persepolis
+     [ ] Women's rations, skilled-pay parity, and the new-mother bonus (boy vs girl differential)
+     [ ] Irdabama and Irtašduna (Artystone) — royal women with estates, seals and workforces
+     [ ] The Persepolis Treasury Archive — the second tablet corpus and payments in silver
+     [ ] Naqsh-e Rustam — the cliff tombs of Darius and his heirs, and the Ka'ba-ye Zardosht
+     [ ] Achaemenid court art as synthesis — Susa glazed-brick archers, the Oxus Treasure, foundation deposits
+     [ ] The Ionian Revolt — Aristagoras, Histiaeus, the burning of Sardis, Lade and Miletus
+     [ ] Xerxes' daiva inscription (XPh) and the 'destroyer of Babylon' myth
+     [ ] The assassination of Xerxes (465 BCE) — Artabanus the hazarapat and the eunuch Aspamitres
+     [ ] Artaxerxes I — Ezra and Nehemiah, and the revolt of Inaros in Egypt
+     [ ] Herzfeld and Erich Schmidt at Persepolis — the 1930s excavation and the aerial photographs
+     [ ] The Oriental Institute loan and the Rubin v. Iran litigation over the tablets
+     [ ] The Persepolis Fortification Archive Project — Stolper, digitization, decades of unread tablets
+     [ ] Achaemenid History Workshops and Briant — reading the empire out from under the Greeks
+     [ ] Nowruz and the Achaemenid claim — contested continuity
+  NAME-DROP (14) — present but untreated; verify context before briefing:
+     [~] The fall of Babylon 539 BCE — Nabonidus, Opis, Gubaru/Ugbaru, the Nabonidus Chronicle  (1 mention)
+     [~] Cyrus in the Hebrew Bible — Isaiah 45's gentile 'anointed', the Ezra edict, the return and the Second Temple  (2 mentions)
+     [~] The Apis bull libel — Herodotus's mad Cambyses vs the Serapeum stelae  (1 mention)
+     [~] Udjahorresnet and the naophorous statue — collaboration and Cambyses' pharaonic titulary  (2 mentions)
+     [~] Rawlinson and the decipherment of cuneiform — Grotefend, Hincks, Norris, the 1857 Royal Asiatic test  (2 mentions)
+     [~] The Achaemenid vs Teispid problem — was Cyrus an Achaemenid, or did Darius invent the lineage?  (1 mention)
+     [~] The King's Eye (and King's Ear) — royal inspectors and the surveillance state  (1 mention)
+     [~] The Persepolis Fortification Archive — tens of thousands of Elamite ration tablets  (2 mentions)
+     [~] Atossa and the court women vs the Greek harem trope  (1 mention)
+     [~] The Apadana delegation reliefs — twenty-three nations bearing gifts, and the New Year debate  (1 mention)
+     [~] The King's Peace / Peace of Antalcidas 387 BCE — Persia as arbiter of Greece  (2 mentions)
+     [~] The death of Darius III and Bessus as 'Artaxerxes V'  (2 mentions)
+     [~] Takht-e Jamshid — the Achaemenids forgotten in Iranian memory, and the Shahnameh's silence  (1 mention)
+     [~] The 1971 celebration of 2,500 years of monarchy at Persepolis  (2 mentions)
+  COVERED (30):
+     [x] Cyrus II the Great and the overthrow of Astyages the Mede  (10)
+     [x] Croesus and the fall of Lydia (Sardis, c. 547/546 BCE)  (14)
+     [x] Cyrus's death on the eastern frontier — the Massagetae and Tomyris  (5)
+     [x] Pasargadae and the tomb of Cyrus — the garden capital, and Alexander's remorse at the plundered tomb  (8)
+     [x] The Cyrus Cylinder — the object (Rassam 1879) and its Babylonian rhetoric of Marduk and restored cults  (4)
+     [x] Cambyses II and the conquest of Egypt — Pelusium 525 BCE, Psamtik III  (10)  · owns a section
+     [x] Cambyses' lost army and the failed Nubian/Ammon expeditions  (3)
+     [x] Bardiya/Gaumata and the coup of Darius — the usurpation question and the seven conspirators  (13)
+     [x] The Behistun inscription — the trilingual relief, the Lie (drauga), the year of nineteen battles  (21)  · owns a section
+     [x] Satrapies — xšaçapāvan, the tribute lists, the balance of autonomy and control  (12)
+     [x] The Royal Road — Sardis to Susa, 111 stations, 90 days on foot  (12)
+     [x] The angareion — mounted express couriers; Herodotus 8.98 and the 'neither snow nor rain' afterlife  (7)
+     [x] The daric and the siglos — the royal archer coinage and imperial gold  (3)
+     [x] Paradayadam / pairidaēza — the walled garden and the word's journey into 'paradise'  (4)
+     [x] The four capitals and the itinerant court — Susa, Ecbatana, Babylon, Persepolis  (8)
+     [x] Persepolis / Parsa — the Apadana, the Gate of All Nations, the terrace  (39)  · owns a section
+     [x] The Immortals — Herodotus's Athanatoi and the anūšiya mistranslation argument  (4)
+     [x] Marathon 490 as a punitive frontier expedition — Datis, Artaphernes, Hippias  (7)
+     [x] Xerxes' invasion — Thermopylae, Salamis, Plataea, Mardonius, Hydarnes, Artemisia  (16)
+     [x] The historiographic asymmetry — no Persian narrative of the wars; Herodotus's bias and the Greek lens  (10)
+     [x] Ahura Mazda, the magi, and the contested Zoroastrianism of the crown (Zarathustra never named)  (16)
+     [x] The tolerance-empire debate — pragmatic patronage vs propaganda (Kuhrt, Briant)  (4)
+     [x] Cyrus the Younger, Cunaxa 401 BCE, and Xenophon's Ten Thousand  (16)
+     [x] Artaxerxes II, Ctesias, and the Great Satraps' Revolt  (3)
+     [x] The late-empire poisonings — Artaxerxes III's reconquest of Egypt, the eunuch Bagoas, Arses, and Darius III's accession  (6)
+     [x] Alexander's invasion compressed — Granicus 334, Issus 333, Gaugamela 331  (13)
+     [x] The burning of Persepolis 330 BCE — Thaïs, drunken revenge or policy, and the archaeological ash  (7)
+     [x] The Median question — was there ever a Median empire?  (10)
+     [x] The Elamite substrate — Anshan, Elamite scribes, and Persia's inheritance from Susa  (12)
+     [x] The gift to the present — satrap, paradise, postal relay, imperial pluralism in modern rhetoric  (6)  · owns a section
+
+------------------------------------------------------------------------
+TOTAL: 21 absent, 14 name-drop
+Absences and name-drops become the next brief. Read context before accepting any verdict.
