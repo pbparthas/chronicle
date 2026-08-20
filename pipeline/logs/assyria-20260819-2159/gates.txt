@@ -1,5 +1,5 @@
 PASS  G1 validate_codex (incl. round-trip)
-ALL CHECKS PASS  (1,624,101 chars, 1314 ids, 762 citations)
+ALL CHECKS PASS  (1,623,806 chars, 1314 ids, 762 citations)
 
 PASS  G2 regression vs baseline
 file                                 ids         cites          refs      sections           bytes
@@ -7,7 +7,7 @@ file                                 ids         cites          refs      sectio
 content/cities.html                   45            83            18            23           64644
 content/epics.html                    77           120            34            37           99997
 content/era-0.html                   207           251           141            58          231052
-content/era-1.html        504->514 (+10)674->689 (+15)326->336 (+10)           156578785->592304 (+13519)   CHANGED
+content/era-1.html        504->514 (+10)674->689 (+15)326->336 (+10)           156578785->592006 (+13221)   CHANGED
 content/era-2.html                   359           516           220           121          442891
 content/faiths.html                   20            34             7            11           26143
 content/interludes.html               27            45            13            12           35012
@@ -24,7 +24,7 @@ shell.html                            65             0             0            
 PASS — no file regressed. (Still confirm the CHANGED set matches what the session was asked to do.)
 
 PASS  G3 assemble
-assembled 1,624,101 chars -> /tmp/gate-assembled.html
+assembled 1,623,806 chars -> /tmp/gate-assembled.html
 
 PASS  G4 absence hunt
 recorded separately in logs/<run>/hunt-after.txt
